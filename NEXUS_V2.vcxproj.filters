@@ -55,6 +55,18 @@
     <ClCompile Include="Playlist.cpp">
       <Filter>Service</Filter>
     </ClCompile>
+    <ClCompile Include="RobotEnemigo.cpp">
+      <Filter>Model</Filter>
+    </ClCompile>
+    <ClCompile Include="MundoIA.cpp">
+      <Filter>Model</Filter>
+    </ClCompile>
+    <ClCompile Include="FrmMundoIA.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
+    <ClCompile Include="MundoIAService.cpp">
+      <Filter>Service</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Mundo.h">
@@ -96,5 +108,28 @@
     <ClInclude Include="Playlist.h">
       <Filter>Service</Filter>
     </ClInclude>
+    <ClInclude Include="RobotEnemigo.h">
+      <Filter>Model</Filter>
+    </ClInclude>
+    <ClInclude Include="MundoIA.h">
+      <Filter>Model</Filter>
+    </ClInclude>
+    <ClInclude Include="FrmMundoIA.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="MundoIAService.h">
+      <Filter>Service</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="..\..\..\Desktop\IMAGENES PARA EL TP\FondoMundoIA.jpg">
+      <Filter>Resource</Filter>
+    </Image>
+    <Image Include="..\..\..\Desktop\IMAGENES PARA EL TP\PersonajeMundoIA.png">
+      <Filter>Resource</Filter>
+    </Image>
+    <Image Include="..\..\..\Documents\FrmPractica\MundoIA\RobotMundoIA.png">
+      <Filter>Resource</Filter>
+    </Image>
   </ItemGroup>
 </Project>

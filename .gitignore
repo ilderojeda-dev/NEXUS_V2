@@ -1,0 +1,25 @@
+# Visual Studio
+.vs/
+*.user
+*.suo
+*.cache
+*.log
+*.pdb
+
+# Compiled binaries
+*.exe
+*.dll
+
+# Build folders
+Debug/
+Release/
+x64/
+x86/
+
+# Temporary files
+*.obj
+*.ipch
+*.tlog
+*.tmp
+*.log
+*.db
