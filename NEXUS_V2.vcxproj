@@ -44,7 +44,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v145</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
     <CLRSupport>true</CLRSupport>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
@@ -129,11 +129,23 @@
     <ClCompile Include="Mundo.cpp" />
     <ClCompile Include="MundoHumanoService.cpp" />
     <ClCompile Include="Muro.cpp" />
+
+    <ClCompile Include="FrmMundoIA.cpp" />
+    <ClCompile Include="Jugador.cpp" />
+    <ClCompile Include="Mundo.cpp" />
+    <ClCompile Include="MundoIA.cpp" />
+    <ClCompile Include="MundoIAService.cpp" />
+    <ClCompile Include="FrmMundoColab.cpp" />
+    <ClCompile Include="Jugador.cpp" />
+    <ClCompile Include="Mundo.cpp" />
+    <ClCompile Include="MundoColabService.cpp" />
+    <ClCompile Include="Nave.cpp" />
     <ClCompile Include="Playlist.cpp" />
     <ClCompile Include="Pregunta.cpp" />
     <ClCompile Include="PreguntaService.cpp" />
     <ClCompile Include="Principal.cpp" />
     <ClCompile Include="Recurso.cpp" />
+    <ClCompile Include="RobotEnemigo.cpp" />
     <ClCompile Include="Sprite.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -159,16 +171,24 @@
       <FileType>CppForm</FileType>
     </ClInclude>
     <ClInclude Include="FrmMundoHumano.h">
+    <ClInclude Include="FrmMundoIA.h">
+    <ClInclude Include="FrmMundoColab.h">
       <FileType>CppForm</FileType>
     </ClInclude>
     <ClInclude Include="Jugador.h" />
     <ClInclude Include="Mundo.h" />
     <ClInclude Include="MundoHumanoService.h" />
     <ClInclude Include="Muro.h" />
+
+    <ClInclude Include="MundoIA.h" />
+    <ClInclude Include="MundoIAService.h" />
+    <ClInclude Include="MundoColabService.h" />
+    <ClInclude Include="Nave.h" />
     <ClInclude Include="Playlist.h" />
     <ClInclude Include="Pregunta.h" />
     <ClInclude Include="PreguntaService.h" />
     <ClInclude Include="Recurso.h" />
+    <ClInclude Include="RobotEnemigo.h" />
     <ClInclude Include="Sprite.h" />
   </ItemGroup>
   <ItemGroup>
@@ -203,6 +223,24 @@
     <Image Include="Astronauta.png" />
     <Image Include="InicioJuego.png" />
     <Image Include="MundoHumano.png" />
+    <EmbeddedResource Include="FrmMundoIA.resx">
+      <DependentUpon>FrmMundoIA.h</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="..\..\..\Desktop\IMAGENES PARA EL TP\FondoMundoIA.jpg" />
+    <Image Include="..\..\..\Desktop\IMAGENES PARA EL TP\PersonajeMundoIA.png" />
+    <Image Include="..\..\..\Documents\FrmPractica\MundoIA\RobotMundoIA.png" />
+    <EmbeddedResource Include="FrmMundoColab.resx">
+      <DependentUpon>FrmMundoColab.h</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="FondoMundoCOlab.png" />
+    <Image Include="MeteoritoSprite.png" />
+    <Image Include="R2D2 Sprite.png" />
+    <Image Include="SpriteEstrella.png" />
+    <Image Include="SpriteNave.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
