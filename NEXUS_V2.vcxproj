@@ -44,7 +44,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v145</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
     <CLRSupport>true</CLRSupport>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
@@ -119,8 +119,11 @@
     <ClCompile Include="Enemigo.cpp" />
     <ClCompile Include="Fondo.cpp" />
     <ClCompile Include="FrmInicio.cpp" />
+    <ClCompile Include="FrmMundoColab.cpp" />
     <ClCompile Include="Jugador.cpp" />
     <ClCompile Include="Mundo.cpp" />
+    <ClCompile Include="MundoColabService.cpp" />
+    <ClCompile Include="Nave.cpp" />
     <ClCompile Include="Playlist.cpp" />
     <ClCompile Include="Pregunta.cpp" />
     <ClCompile Include="PreguntaService.cpp" />
@@ -137,8 +140,13 @@
     <ClInclude Include="FrmInicio.h">
       <FileType>CppForm</FileType>
     </ClInclude>
+    <ClInclude Include="FrmMundoColab.h">
+      <FileType>CppForm</FileType>
+    </ClInclude>
     <ClInclude Include="Jugador.h" />
     <ClInclude Include="Mundo.h" />
+    <ClInclude Include="MundoColabService.h" />
+    <ClInclude Include="Nave.h" />
     <ClInclude Include="Playlist.h" />
     <ClInclude Include="Pregunta.h" />
     <ClInclude Include="PreguntaService.h" />
@@ -156,6 +164,16 @@
     <EmbeddedResource Include="FrmInicio.resx">
       <DependentUpon>FrmInicio.h</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="FrmMundoColab.resx">
+      <DependentUpon>FrmMundoColab.h</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="FondoMundoCOlab.png" />
+    <Image Include="MeteoritoSprite.png" />
+    <Image Include="R2D2 Sprite.png" />
+    <Image Include="SpriteEstrella.png" />
+    <Image Include="SpriteNave.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

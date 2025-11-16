@@ -55,6 +55,15 @@
     <ClCompile Include="Playlist.cpp">
       <Filter>Service</Filter>
     </ClCompile>
+    <ClCompile Include="FrmMundoColab.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Nave.cpp">
+      <Filter>Model</Filter>
+    </ClCompile>
+    <ClCompile Include="MundoColabService.cpp">
+      <Filter>Service</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Mundo.h">
@@ -96,5 +105,31 @@
     <ClInclude Include="Playlist.h">
       <Filter>Service</Filter>
     </ClInclude>
+    <ClInclude Include="FrmMundoColab.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Nave.h">
+      <Filter>Model</Filter>
+    </ClInclude>
+    <ClInclude Include="MundoColabService.h">
+      <Filter>Service</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="FondoMundoCOlab.png">
+      <Filter>Resource</Filter>
+    </Image>
+    <Image Include="SpriteNave.png">
+      <Filter>Resource</Filter>
+    </Image>
+    <Image Include="SpriteEstrella.png">
+      <Filter>Resource</Filter>
+    </Image>
+    <Image Include="R2D2 Sprite.png">
+      <Filter>Resource</Filter>
+    </Image>
+    <Image Include="MeteoritoSprite.png">
+      <Filter>Resource</Filter>
+    </Image>
   </ItemGroup>
 </Project>
