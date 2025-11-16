@@ -38,3 +38,10 @@ void Jugador::dibujar(Graphics^ canvas) {
     canvas->DrawImage(bitmap, cuadroDestino, cuadroOrigen, GraphicsUnit::Pixel);
     delete bitmap;
 }
+
+int Jugador::getVidas() {
+    return vida;
+}
+int Jugador::getVelocidad() {
+    return velocidad;
+}

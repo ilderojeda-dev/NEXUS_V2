@@ -22,8 +22,7 @@ void Sprite::cargarImagen(char* ruta, int filas, int columnas) {
     this->filas = filas;
     this->columnas = columnas;
 
-	System::Drawing::Bitmap^ bitmap = gcnew System::Drawing::Bitmap(gcnew System::String(image)); // Cargar la imagen para obtener sus dimensiones con GDI+
-	
+    Bitmap^ bitmap = gcnew Bitmap(gcnew System::String(image));
     ancho = bitmap->Width / columnas;
     alto = bitmap->Height / filas;
     delete bitmap;

@@ -15,5 +15,7 @@ public:
     void mover(Direccion tecla, int limiteAncho, int limiteAlto) override;
     void dibujar(Graphics^ canvas) override;
 
+    int getVidas();
+    int getVelocidad();
 };
 

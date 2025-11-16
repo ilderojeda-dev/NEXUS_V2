@@ -119,6 +119,11 @@
     <ClCompile Include="Enemigo.cpp" />
     <ClCompile Include="Fondo.cpp" />
     <ClCompile Include="FrmInicio.cpp" />
+    <ClCompile Include="FrmMundoIA.cpp" />
+    <ClCompile Include="Jugador.cpp" />
+    <ClCompile Include="Mundo.cpp" />
+    <ClCompile Include="MundoIA.cpp" />
+    <ClCompile Include="MundoIAService.cpp" />
     <ClCompile Include="FrmMundoColab.cpp" />
     <ClCompile Include="Jugador.cpp" />
     <ClCompile Include="Mundo.cpp" />
@@ -129,6 +134,7 @@
     <ClCompile Include="PreguntaService.cpp" />
     <ClCompile Include="Principal.cpp" />
     <ClCompile Include="Recurso.cpp" />
+    <ClCompile Include="RobotEnemigo.cpp" />
     <ClCompile Include="Sprite.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -140,17 +146,21 @@
     <ClInclude Include="FrmInicio.h">
       <FileType>CppForm</FileType>
     </ClInclude>
+    <ClInclude Include="FrmMundoIA.h">
     <ClInclude Include="FrmMundoColab.h">
       <FileType>CppForm</FileType>
     </ClInclude>
     <ClInclude Include="Jugador.h" />
     <ClInclude Include="Mundo.h" />
+    <ClInclude Include="MundoIA.h" />
+    <ClInclude Include="MundoIAService.h" />
     <ClInclude Include="MundoColabService.h" />
     <ClInclude Include="Nave.h" />
     <ClInclude Include="Playlist.h" />
     <ClInclude Include="Pregunta.h" />
     <ClInclude Include="PreguntaService.h" />
     <ClInclude Include="Recurso.h" />
+    <ClInclude Include="RobotEnemigo.h" />
     <ClInclude Include="Sprite.h" />
   </ItemGroup>
   <ItemGroup>
@@ -164,6 +174,14 @@
     <EmbeddedResource Include="FrmInicio.resx">
       <DependentUpon>FrmInicio.h</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="FrmMundoIA.resx">
+      <DependentUpon>FrmMundoIA.h</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="..\..\..\Desktop\IMAGENES PARA EL TP\FondoMundoIA.jpg" />
+    <Image Include="..\..\..\Desktop\IMAGENES PARA EL TP\PersonajeMundoIA.png" />
+    <Image Include="..\..\..\Documents\FrmPractica\MundoIA\RobotMundoIA.png" />
     <EmbeddedResource Include="FrmMundoColab.resx">
       <DependentUpon>FrmMundoColab.h</DependentUpon>
     </EmbeddedResource>
