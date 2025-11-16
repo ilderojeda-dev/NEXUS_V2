@@ -65,6 +65,13 @@
       <Filter>UI</Filter>
     </ClCompile>
     <ClCompile Include="MundoIAService.cpp">
+    <ClCompile Include="FrmMundoColab.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Nave.cpp">
+      <Filter>Model</Filter>
+    </ClCompile>
+    <ClCompile Include="MundoColabService.cpp">
       <Filter>Service</Filter>
     </ClCompile>
   </ItemGroup>
@@ -118,6 +125,14 @@
       <Filter>UI</Filter>
     </ClInclude>
     <ClInclude Include="MundoIAService.h">
+
+    <ClInclude Include="FrmMundoColab.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Nave.h">
+      <Filter>Model</Filter>
+    </ClInclude>
+    <ClInclude Include="MundoColabService.h">
       <Filter>Service</Filter>
     </ClInclude>
   </ItemGroup>
@@ -129,6 +144,20 @@
       <Filter>Resource</Filter>
     </Image>
     <Image Include="..\..\..\Documents\FrmPractica\MundoIA\RobotMundoIA.png">
+
+    <Image Include="FondoMundoCOlab.png">
+      <Filter>Resource</Filter>
+    </Image>
+    <Image Include="SpriteNave.png">
+      <Filter>Resource</Filter>
+    </Image>
+    <Image Include="SpriteEstrella.png">
+      <Filter>Resource</Filter>
+    </Image>
+    <Image Include="R2D2 Sprite.png">
+      <Filter>Resource</Filter>
+    </Image>
+    <Image Include="MeteoritoSprite.png">
       <Filter>Resource</Filter>
     </Image>
   </ItemGroup>
