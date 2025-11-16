@@ -50,12 +50,12 @@ Fondo* Mundo::getFondo() {
 }
 
 // Metodos de Hamp
-void Mundo::cargarSpriteHamp(char* ruta, int filas, int columnas) {
+void Mundo::cargarSpriteJugador(char* ruta, int filas, int columnas) {
     jugador->cargarImagen(ruta, filas, columnas);
 }
 
-void Mundo::moverHamp(Direccion tecla) {
-    jugador->mover(tecla, anchoPanel, altoPanel);
+void Mundo::moverJugador(Direccion tecla) {
+    //jugador->mover(tecla, anchoPanel, altoPanel, muros);
 }
 
 Jugador* Mundo::getJugador() {

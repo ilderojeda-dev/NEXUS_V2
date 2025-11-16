@@ -33,11 +33,12 @@ public:
 
     int getAnchoPanel();
     int getAltoPanel();
+	int getVelocidad() { return 20; } // Velocidad comun para todos los modos
     Fondo* getFondo();
 
     // Metodos de Hamp (comunes a todos los modos)
-    void cargarSpriteHamp(char* ruta, int filas, int columnas);
-    void moverHamp(Direccion tecla);
+    void cargarSpriteJugador(char* ruta, int filas, int columnas);
+    void moverJugador(Direccion tecla);
     Jugador* getJugador();
 
     // Estado del juego (comun a todos los modos)

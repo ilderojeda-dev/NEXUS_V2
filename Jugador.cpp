@@ -1,4 +1,4 @@
-#include "Jugador.h"
+ï»¿#include "Jugador.h"
 
 using namespace System::Drawing;
 Jugador::Jugador() : Sprite() {
@@ -7,7 +7,7 @@ Jugador::Jugador() : Sprite() {
 }
 Jugador::Jugador(int x, int y) : Sprite(x, y) {
 	vida = 1;
-	velocidad = 20;
+	velocidad = 15;
 }
 Jugador::~Jugador() {
 }
@@ -25,18 +25,33 @@ void Jugador::mover(Direccion tecla, int limiteAncho, int limiteAlto) {
     x += dx * velocidad;
     y += dy * velocidad;
 
-    if (x < 0) x = 0;
+    if (x < 110) x = 110;
     if (y < 0) y = 0;
     if (x > limiteAncho - ancho * 2) x = limiteAncho - ancho * 2;
-    if (y > limiteAlto - alto * 2) y = limiteAlto - alto * 2;
+    if (y > limiteAlto - alto) y = limiteAlto - alto;
 }
 void Jugador::dibujar(Graphics^ canvas) {
     if (ancho == 0 || alto == 0 || image == nullptr) return;
+
     Bitmap^ bitmap = gcnew Bitmap(gcnew System::String(image));
-	Rectangle cuadroOrigen = Rectangle(ancho * indiceX, alto * indiceY, ancho, alto); // se multiplicar por el indice porque es un spritesheetq es decir varias imagenes en una sola
-	Rectangle cuadroDestino = Rectangle(x, y, ancho * 2, alto * 2); //se multiplica por 2 para escalar el sprite es decir agrandarlo y si queremos mas pequeño se divide
+
+    Rectangle cuadroOrigen = Rectangle(
+        indiceX * ancho,
+        indiceY * alto,
+        ancho,
+        alto
+    );
+
+    Rectangle cuadroDestino = Rectangle(
+        x,
+        y,
+        ancho * 1,
+        alto * 1
+    );
+
     canvas->DrawImage(bitmap, cuadroDestino, cuadroOrigen, GraphicsUnit::Pixel);
     delete bitmap;
+
 }
 
 int Jugador::getVidas() {

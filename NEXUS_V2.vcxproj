@@ -113,12 +113,23 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Alerta.cpp" />
     <ClCompile Include="Aliado.cpp" />
     <ClCompile Include="Dialogo.cpp" />
     <ClCompile Include="DialogoService.cpp" />
     <ClCompile Include="Enemigo.cpp" />
     <ClCompile Include="Fondo.cpp" />
     <ClCompile Include="FrmInicio.cpp" />
+    <ClCompile Include="FrmModulo1.cpp" />
+    <ClCompile Include="FrmModulo2.cpp" />
+    <ClCompile Include="FrmModulo3.cpp" />
+    <ClCompile Include="FrmModulo4.cpp" />
+    <ClCompile Include="FrmMundoHumano.cpp" />
+    <ClCompile Include="Jugador.cpp" />
+    <ClCompile Include="Mundo.cpp" />
+    <ClCompile Include="MundoHumanoService.cpp" />
+    <ClCompile Include="Muro.cpp" />
+
     <ClCompile Include="FrmMundoIA.cpp" />
     <ClCompile Include="Jugador.cpp" />
     <ClCompile Include="Mundo.cpp" />
@@ -138,6 +149,7 @@
     <ClCompile Include="Sprite.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Alerta.h" />
     <ClInclude Include="Aliado.h" />
     <ClInclude Include="Dialogo.h" />
     <ClInclude Include="DialogoService.h" />
@@ -146,12 +158,28 @@
     <ClInclude Include="FrmInicio.h">
       <FileType>CppForm</FileType>
     </ClInclude>
+    <ClInclude Include="FrmModulo1.h">
+      <FileType>CppForm</FileType>
+    </ClInclude>
+    <ClInclude Include="FrmModulo2.h">
+      <FileType>CppForm</FileType>
+    </ClInclude>
+    <ClInclude Include="FrmModulo3.h">
+      <FileType>CppForm</FileType>
+    </ClInclude>
+    <ClInclude Include="FrmModulo4.h">
+      <FileType>CppForm</FileType>
+    </ClInclude>
+    <ClInclude Include="FrmMundoHumano.h">
     <ClInclude Include="FrmMundoIA.h">
     <ClInclude Include="FrmMundoColab.h">
       <FileType>CppForm</FileType>
     </ClInclude>
     <ClInclude Include="Jugador.h" />
     <ClInclude Include="Mundo.h" />
+    <ClInclude Include="MundoHumanoService.h" />
+    <ClInclude Include="Muro.h" />
+
     <ClInclude Include="MundoIA.h" />
     <ClInclude Include="MundoIAService.h" />
     <ClInclude Include="MundoColabService.h" />
@@ -174,6 +202,27 @@
     <EmbeddedResource Include="FrmInicio.resx">
       <DependentUpon>FrmInicio.h</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="FrmModulo1.resx">
+      <DependentUpon>FrmModulo1.h</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmModulo2.resx">
+      <DependentUpon>FrmModulo2.h</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmModulo3.resx">
+      <DependentUpon>FrmModulo3.h</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmModulo4.resx">
+      <DependentUpon>FrmModulo4.h</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmMundoHumano.resx">
+      <DependentUpon>FrmMundoHumano.h</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Alerta.png" />
+    <Image Include="Astronauta.png" />
+    <Image Include="InicioJuego.png" />
+    <Image Include="MundoHumano.png" />
     <EmbeddedResource Include="FrmMundoIA.resx">
       <DependentUpon>FrmMundoIA.h</DependentUpon>
     </EmbeddedResource>
