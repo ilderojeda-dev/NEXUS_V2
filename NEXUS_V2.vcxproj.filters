@@ -55,6 +55,30 @@
     <ClCompile Include="Playlist.cpp">
       <Filter>Service</Filter>
     </ClCompile>
+    <ClCompile Include="MundoHumanoService.cpp">
+      <Filter>Service</Filter>
+    </ClCompile>
+    <ClCompile Include="FrmMundoHumano.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Muro.cpp">
+      <Filter>Service</Filter>
+    </ClCompile>
+    <ClCompile Include="FrmModulo1.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
+    <ClCompile Include="FrmModulo2.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
+    <ClCompile Include="FrmModulo3.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
+    <ClCompile Include="FrmModulo4.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Alerta.cpp">
+      <Filter>Model</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Mundo.h">
@@ -96,5 +120,43 @@
     <ClInclude Include="Playlist.h">
       <Filter>Service</Filter>
     </ClInclude>
+    <ClInclude Include="MundoHumanoService.h">
+      <Filter>Service</Filter>
+    </ClInclude>
+    <ClInclude Include="FrmMundoHumano.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Muro.h">
+      <Filter>Service</Filter>
+    </ClInclude>
+    <ClInclude Include="FrmModulo1.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="FrmModulo2.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="FrmModulo3.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="FrmModulo4.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Alerta.h">
+      <Filter>Model</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="MundoHumano.png">
+      <Filter>Resource</Filter>
+    </Image>
+    <Image Include="Astronauta.png">
+      <Filter>Resource</Filter>
+    </Image>
+    <Image Include="InicioJuego.png">
+      <Filter>Resource</Filter>
+    </Image>
+    <Image Include="Alerta.png">
+      <Filter>Resource</Filter>
+    </Image>
   </ItemGroup>
 </Project>
