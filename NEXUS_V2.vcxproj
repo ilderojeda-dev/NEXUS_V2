@@ -129,15 +129,9 @@
     <ClCompile Include="Mundo.cpp" />
     <ClCompile Include="MundoHumanoService.cpp" />
     <ClCompile Include="Muro.cpp" />
-
     <ClCompile Include="FrmMundoIA.cpp" />
-    <ClCompile Include="Jugador.cpp" />
-    <ClCompile Include="Mundo.cpp" />
-    <ClCompile Include="MundoIA.cpp" />
     <ClCompile Include="MundoIAService.cpp" />
     <ClCompile Include="FrmMundoColab.cpp" />
-    <ClCompile Include="Jugador.cpp" />
-    <ClCompile Include="Mundo.cpp" />
     <ClCompile Include="MundoColabService.cpp" />
     <ClCompile Include="Nave.cpp" />
     <ClCompile Include="Playlist.cpp" />
@@ -171,7 +165,11 @@
       <FileType>CppForm</FileType>
     </ClInclude>
     <ClInclude Include="FrmMundoHumano.h">
+      <FileType>CppForm</FileType>
+    </ClInclude>
     <ClInclude Include="FrmMundoIA.h">
+      <FileType>CppForm</FileType>
+    </ClInclude>
     <ClInclude Include="FrmMundoColab.h">
       <FileType>CppForm</FileType>
     </ClInclude>
@@ -179,8 +177,6 @@
     <ClInclude Include="Mundo.h" />
     <ClInclude Include="MundoHumanoService.h" />
     <ClInclude Include="Muro.h" />
-
-    <ClInclude Include="MundoIA.h" />
     <ClInclude Include="MundoIAService.h" />
     <ClInclude Include="MundoColabService.h" />
     <ClInclude Include="Nave.h" />
@@ -221,6 +217,7 @@
   <ItemGroup>
     <Image Include="Alerta.png" />
     <Image Include="Astronauta.png" />
+    <Image Include="FondoMundoIA.png" />
     <Image Include="InicioJuego.png" />
     <Image Include="MundoHumano.png" />
     <EmbeddedResource Include="FrmMundoIA.resx">
@@ -228,9 +225,6 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <Image Include="..\..\..\Desktop\IMAGENES PARA EL TP\FondoMundoIA.jpg" />
-    <Image Include="..\..\..\Desktop\IMAGENES PARA EL TP\PersonajeMundoIA.png" />
-    <Image Include="..\..\..\Documents\FrmPractica\MundoIA\RobotMundoIA.png" />
     <EmbeddedResource Include="FrmMundoColab.resx">
       <DependentUpon>FrmMundoColab.h</DependentUpon>
     </EmbeddedResource>
@@ -238,7 +232,9 @@
   <ItemGroup>
     <Image Include="FondoMundoCOlab.png" />
     <Image Include="MeteoritoSprite.png" />
+    <Image Include="PersonajeMundoIA.png" />
     <Image Include="R2D2 Sprite.png" />
+    <Image Include="RobotMundoIA.png" />
     <Image Include="SpriteEstrella.png" />
     <Image Include="SpriteNave.png" />
   </ItemGroup>

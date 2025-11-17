@@ -27,7 +27,7 @@ namespace NEXUSV2 {
 
 			mundoIAService = new MundoIAService(pnlMundoIA->Width, pnlMundoIA->Height, 3);
 
-			char rutaFondo[] = "FondoMundoIA.jpg";
+			char rutaFondo[] = "FondoMundoIA.png";
 			mundoIAService->cargarFondo(rutaFondo);
 			char rutaJugador[] = "PersonajeMundoIA.png";
 			mundoIAService->cargarSpriteJugador(rutaJugador, 4, 8);
@@ -82,7 +82,7 @@ namespace NEXUSV2 {
 			this->pnlMundoIA->BackColor = System::Drawing::SystemColors::ActiveBorder;
 			this->pnlMundoIA->Location = System::Drawing::Point(0, 0);
 			this->pnlMundoIA->Name = L"pnlMundoIA";
-			this->pnlMundoIA->Size = System::Drawing::Size(1177, 586);
+			this->pnlMundoIA->Size = System::Drawing::Size(1509, 925);
 			this->pnlMundoIA->TabIndex = 0;
 			this->pnlMundoIA->Paint += gcnew System::Windows::Forms::PaintEventHandler(this, &FrmMundoIA::panel1_Paint);
 			// 
@@ -94,10 +94,13 @@ namespace NEXUSV2 {
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
-			this->ClientSize = System::Drawing::Size(1487, 744);
+			this->ClientSize = System::Drawing::Size(1904, 1041);
 			this->Controls->Add(this->pnlMundoIA);
+			this->FormBorderStyle = System::Windows::Forms::FormBorderStyle::None;
 			this->Name = L"FrmMundoIA";
 			this->Text = L"FrmMundoIA";
+			this->WindowState = System::Windows::Forms::FormWindowState::Maximized;
+			this->Load += gcnew System::EventHandler(this, &FrmMundoIA::FrmMundoIA_Load);
 			this->KeyDown += gcnew System::Windows::Forms::KeyEventHandler(this, &FrmMundoIA::FrmMundoIA_KeyDown);
 			this->KeyUp += gcnew System::Windows::Forms::KeyEventHandler(this, &FrmMundoIA::FrmMundoIA_KeyUp_1);
 			this->ResumeLayout(false);
@@ -159,6 +162,8 @@ private: System::Void FrmMundoIA_KeyUp_1(System::Object^ sender, System::Windows
 		e->KeyCode == Keys::A || e->KeyCode == Keys::D) {
 		teclaPresionada = Ninguno;
 	}
+}
+private: System::Void FrmMundoIA_Load(System::Object^ sender, System::EventArgs^ e) {
 }
 };
 }

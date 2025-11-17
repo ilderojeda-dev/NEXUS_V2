@@ -1,8 +1,9 @@
 #pragma once
 #include "Mundo.h"
 #include "FrmMundoHumano.h"
-
 #include "FrmMundoIA.h"
+#include "FrmMundoColab.h"
+
 namespace NEXUSV2 {
 
 	using namespace System;
@@ -40,7 +41,6 @@ namespace NEXUSV2 {
 		}
 	private: System::Windows::Forms::Panel^ pnlFondo;
 	private: System::Windows::Forms::Button^ btnNiveles;
-
 	private: System::Windows::Forms::Button^ btnIniciarJuego;
 	private: System::Windows::Forms::Button^ btnSalir;
 	private: System::Windows::Forms::Button^ btnCreditos;
@@ -92,6 +92,9 @@ namespace NEXUSV2 {
 			this->btnNiveles = (gcnew System::Windows::Forms::Button());
 			this->btnIniciarJuego = (gcnew System::Windows::Forms::Button());
 			this->btnSalir = (gcnew System::Windows::Forms::Button());
+			this->brnMundoIA = (gcnew System::Windows::Forms::Button());
+			this->button2 = (gcnew System::Windows::Forms::Button());
+			this->button3 = (gcnew System::Windows::Forms::Button());
 			this->pnlFondo->SuspendLayout();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->BeginInit();
 			this->SuspendLayout();
@@ -146,6 +149,7 @@ namespace NEXUSV2 {
 			this->btnNivel3->TabIndex = 8;
 			this->btnNivel3->UseVisualStyleBackColor = false;
 			this->btnNivel3->Visible = false;
+			this->btnNivel3->Click += gcnew System::EventHandler(this, &FrmInicio::btnNivel3_Click);
 			// 
 			// btnNivel2
 			// 
@@ -173,6 +177,7 @@ namespace NEXUSV2 {
 			this->btnNivel1->TabIndex = 6;
 			this->btnNivel1->UseVisualStyleBackColor = false;
 			this->btnNivel1->Visible = false;
+			this->btnNivel1->Click += gcnew System::EventHandler(this, &FrmInicio::btnNivel1_Click);
 			// 
 			// pictureBox1
 			// 
@@ -258,11 +263,6 @@ namespace NEXUSV2 {
 			this->btnSalir->Text = L"SALIR";
 			this->btnSalir->UseVisualStyleBackColor = true;
 			this->btnSalir->Click += gcnew System::EventHandler(this, &FrmInicio::btnSalir_Click);
-
-			this->brnMundoIA = (gcnew System::Windows::Forms::Button());
-			this->button2 = (gcnew System::Windows::Forms::Button());
-			this->button3 = (gcnew System::Windows::Forms::Button());
-			this->SuspendLayout();
 			// 
 			// brnMundoIA
 			// 
@@ -272,7 +272,6 @@ namespace NEXUSV2 {
 			this->brnMundoIA->TabIndex = 0;
 			this->brnMundoIA->Text = L"MUNDO IA";
 			this->brnMundoIA->UseVisualStyleBackColor = true;
-			this->brnMundoIA->Click += gcnew System::EventHandler(this, &FrmInicio::button1_Click);
 			// 
 			// button2
 			// 
@@ -297,13 +296,12 @@ namespace NEXUSV2 {
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->ClientSize = System::Drawing::Size(1920, 1080);
+			//1922; 1086
 			this->Controls->Add(this->pnlFondo);
-			this->FormBorderStyle = System::Windows::Forms::FormBorderStyle::None;
-
-			this->ClientSize = System::Drawing::Size(1174, 769);
 			this->Controls->Add(this->button3);
 			this->Controls->Add(this->button2);
 			this->Controls->Add(this->brnMundoIA);
+			this->FormBorderStyle = System::Windows::Forms::FormBorderStyle::None;
 			this->Name = L"FrmInicio";
 			this->Text = L"FrmInicio";
 			this->WindowState = System::Windows::Forms::FormWindowState::Maximized;
@@ -352,12 +350,18 @@ namespace NEXUSV2 {
 	private: System::Void btnCreditos_Click(System::Object^ sender, System::EventArgs^ e) {
 		//Agregar formulario de creditos
 	}
+private: System::Void btnNivel1_Click(System::Object^ sender, System::EventArgs^ e) {
+	FrmMundoIA^ frmMundoIA = gcnew FrmMundoIA();
+	frmMundoIA->Show();
+	this->Hide();
+
+}
+private: System::Void btnNivel3_Click(System::Object^ sender, System::EventArgs^ e) {
+	FrmMundoColab^ frmMundoColab = gcnew FrmMundoColab();
+	frmMundoColab->Show();
+	this->Hide();	
+}
 };
 
-	private: System::Void button1_Click(System::Object^ sender, System::EventArgs^ e) {
-
-		FrmMundoIA^ frmMundoIA = gcnew FrmMundoIA();
-		frmMundoIA->Show();
-	}
-	};
+	
 }

@@ -40,17 +40,23 @@
     <ClCompile Include="Pregunta.cpp">
       <Filter>Model</Filter>
     </ClCompile>
+    <ClCompile Include="Recurso.cpp">
+      <Filter>Model</Filter>
+    </ClCompile>
+    <ClCompile Include="Alerta.cpp">
+      <Filter>Model</Filter>
+    </ClCompile>
+    <ClCompile Include="RobotEnemigo.cpp">
+      <Filter>Model</Filter>
+    </ClCompile>
+    <ClCompile Include="Nave.cpp">
+      <Filter>Model</Filter>
+    </ClCompile>
     <ClCompile Include="DialogoService.cpp">
       <Filter>Service</Filter>
     </ClCompile>
     <ClCompile Include="PreguntaService.cpp">
       <Filter>Service</Filter>
-    </ClCompile>
-    <ClCompile Include="Recurso.cpp">
-      <Filter>Model</Filter>
-    </ClCompile>
-    <ClCompile Include="FrmInicio.cpp">
-      <Filter>UI</Filter>
     </ClCompile>
     <ClCompile Include="Playlist.cpp">
       <Filter>Service</Filter>
@@ -58,11 +64,20 @@
     <ClCompile Include="MundoHumanoService.cpp">
       <Filter>Service</Filter>
     </ClCompile>
-    <ClCompile Include="FrmMundoHumano.cpp">
-      <Filter>UI</Filter>
-    </ClCompile>
     <ClCompile Include="Muro.cpp">
       <Filter>Service</Filter>
+    </ClCompile>
+    <ClCompile Include="MundoIAService.cpp">
+      <Filter>Service</Filter>
+    </ClCompile>
+    <ClCompile Include="MundoColabService.cpp">
+      <Filter>Service</Filter>
+    </ClCompile>
+    <ClCompile Include="FrmInicio.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
+    <ClCompile Include="FrmMundoHumano.cpp">
+      <Filter>UI</Filter>
     </ClCompile>
     <ClCompile Include="FrmModulo1.cpp">
       <Filter>UI</Filter>
@@ -76,28 +91,11 @@
     <ClCompile Include="FrmModulo4.cpp">
       <Filter>UI</Filter>
     </ClCompile>
-    <ClCompile Include="Alerta.cpp">
-      <Filter>Model</Filter>
-    </ClCompile>
-
-    <ClCompile Include="RobotEnemigo.cpp">
-      <Filter>Model</Filter>
-    </ClCompile>
-    <ClCompile Include="MundoIA.cpp">
-      <Filter>Model</Filter>
-    </ClCompile>
     <ClCompile Include="FrmMundoIA.cpp">
       <Filter>UI</Filter>
     </ClCompile>
-    <ClCompile Include="MundoIAService.cpp">
     <ClCompile Include="FrmMundoColab.cpp">
       <Filter>UI</Filter>
-    </ClCompile>
-    <ClCompile Include="Nave.cpp">
-      <Filter>Model</Filter>
-    </ClCompile>
-    <ClCompile Include="MundoColabService.cpp">
-      <Filter>Service</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -125,17 +123,23 @@
     <ClInclude Include="Pregunta.h">
       <Filter>Model</Filter>
     </ClInclude>
+    <ClInclude Include="Recurso.h">
+      <Filter>Model</Filter>
+    </ClInclude>
+    <ClInclude Include="Alerta.h">
+      <Filter>Model</Filter>
+    </ClInclude>
+    <ClInclude Include="RobotEnemigo.h">
+      <Filter>Model</Filter>
+    </ClInclude>
+    <ClInclude Include="Nave.h">
+      <Filter>Model</Filter>
+    </ClInclude>
     <ClInclude Include="DialogoService.h">
       <Filter>Service</Filter>
     </ClInclude>
     <ClInclude Include="PreguntaService.h">
       <Filter>Service</Filter>
-    </ClInclude>
-    <ClInclude Include="Recurso.h">
-      <Filter>Model</Filter>
-    </ClInclude>
-    <ClInclude Include="FrmInicio.h">
-      <Filter>UI</Filter>
     </ClInclude>
     <ClInclude Include="Playlist.h">
       <Filter>Service</Filter>
@@ -143,11 +147,20 @@
     <ClInclude Include="MundoHumanoService.h">
       <Filter>Service</Filter>
     </ClInclude>
-    <ClInclude Include="FrmMundoHumano.h">
-      <Filter>UI</Filter>
-    </ClInclude>
     <ClInclude Include="Muro.h">
       <Filter>Service</Filter>
+    </ClInclude>
+    <ClInclude Include="MundoIAService.h">
+      <Filter>Service</Filter>
+    </ClInclude>
+    <ClInclude Include="MundoColabService.h">
+      <Filter>Service</Filter>
+    </ClInclude>
+    <ClInclude Include="FrmInicio.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="FrmMundoHumano.h">
+      <Filter>UI</Filter>
     </ClInclude>
     <ClInclude Include="FrmModulo1.h">
       <Filter>UI</Filter>
@@ -161,8 +174,11 @@
     <ClInclude Include="FrmModulo4.h">
       <Filter>UI</Filter>
     </ClInclude>
-    <ClInclude Include="Alerta.h">
-      <Filter>Model</Filter>
+    <ClInclude Include="FrmMundoIA.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="FrmMundoColab.h">
+      <Filter>UI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -176,37 +192,8 @@
       <Filter>Resource</Filter>
     </Image>
     <Image Include="Alerta.png">
-
-    <ClInclude Include="RobotEnemigo.h">
-      <Filter>Model</Filter>
-    </ClInclude>
-    <ClInclude Include="MundoIA.h">
-      <Filter>Model</Filter>
-    </ClInclude>
-    <ClInclude Include="FrmMundoIA.h">
-      <Filter>UI</Filter>
-    </ClInclude>
-    <ClInclude Include="MundoIAService.h">
-
-    <ClInclude Include="FrmMundoColab.h">
-      <Filter>UI</Filter>
-    </ClInclude>
-    <ClInclude Include="Nave.h">
-      <Filter>Model</Filter>
-    </ClInclude>
-    <ClInclude Include="MundoColabService.h">
-      <Filter>Service</Filter>
-    </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <Image Include="..\..\..\Desktop\IMAGENES PARA EL TP\FondoMundoIA.jpg">
       <Filter>Resource</Filter>
     </Image>
-    <Image Include="..\..\..\Desktop\IMAGENES PARA EL TP\PersonajeMundoIA.png">
-      <Filter>Resource</Filter>
-    </Image>
-    <Image Include="..\..\..\Documents\FrmPractica\MundoIA\RobotMundoIA.png">
-
     <Image Include="FondoMundoCOlab.png">
       <Filter>Resource</Filter>
     </Image>
@@ -220,6 +207,15 @@
       <Filter>Resource</Filter>
     </Image>
     <Image Include="MeteoritoSprite.png">
+      <Filter>Resource</Filter>
+    </Image>
+    <Image Include="FondoMundoIA.png">
+      <Filter>Resource</Filter>
+    </Image>
+    <Image Include="PersonajeMundoIA.png">
+      <Filter>Resource</Filter>
+    </Image>
+    <Image Include="RobotMundoIA.png">
       <Filter>Resource</Filter>
     </Image>
   </ItemGroup>

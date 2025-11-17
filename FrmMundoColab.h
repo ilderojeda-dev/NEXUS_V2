@@ -106,6 +106,7 @@ namespace NEXUSV2 {
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->ClientSize = System::Drawing::Size(1904, 1041);
 			this->Controls->Add(this->pnlJuego);
+			this->FormBorderStyle = System::Windows::Forms::FormBorderStyle::None;
 			this->Name = L"FrmMundoColab";
 			this->Text = L"FrmMundoColab";
 			this->WindowState = System::Windows::Forms::FormWindowState::Maximized;
