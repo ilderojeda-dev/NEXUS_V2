@@ -5,6 +5,13 @@ Alerta::Alerta() : Recurso() {
 
 }
 Alerta::Alerta(int x, int y) : Recurso(x, y) {
+    numeroAlerta = -1;
+    indiceX = 0;
+    indiceY = 0;
+}
+
+Alerta::Alerta(int x, int y, int n) : Recurso(x, y) {
+	numeroAlerta = n;
     indiceX = 0;
     indiceY = 0;
 }
@@ -13,7 +20,12 @@ Alerta::Alerta(int x, int y) : Recurso(x, y) {
 Alerta::~Alerta() {
 
 }
-
+void Alerta::setTipoAlerta(int n) {
+    numeroAlerta = n;
+}
+int Alerta::getTipoAlerta() {
+    return numeroAlerta;
+}
 void Alerta::mover(Direccion tecla, int limiteAncho, int limiteAlto)  {
     indiceX++;
     if (indiceX >= columnas) indiceX = 0;

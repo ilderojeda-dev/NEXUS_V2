@@ -54,18 +54,22 @@ void MundoHumanoService::generarAlertas() {
 	char rutaAlerta[] = "Alerta.png";
 	Alerta* alertaM1 = new Alerta(186, 161);
 	alertaM1->cargarImagen(rutaAlerta, 1, 4);
+	alertaM1->setTipoAlerta(0); // Tipo 1 para la primera alerta
 	alertas.push_back(alertaM1);
 
 	Alerta* alertaM2 = new Alerta(1169, 161);
 	alertaM2->cargarImagen(rutaAlerta, 1, 4);
+	alertaM2->setTipoAlerta(1); // Tipo 2 para la segunda alerta
 	alertas.push_back(alertaM2);
 
 	Alerta* alertaM3 = new Alerta(319, 601);
 	alertaM3->cargarImagen(rutaAlerta, 1, 4);
+	alertaM3->setTipoAlerta(2);
 	alertas.push_back(alertaM3);
 
 	Alerta* alertaM4 = new Alerta(1179, 541);
 	alertaM4->cargarImagen(rutaAlerta, 1, 4);
+	alertaM4->setTipoAlerta(3);
 	alertas.push_back(alertaM4);
 
 
@@ -87,17 +91,17 @@ int MundoHumanoService::verificarColisionAlerta() {
 		Rectangle rectAlerta = alertas[i]->getRectangle();
 
 		if (rectJugador.IntersectsWith(rectAlerta)) {
+			int tipoAlerta = alertas[i]->getTipoAlerta();
 
 			delete alertas[i];
 			alertas.erase(alertas.begin() + i);
 
-			return i;   // ← devuelve la alerta que colisionó
+			return tipoAlerta;   // ← devuelve la alerta que colisionó
 		}
 	}
 
 	return -1; // ← NO hubo colisión
 }
-
 
 
 

@@ -30,6 +30,8 @@ public:
 	void moverAlertas();
 	vector<Alerta*> getAlertas();
 	int verificarColisionAlerta();
+	
+
 
 
 	
