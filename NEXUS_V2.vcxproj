@@ -84,6 +84,10 @@
       <SubSystem>Windows</SubSystem>
       <EntryPointSymbol>main</EntryPointSymbol>
     </Link>
+    <PostBuildEvent>
+      <Command>
+      </Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -134,12 +138,12 @@
     <ClCompile Include="FrmMundoColab.cpp" />
     <ClCompile Include="MundoColabService.cpp" />
     <ClCompile Include="Nave.cpp" />
-    <ClCompile Include="Playlist.cpp" />
     <ClCompile Include="Pregunta.cpp" />
     <ClCompile Include="PreguntaService.cpp" />
     <ClCompile Include="Principal.cpp" />
     <ClCompile Include="Recurso.cpp" />
     <ClCompile Include="RobotEnemigo.cpp" />
+    <ClCompile Include="SoundManager.cpp" />
     <ClCompile Include="Sprite.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -180,19 +184,21 @@
     <ClInclude Include="MundoIAService.h" />
     <ClInclude Include="MundoColabService.h" />
     <ClInclude Include="Nave.h" />
-    <ClInclude Include="Playlist.h" />
     <ClInclude Include="Pregunta.h" />
     <ClInclude Include="PreguntaService.h" />
     <ClInclude Include="Recurso.h" />
     <ClInclude Include="RobotEnemigo.h" />
+    <ClInclude Include="SoundManager.h" />
     <ClInclude Include="Sprite.h" />
   </ItemGroup>
   <ItemGroup>
+    <Reference Include="PresentationCore" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="FrmInicio.resx">
@@ -237,6 +243,17 @@
     <Image Include="RobotMundoIA.png" />
     <Image Include="SpriteEstrella.png" />
     <Image Include="SpriteNave.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <CopyFileToFolders Include="EfectoClick.wav">
+      <FileType>Document</FileType>
+      <DestinationFolders Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(OutDir)Resource\</DestinationFolders>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="MusicaFondoInicio.wav">
+      <DeploymentContent>false</DeploymentContent>
+      <FileType>Document</FileType>
+      <DestinationFolders Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(OutDir)Resource\</DestinationFolders>
+    </CopyFileToFolders>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
