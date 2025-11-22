@@ -141,7 +141,7 @@ namespace NEXUSV2 {
 			// 
 			// btnPuntos
 			// 
-			this->btnPuntos->Location = System::Drawing::Point(469, 301);
+			this->btnPuntos->Location = System::Drawing::Point(1382, 13);
 			this->btnPuntos->Name = L"btnPuntos";
 			this->btnPuntos->Size = System::Drawing::Size(75, 23);
 			this->btnPuntos->TabIndex = 0;
@@ -277,7 +277,7 @@ namespace NEXUSV2 {
 			this->Controls->Add(this->btnSalir);
 			this->Controls->Add(this->pictureBox1);
 			this->Controls->Add(this->pnlMundo);
-			this->FormBorderStyle = System::Windows::Forms::FormBorderStyle::None; //Quitar bordes de la ventana
+			this->FormBorderStyle = System::Windows::Forms::FormBorderStyle::None;
 			this->Name = L"FrmMundoHumano";
 			this->Text = L"FrmMundoHumano";
 			this->WindowState = System::Windows::Forms::FormWindowState::Maximized;

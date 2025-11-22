@@ -58,9 +58,6 @@
     <ClCompile Include="PreguntaService.cpp">
       <Filter>Service</Filter>
     </ClCompile>
-    <ClCompile Include="Playlist.cpp">
-      <Filter>Service</Filter>
-    </ClCompile>
     <ClCompile Include="MundoHumanoService.cpp">
       <Filter>Service</Filter>
     </ClCompile>
@@ -96,6 +93,9 @@
     </ClCompile>
     <ClCompile Include="FrmMundoColab.cpp">
       <Filter>UI</Filter>
+    </ClCompile>
+    <ClCompile Include="SoundManager.cpp">
+      <Filter>Service</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -141,9 +141,6 @@
     <ClInclude Include="PreguntaService.h">
       <Filter>Service</Filter>
     </ClInclude>
-    <ClInclude Include="Playlist.h">
-      <Filter>Service</Filter>
-    </ClInclude>
     <ClInclude Include="MundoHumanoService.h">
       <Filter>Service</Filter>
     </ClInclude>
@@ -179,6 +176,9 @@
     </ClInclude>
     <ClInclude Include="FrmMundoColab.h">
       <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="SoundManager.h">
+      <Filter>Service</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -218,5 +218,13 @@
     <Image Include="RobotMundoIA.png">
       <Filter>Resource</Filter>
     </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <CopyFileToFolders Include="MusicaFondoInicio.wav">
+      <Filter>Resource</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="EfectoClick.wav">
+      <Filter>Resource</Filter>
+    </CopyFileToFolders>
   </ItemGroup>
 </Project>

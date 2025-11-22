@@ -1,7 +1,10 @@
-#pragma once
+﻿#pragma once
 #include "Mundo.h"
 #include "FrmMundoHumano.h"
 #include "FrmMundoIA.h"
+#include "SoundManager.h"
+
+
 #include "FrmMundoColab.h"
 
 namespace NEXUSV2 {
@@ -12,6 +15,7 @@ namespace NEXUSV2 {
 	using namespace System::Windows::Forms;
 	using namespace System::Data;
 	using namespace System::Drawing;
+	using namespace System::Media;
 
 	/// <summary>
 	/// Summary for FrmInicio
@@ -19,14 +23,22 @@ namespace NEXUSV2 {
 	public ref class FrmInicio : public System::Windows::Forms::Form
 	{
 	public:
+
 		FrmInicio(void)
 		{
 			InitializeComponent();
-			//
-			//TODO: Add the constructor code here
-			//
+			// --- AGREGA ESTO ---
+			gestorSonido = gcnew NEXUS_V2::Service::SoundManager();
+
+			// Reproduce la música. Asegúrate de que "MusicaFondoInicio.wav"
+			// esté en tu carpeta Resource y configurado para "Copiar siempre".
+			gestorSonido->ReproducirMusica("MusicaFondoInicio.wav", 0.3); // 0.3 es volumen bajito (30%)
+
+			
+
 			
 		}
+
 
 	protected:
 		/// <summary>
@@ -52,7 +64,8 @@ namespace NEXUSV2 {
 
 	private: System::Windows::Forms::Button^ btnNivel3;
 	private: System::Windows::Forms::Button^ btnNivel2;
-
+		   // Variable para controlar el sonido en este formulario
+	private: NEXUS_V2::Service::SoundManager^ gestorSonido;
 
 
 
@@ -71,6 +84,7 @@ namespace NEXUSV2 {
 		/// Required designer variable.
 		/// </summary>
 		System::ComponentModel::Container ^components;
+		
 		
 
 #pragma region Windows Form Designer generated code
@@ -159,7 +173,7 @@ namespace NEXUSV2 {
 			this->btnNivel2->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
 			this->btnNivel2->Location = System::Drawing::Point(743, 338);
 			this->btnNivel2->Name = L"btnNivel2";
-			this->btnNivel2->Size = System::Drawing::Size(418, 546);
+			this->btnNivel2->Size = System::Drawing::Size(418, 549);
 			this->btnNivel2->TabIndex = 7;
 			this->btnNivel2->UseVisualStyleBackColor = false;
 			this->btnNivel2->Visible = false;
@@ -186,7 +200,7 @@ namespace NEXUSV2 {
 			this->pictureBox1->BackgroundImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pictureBox1.BackgroundImage")));
 			this->pictureBox1->Location = System::Drawing::Point(200, 13);
 			this->pictureBox1->Name = L"pictureBox1";
-			this->pictureBox1->Size = System::Drawing::Size(1529, 1023);
+			this->pictureBox1->Size = System::Drawing::Size(1529, 1013);
 			this->pictureBox1->TabIndex = 5;
 			this->pictureBox1->TabStop = false;
 			this->pictureBox1->Visible = false;
@@ -219,6 +233,7 @@ namespace NEXUSV2 {
 			this->btnHistoria->TabIndex = 3;
 			this->btnHistoria->Text = L"HISTORIA";
 			this->btnHistoria->UseVisualStyleBackColor = false;
+			this->btnHistoria->Click += gcnew System::EventHandler(this, &FrmInicio::btnHistoria_Click_1);
 			// 
 			// btnNiveles
 			// 
@@ -296,7 +311,6 @@ namespace NEXUSV2 {
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->ClientSize = System::Drawing::Size(1920, 1080);
-			//1922; 1086
 			this->Controls->Add(this->pnlFondo);
 			this->Controls->Add(this->button3);
 			this->Controls->Add(this->button2);
@@ -315,26 +329,34 @@ namespace NEXUSV2 {
 	private: System::Void FrmInicio_Load(System::Object^ sender, System::EventArgs^ e) {
 	}
 	private: System::Void pnlFondo_Paint(System::Object^ sender, System::Windows::Forms::PaintEventArgs^ e) {
-	}
+ 	}
 	private: System::Void btnSalir_Click(System::Object^ sender, System::EventArgs^ e) {
 		this->Close();
 	}
 	private: System::Void btnIniciarJuego_Click(System::Object^ sender, System::EventArgs^ e) {
+		gestorSonido->ReproducirEfecto("EfectoClick.wav", 1.0);
 		FrmMundoHumano^ frmMundoHumano = gcnew FrmMundoHumano();
 		frmMundoHumano->Show();
 		this->Hide();
 	}
+	private: System::Void FrmInicio_FormClosing(System::Object^ sender, System::Windows::Forms::FormClosingEventArgs^ e) {
+			   
+
+	}
+
 	private: System::Void btnNiveles_Click(System::Object^ sender, System::EventArgs^ e) {
-		
+		gestorSonido->ReproducirEfecto("EfectoClick.wav", 1.0);
 		btnNivel1->Visible = true;
 		btnNivel2->Visible = true;
 		btnNivel3->Visible = true;
 		btnVolver->Visible = true;
 		pictureBox1->Visible = true;
+
+		
 	}
 
 	private: System::Void btnVolver_Click(System::Object^ sender, System::EventArgs^ e) {
-		
+		gestorSonido->ReproducirEfecto("EfectoClick.wav", 1.0);
 		btnNivel1->Visible = false;
 		btnNivel2->Visible = false;
 		btnNivel3->Visible = false;
@@ -343,25 +365,38 @@ namespace NEXUSV2 {
 		
 	}
 	private: System::Void btnNivel2_Click(System::Object^ sender, System::EventArgs^ e) {
+		gestorSonido->ReproducirEfecto("EfectoClick.wav", 1.0);
+
 		FrmMundoHumano^ frmMundoHumano = gcnew FrmMundoHumano();
+
 		frmMundoHumano->Show();
 		this->Hide();
+		gestorSonido->DetenerMusica();
 	}
 	private: System::Void btnCreditos_Click(System::Object^ sender, System::EventArgs^ e) {
+		gestorSonido->ReproducirEfecto("EfectoClick.wav", 1.0);
 		//Agregar formulario de creditos
 	}
-private: System::Void btnNivel1_Click(System::Object^ sender, System::EventArgs^ e) {
-	FrmMundoIA^ frmMundoIA = gcnew FrmMundoIA();
-	frmMundoIA->Show();
-	this->Hide();
-
-}
-private: System::Void btnNivel3_Click(System::Object^ sender, System::EventArgs^ e) {
-	FrmMundoColab^ frmMundoColab = gcnew FrmMundoColab();
-	frmMundoColab->Show();
-	this->Hide();	
+		   
+	private: System::Void btnNivel1_Click(System::Object^ sender, System::EventArgs^ e) {
+		gestorSonido->ReproducirEfecto("EfectoClick.wav", 1.0);
+		
+		FrmMundoIA^ frmMundoIA = gcnew FrmMundoIA();
+		frmMundoIA->Show();
+		
+		this->Hide();
+	
+	}
+	private: System::Void btnNivel3_Click(System::Object^ sender, System::EventArgs^ e) {
+		gestorSonido->ReproducirEfecto("EfectoClick.wav", 1.0);
+		FrmMundoColab^ frmMundoColab = gcnew FrmMundoColab();
+		frmMundoColab->Show();
+		this->Hide();	
+	}
+private: System::Void btnHistoria_Click_1(System::Object^ sender, System::EventArgs^ e) {
+	gestorSonido->ReproducirEfecto("EfectoClick.wav", 1.0);
+	//Agregar formulario de historia
 }
 };
-
 	
 }
