@@ -7,6 +7,7 @@ namespace NEXUS_V2 {
 		{
 			musicaFondo = gcnew MediaPlayer();
 			listaEfectos = gcnew List<MediaPlayer^>();
+			sonidoBucle = gcnew MediaPlayer();
 		}
 
 		void SoundManager::ReproducirMusica(String^ nombreArchivo, double volumen)
@@ -72,5 +73,40 @@ namespace NEXUS_V2 {
 				listaEfectos->Remove(reproductorTerminado);
 			}
 		}
+		void SoundManager::ReproducirSonidoBucle(String^ nombreArchivo, double volumen)
+		{
+			try {
+				// Evitamos recargar si ya está sonando lo mismo (opcional, pero recomendado)
+				// Si quieres poder cambiar de sonido (ej: de pasos a correr), quita este if.
+				// if (sonidoBucle->Source != nullptr) return; 
+
+				String^ rutaBase = AppDomain::CurrentDomain->BaseDirectory;
+				String^ rutaCompleta = Path::Combine(rutaBase, "Resource", nombreArchivo);
+
+				sonidoBucle->Open(gcnew Uri(rutaCompleta));
+				sonidoBucle->Volume = volumen;
+
+				// Conectamos el evento para que sea infinito
+				sonidoBucle->MediaEnded += gcnew EventHandler(this, &SoundManager::AlTerminarBucle);
+
+				sonidoBucle->Play();
+			}
+			catch (Exception^ ex) {}
+		}
+
+		void SoundManager::DetenerSonidoBucle()
+		{
+			sonidoBucle->Stop();
+			// Opcional: Desconectar el evento si quieres limpiar memoria, 
+			// pero para este nivel está bien así.
+		}
+
+		void SoundManager::AlTerminarBucle(Object^ sender, EventArgs^ e)
+		{
+			// ¡Aquí está la magia! Cuando acaba, vuelve a empezar.
+			sonidoBucle->Position = TimeSpan::Zero;
+			sonidoBucle->Play();
+		}
+
 	}
 }

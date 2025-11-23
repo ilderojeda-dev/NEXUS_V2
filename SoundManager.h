@@ -12,15 +12,19 @@ namespace NEXUS_V2 {
 		private:
 			MediaPlayer^ musicaFondo;
 			List<MediaPlayer^>^ listaEfectos;
-
+			MediaPlayer^ sonidoBucle;
 			void AlTerminarMusica(Object^ sender, EventArgs^ e);
 			void AlTerminarEfecto(Object^ sender, EventArgs^ e);
+			void AlTerminarBucle(Object^ sender, EventArgs^ e);
 
 		public:
 			SoundManager();
 			void ReproducirMusica(String^ nombreArchivo, double volumen);
 			void DetenerMusica();
 			void ReproducirEfecto(String^ nombreArchivo, double volumen);
+			void ReproducirSonidoBucle(String^ nombreArchivo, double volumen);
+			void DetenerSonidoBucle();
+
 		};
 	}
 }

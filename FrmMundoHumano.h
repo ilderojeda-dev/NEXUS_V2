@@ -5,6 +5,7 @@
 #include "FrmModulo2.h"
 #include "FrmModulo3.h"
 #include "FrmModulo4.h"
+#include "SoundManager.h"
 
 
 namespace NEXUSV2 {
@@ -28,6 +29,9 @@ namespace NEXUSV2 {
 			//
 			//TODO: Add the constructor code here
 			//
+			gestorSonido = gcnew NEXUS_V2::Service::SoundManager();
+			gestorSonido->ReproducirMusica("MusicaFondoMundoHumano.wav", 0.8); // Rep
+
 			service = new MundoHumanoService(pnlMundo->Width, pnlMundo->Height, 3);
 			char rutaFondo[] = "MundoHumano.png";
 			service->cargarFondo(rutaFondo);
@@ -38,6 +42,8 @@ namespace NEXUSV2 {
 			this->KeyPreview = true;
 			this->SetStyle(ControlStyles::Selectable, false);//
 			teclaPresionada = Direccion::Ninguno;  
+			
+
 
 		
 
@@ -60,10 +66,10 @@ namespace NEXUSV2 {
 		}
 	protected: virtual bool ProcessCmdKey(Message% msg, Keys keyData) override {
 		switch (keyData) {
-		case Keys::Up: teclaPresionada = Direccion::Arriba; return true;
-		case Keys::Down: teclaPresionada = Direccion::Abajo; return true;
-		case Keys::Left: teclaPresionada = Direccion::Izquierda; return true;
-		case Keys::Right: teclaPresionada = Direccion::Derecha; return true;
+		case Keys::Up: teclaPresionada = Direccion::Arriba; return true;  
+		case Keys::Down: teclaPresionada = Direccion::Abajo; return true; 
+		case Keys::Left: teclaPresionada = Direccion::Izquierda; return true; 
+		case Keys::Right: teclaPresionada = Direccion::Derecha; return true; 
 		}
 		return __super::ProcessCmdKey(msg, keyData);
 	}
@@ -83,15 +89,9 @@ namespace NEXUSV2 {
 	private: System::Windows::Forms::Button^ btnAbajo;
 	private: System::Windows::Forms::Button^ btnDerecha;
 	private: System::Windows::Forms::Button^ btnIzquierda;
-
-
-
-
-
-
-
-
-
+	private: NEXUS_V2::Service::SoundManager^ gestorSonido	;
+		   bool reproduciendoPasos = false;
+		
 	protected:
 
 	private:
@@ -101,8 +101,6 @@ namespace NEXUSV2 {
 
 		MundoHumanoService* service;
 	
-		
-
 
 #pragma region Windows Form Designer generated code
 		/// <summary>
@@ -304,21 +302,25 @@ namespace NEXUSV2 {
 		switch (colision) {
 
 		case 0: {
+			teclaPresionada = Direccion::Ninguno;
 			FrmModulo1^ m = gcnew FrmModulo1();
 			m->Show();
 			break;
 		}
 		case 1: {
+			teclaPresionada = Direccion::Ninguno;
 			FrmModulo2^ m = gcnew FrmModulo2();
 			m->Show();
 			break;
 		}
 		case 2: {
+			teclaPresionada = Direccion::Ninguno;
 			FrmModulo3^ m = gcnew FrmModulo3();
 			m->Show();
 			break;
 		}
 		case 3: {
+			teclaPresionada = Direccion::Ninguno;
 			FrmModulo4^ m = gcnew FrmModulo4();
 			m->Show();
 			break;
@@ -329,6 +331,19 @@ namespace NEXUSV2 {
 
 
 		service->moverJugador(teclaPresionada);
+		if (teclaPresionada != Direccion::Ninguno) {
+			if (!reproduciendoPasos) {
+				gestorSonido->ReproducirSonidoBucle("PasosJugador.wav", 0.5);
+				reproduciendoPasos = true; // Bajamos el interruptor
+			}
+		}
+		else {
+			if (reproduciendoPasos) {
+				gestorSonido->DetenerSonidoBucle();
+				reproduciendoPasos = false; // Subimos el interruptor
+			}
+		}
+
 		Graphics^ canvas = pnlMundo->CreateGraphics();
 		BufferedGraphicsContext^ espacio_buffer = BufferedGraphicsManager::Current;
 		BufferedGraphics^ buffer = espacio_buffer->Allocate(canvas, pnlMundo->ClientRectangle);
@@ -378,7 +393,12 @@ private: System::Void pnlMundo_Paint(System::Object^ sender, System::Windows::Fo
 
 
 private: System::Void btnSalir_Click(System::Object^ sender, System::EventArgs^ e) {
+	gestorSonido->DetenerMusica();
+	gestorSonido->DetenerSonidoBucle(); // Por si te fuiste caminando
+
+	// 2. Cerrar este formulario (Esto disparará el evento en el menú)
 	this->Close();
+	
 }
 
 

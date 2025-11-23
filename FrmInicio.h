@@ -2,6 +2,7 @@
 #include "Mundo.h"
 #include "FrmMundoHumano.h"
 #include "FrmMundoIA.h"
+
 #include "SoundManager.h"
 
 
@@ -343,6 +344,15 @@ namespace NEXUSV2 {
 			   
 
 	}
+		   // Esta función se ejecutará automáticamente cuando se cierre el Nivel
+	private: System::Void AlCerrarMundo(System::Object^ sender, System::Windows::Forms::FormClosedEventArgs^ e) {
+		// 1. Vuelve a mostrar el menú
+		this->Show();
+
+		// 2. Vuelve a poner la música del menú
+		gestorSonido->ReproducirMusica("MusicaFondoInicio.wav", 0.5);
+
+	}
 
 	private: System::Void btnNiveles_Click(System::Object^ sender, System::EventArgs^ e) {
 		gestorSonido->ReproducirEfecto("EfectoClick.wav", 1.0);
@@ -365,13 +375,20 @@ namespace NEXUSV2 {
 		
 	}
 	private: System::Void btnNivel2_Click(System::Object^ sender, System::EventArgs^ e) {
-		gestorSonido->ReproducirEfecto("EfectoClick.wav", 1.0);
+		gestorSonido->ReproducirEfecto("Click.wav", 1.0);
+		gestorSonido->DetenerMusica();
 
+		// 2. Crear el nivel
 		FrmMundoHumano^ frmMundoHumano = gcnew FrmMundoHumano();
 
+		// --- AQUÍ ESTÁ EL TRUCO ---
+		// Le decimos: "Cuando 'mundo' se cierre, ejecuta 'AlCerrarMundo'"
+		frmMundoHumano->FormClosed += gcnew System::Windows::Forms::FormClosedEventHandler(this, &FrmInicio::AlCerrarMundo);
+		// ---------------------------
+
+		// 3. Mostrar nivel y ocultar menú
 		frmMundoHumano->Show();
 		this->Hide();
-		gestorSonido->DetenerMusica();
 	}
 	private: System::Void btnCreditos_Click(System::Object^ sender, System::EventArgs^ e) {
 		gestorSonido->ReproducirEfecto("EfectoClick.wav", 1.0);
