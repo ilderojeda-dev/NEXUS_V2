@@ -16,33 +16,72 @@ RobotEnemigo::~RobotEnemigo()
 }
 
 void RobotEnemigo::mover(Direccion direccion, int limiteAncho, int limiteAlto) {
-	indiceX++;
-	if (indiceX >= columnas)indiceX = 0;
+    // Actualizar animación
+    indiceX++;
+    if (indiceX >= columnas) indiceX = 0;
 
-	x += dx;
-	y += dy;
+    // Calcular dimensiones escaladas
+    int anchoEscalado = (int)(ancho * escala);
+    int altoEscalado = (int)(alto * escala);
 
-	if (x < limiteAncho - ancho && y == 20) { dx = 5; dy = 0; indiceY = 3; }
-	if (x >= limiteAncho - ancho && y < limiteAlto - alto) { dx = 0; dy = 5; indiceY = 2; }
-	if (y >= limiteAlto - alto && x > 20) { dx = -5; dy = 0; indiceY = 1; }
-	if (x <= 20 && y > 20) { dx = 0; dy = -5; indiceY = 0; }
+    // Aplicar movimiento
+    x += dx;
+    y += dy;
 
+    // Patrullaje en rectángulo con dimensiones escaladas
+    // Borde superior derecho: ir a la derecha
+    if (x < limiteAncho - anchoEscalado && y == 20) {
+        dx = 5;
+        dy = 0;
+        indiceY = 3;
+    }
+
+    // Esquina derecha: bajar
+    if (x >= limiteAncho - anchoEscalado && y < limiteAlto - altoEscalado) {
+        dx = 0;
+        dy = 5;
+        indiceY = 2;
+    }
+
+    // Borde inferior: ir a la izquierda
+    if (y >= limiteAlto - altoEscalado && x > 20) {
+        dx = -5;
+        dy = 0;
+        indiceY = 1;
+    }
+
+    // Esquina izquierda: subir
+    if (x <= 20 && y > 20) {
+        dx = 0;
+        dy = -5;
+        indiceY = 0;
+    }
 }
 void RobotEnemigo::dibujar(Graphics^ canvas) {
 
-	//validar que exista imagen
-	if (ancho == 0 || alto == 0 || image == nullptr) return;
+    if (image != nullptr) {
+        Bitmap^ bmp = gcnew Bitmap(gcnew System::String(image));
 
-	// Generar mapa de Bits
-	Bitmap^ bitmap = gcnew Bitmap(gcnew System::String(image));
+        int anchoFrame = bmp->Width / columnas;
+        int altoFrame = bmp->Height / filas;
 
-	//rectangulo seleccionado de la imagen
-	Rectangle cuadroOrigen = Rectangle(indiceX * ancho, indiceY * alto, ancho, alto);
+        Rectangle porcion = Rectangle(
+            indiceX * anchoFrame,
+            indiceY * altoFrame,
+            anchoFrame,
+            altoFrame
+        );
 
-	//rectangulo en el panel donde se pegará el otro rectangulo 
-	Rectangle cuadroDestino = Rectangle(x, y, ancho, alto);
+        // Usar la escala definida
+        Rectangle destino = Rectangle(
+            x,
+            y,
+            (int)(anchoFrame * escala),
+            (int)(altoFrame * escala)
+        );
 
-	canvas->DrawImage(bitmap, cuadroDestino, cuadroOrigen, GraphicsUnit::Pixel);
-	delete bitmap;
+        canvas->DrawImage(bmp, destino, porcion, GraphicsUnit::Pixel);
+        delete bmp;
+    }
 
 }

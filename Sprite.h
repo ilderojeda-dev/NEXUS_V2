@@ -11,6 +11,7 @@ protected:
     int indiceX, indiceY;
     int ancho, alto;
     int filas, columnas;
+    float escala; 
 
 public:
     Sprite();
@@ -20,6 +21,9 @@ public:
     void cargarImagen(char* ruta, int filas, int columnas);
     virtual void mover(Direccion tecla, int limiteAncho, int limiteAlto) = 0;
     virtual void dibujar(Graphics^ canvas) = 0;
+
+    float getEscala();
+    void setEscala(float e);
 
     int getX();
     int getY();

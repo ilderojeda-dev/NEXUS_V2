@@ -1,62 +1,131 @@
 ﻿#include "Jugador.h"
 
-using namespace System::Drawing;
 Jugador::Jugador() : Sprite() {
-	vida = 1;
-	velocidad = 3;
+    vida = 3;
+    velocidad = 10;
+    saltando = false;
+    velocidadSalto = 0;
+    gravedadSalto = 2;
+    alturaInicial = 0;
 }
+
 Jugador::Jugador(int x, int y) : Sprite(x, y) {
-	vida = 1;
-	velocidad = 15;
+    vida = 3;
+    velocidad = 10;
+    saltando = false;
+    velocidadSalto = 0;
+    gravedadSalto = 2;
+    alturaInicial = y;
 }
-Jugador::~Jugador() {
+
+Jugador::~Jugador() {}
+
+void Jugador::saltar() {
+    if (!saltando) {
+        saltando = true;
+        velocidadSalto = -20;  // Velocidad inicial hacia arriba (negativa)
+        alturaInicial = y;
+    }
 }
+
+void Jugador::actualizarSalto(int limiteAlto) {
+    if (saltando) {
+        // Aplicar velocidad de salto
+        y += velocidadSalto;
+
+        // Aplicar gravedad
+        velocidadSalto += gravedadSalto;
+
+        // Verificar si llegó al suelo
+        if (y >= alturaInicial) {
+            y = alturaInicial;
+            saltando = false;
+            velocidadSalto = 0;
+        }
+
+        // Limitar altura máxima (opcional)
+        if (y < 50) {
+            y = 50;
+            velocidadSalto = 0;
+        }
+    }
+}
+
 void Jugador::mover(Direccion tecla, int limiteAncho, int limiteAlto) {
     if (tecla == Direccion::Ninguno) return;
 
-    if (tecla == Direccion::Arriba) { dx = 0;  dy = -1; indiceY = 3; }
-    if (tecla == Direccion::Abajo) { dx = 0;  dy = 1;  indiceY = 0; }
-    if (tecla == Direccion::Izquierda) { dx = -1; dy = 0;  indiceY = 1; }
-    if (tecla == Direccion::Derecha) { dx = 1;  dy = 0;  indiceY = 2; }
+    // Configurar dirección y animación
+    if (tecla == Direccion::Arriba) {
+        dx = 0;
+        dy = -1;
+        indiceY = 3;
+    }
+    if (tecla == Direccion::Abajo) {
+        dx = 0;
+        dy = 1;
+        indiceY = 0;
+    }
+    if (tecla == Direccion::Izquierda) {
+        dx = -1;
+        dy = 0;
+        indiceY = 1;
+    }
+    if (tecla == Direccion::Derecha) {
+        dx = 1;
+        dy = 0;
+        indiceY = 2;
+    }
 
+    // Actualizar animación
     indiceX++;
     if (indiceX >= columnas) indiceX = 0;
 
-    x += dx * velocidad;
-    y += dy * velocidad;
+    // Calcular dimensiones escaladas
+    int anchoEscalado = (int)(ancho * escala);
+    int altoEscalado = (int)(alto * escala);
 
-    if (x < 110) x = 110;
-    if (y < 0) y = 0;
-    if (x > limiteAncho - ancho * 2) x = limiteAncho - ancho * 2;
-    if (y > limiteAlto - alto) y = limiteAlto - alto;
+    // Aplicar movimiento horizontal (no vertical si está saltando)
+    if (!saltando) {
+        x += dx * velocidad;
+        y += dy * velocidad;
+    }
+    else {
+        // Solo movimiento horizontal al saltar
+        x += dx * velocidad;
+    }
+
+    // Límites ajustados con escala
+    if (x < 110)
+        x = 110;
+    if (y < 0)
+        y = 0;
+    if (x > limiteAncho - anchoEscalado)
+        x = limiteAncho - anchoEscalado;
+    if (y > limiteAlto - altoEscalado)
+        y = limiteAlto - altoEscalado;
 }
+
 void Jugador::dibujar(Graphics^ canvas) {
-    if (ancho == 0 || alto == 0 || image == nullptr) return;
+    Bitmap^ bmp = gcnew Bitmap(gcnew System::String(image));
+    int anchoEscalado = (int)(ancho * escala);
+    int altoEscalado = (int)(alto * escala);
 
-    Bitmap^ bitmap = gcnew Bitmap(gcnew System::String(image));
-
-    Rectangle cuadroOrigen = Rectangle(
+    Rectangle seccion = Rectangle(
         indiceX * ancho,
         indiceY * alto,
         ancho,
         alto
     );
 
-    Rectangle cuadroDestino = Rectangle(
-        x,
-        y,
-        ancho * 1,
-        alto * 1
-    );
+    Rectangle destino = Rectangle(x, y, anchoEscalado, altoEscalado);
+    canvas->DrawImage(bmp, destino, seccion, GraphicsUnit::Pixel);
+    delete bmp;
+}
 
-    canvas->DrawImage(bitmap, cuadroDestino, cuadroOrigen, GraphicsUnit::Pixel);
-    delete bitmap;
-
+int Jugador::getVelocidad() {
+    return velocidad;
 }
 
 int Jugador::getVidas() {
     return vida;
-}
-int Jugador::getVelocidad() {
-    return velocidad;
 }

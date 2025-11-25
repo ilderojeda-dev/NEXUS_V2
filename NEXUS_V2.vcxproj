@@ -224,6 +224,7 @@
     <Image Include="Alerta.png" />
     <Image Include="Astronauta.png" />
     <Image Include="FondoMundoIA.png" />
+    <Image Include="FondoMundoIANoche.png" />
     <Image Include="InicioJuego.png" />
     <Image Include="MundoHumano.png" />
     <EmbeddedResource Include="FrmMundoIA.resx">

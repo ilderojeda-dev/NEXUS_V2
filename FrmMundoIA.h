@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include "MundoIAService.h"
 
 namespace NEXUSV2 {
@@ -20,19 +20,24 @@ namespace NEXUSV2 {
 		{
 			InitializeComponent();
 			//
-			//TODO: agregar código de constructor aquí
+			//TODO: agregar cÃ³digo de constructor aquÃ­
 			//
-
-
 
 			mundoIAService = new MundoIAService(pnlMundoIA->Width, pnlMundoIA->Height, 3);
 
-			char rutaFondo[] = "FondoMundoIA.png";
-			mundoIAService->cargarFondo(rutaFondo);
+			// Cargar fondos (dÃ­a y noche)
+			char rutaDia[] = "FondoMundoIA.png";
+			char rutaNoche[] = "FondoMundoIANoche.png";
+			mundoIAService->cargarFondos(rutaDia, rutaNoche);
+
+			// Cargar jugador
 			char rutaJugador[] = "PersonajeMundoIA.png";
 			mundoIAService->cargarSpriteJugador(rutaJugador, 4, 8);
+			mundoIAService->getJugador()->setEscala(0.6f);
+
+			// Crear 3 robots
 			char rutaRobot[] = "RobotMundoIA.png";
-			mundoIAService->cargarSpriteRobot(rutaRobot, 4, 9);
+			mundoIAService->crearRobots(rutaRobot, 4, 9);
 
 			teclaPresionada = Ninguno;
 
@@ -40,7 +45,7 @@ namespace NEXUSV2 {
 
 	protected:
 		/// <summary>
-		/// Limpiar los recursos que se estén usando.
+		/// Limpiar los recursos que se estÃ©n usando.
 		/// </summary>
 		~FrmMundoIA()
 		{
@@ -57,7 +62,7 @@ namespace NEXUSV2 {
 
 	private:
 		/// <summary>
-		/// Variable del diseñador necesaria.
+		/// Variable del diseÃ±ador necesaria.
 		/// </summary>
 
 		MundoIAService* mundoIAService;
@@ -67,8 +72,8 @@ namespace NEXUSV2 {
 
 #pragma region Windows Form Designer generated code
 		/// <summary>
-		/// Método necesario para admitir el Diseñador. No se puede modificar
-		/// el contenido de este método con el editor de código.
+		/// MÃ©todo necesario para admitir el DiseÃ±ador. No se puede modificar
+		/// el contenido de este mÃ©todo con el editor de cÃ³digo.
 		/// </summary>
 		void InitializeComponent(void)
 		{
@@ -80,9 +85,9 @@ namespace NEXUSV2 {
 			// pnlMundoIA
 			// 
 			this->pnlMundoIA->BackColor = System::Drawing::SystemColors::ActiveBorder;
-			this->pnlMundoIA->Location = System::Drawing::Point(0, 0);
+			this->pnlMundoIA->Location = System::Drawing::Point(2, 2);
 			this->pnlMundoIA->Name = L"pnlMundoIA";
-			this->pnlMundoIA->Size = System::Drawing::Size(1509, 925);
+			this->pnlMundoIA->Size = System::Drawing::Size(1395, 551);
 			this->pnlMundoIA->TabIndex = 0;
 			this->pnlMundoIA->Paint += gcnew System::Windows::Forms::PaintEventHandler(this, &FrmMundoIA::panel1_Paint);
 			// 
@@ -94,6 +99,7 @@ namespace NEXUSV2 {
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
+			this->BackColor = System::Drawing::SystemColors::ActiveCaptionText;
 			this->ClientSize = System::Drawing::Size(1904, 1041);
 			this->Controls->Add(this->pnlMundoIA);
 			this->FormBorderStyle = System::Windows::Forms::FormBorderStyle::None;
@@ -108,24 +114,53 @@ namespace NEXUSV2 {
 		}
 #pragma endregion
 	private: System::Void panel1_Paint(System::Object^ sender, System::Windows::Forms::PaintEventArgs^ e) {
-		timer1->Start();
+			timer1->Start();
 	}
 	private: System::Void timer1_Tick(System::Object^ sender, System::EventArgs^ e) {
 
-		Graphics^ canvas = pnlMundoIA->CreateGraphics();
+		// Actualizar salto del jugador
+		if (mundoIAService->getJugador() != nullptr) {
+			mundoIAService->getJugador()->actualizarSalto(pnlMundoIA->Height);
+		}
 
+		// Mover robots
+		mundoIAService->moverRobots();
+
+		// Verificar colisiones
+		mundoIAService->verificarColisiones();
+
+		// Cambiar fondo si llegÃ³ al borde
+		mundoIAService->cambiarFondo();
+
+		// Actualizar diÃ¡logo
+		mundoIAService->actualizarDialogo();
+
+		// Renderizar
+		Graphics^ canvas = pnlMundoIA->CreateGraphics();
 		BufferedGraphicsContext^ espacio_buffer = BufferedGraphicsManager::Current;
 		BufferedGraphics^ buffer = espacio_buffer->Allocate(canvas, pnlMundoIA->ClientRectangle);
 
 		mundoIAService->dibujarTodo(buffer->Graphics);
 		buffer->Render(canvas);
-		mundoIAService->moverRobot();
+
 		delete buffer;
 		delete canvas;
 
 	}
 	private: System::Void FrmMundoIA_KeyDown(System::Object^ sender, System::Windows::Forms::KeyEventArgs^ e) {
+		// Salto con barra espaciadora
+		if (e->KeyCode == Keys::Space) {
+			if (mundoIAService->getJugador() != nullptr) {
+				mundoIAService->getJugador()->saltar();
+			}
+		}
 
+		// Cerrar diÃ¡logo con Enter
+		if (e->KeyCode == Keys::Enter && mundoIAService->getMostrandoDialogo()) {
+			mundoIAService->cerrarDialogo();  // â† AGREGAR ESTE MÃ‰TODO
+		}
+
+		// Movimiento normal
 		switch (e->KeyCode) {
 		case Keys::W:
 			teclaPresionada = Arriba;
@@ -164,6 +199,9 @@ private: System::Void FrmMundoIA_KeyUp_1(System::Object^ sender, System::Windows
 	}
 }
 private: System::Void FrmMundoIA_Load(System::Object^ sender, System::EventArgs^ e) {
+
+
+
 }
 };
 }
