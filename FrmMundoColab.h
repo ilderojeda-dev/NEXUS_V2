@@ -34,6 +34,9 @@ namespace NEXUSV2 {
 			char rutaNave[] = "SpriteNave.png";
 			mundoColab->CargarSpriteNave(rutaNave, 1, 4);
 
+			mundoColab->spawnMeteorito(1); //mantener 1 meteorito si o si (no es necesario)
+			mundoColab->spawnEstrella(1); //lo mismo
+
 			teclaPresionadaNave = Direccion::Ninguno;
 		}
 
@@ -119,26 +122,23 @@ namespace NEXUSV2 {
 #pragma endregion
 	private: System::Void FrmMundoColab_Load(System::Object^ sender, System::EventArgs^ e) {
 		timer1->Start();
-		
+			
 		
 
 		
 	}
-	private: System::Void pnlJuego_Paint(System::Object^ sender, System::Windows::Forms::PaintEventArgs^ e) {
-		if (mundoColab == nullptr) {
-			mundoColab = new MundoColabService(pnlJuego->Width, pnlJuego->Height, 3);
-		}
-		mundoColab->dibujarTodo(e->Graphics);
-
-	}
-	private: System::Void backgroundWorker1_DoWork(System::Object^ sender, System::ComponentModel::DoWorkEventArgs^ e) {
-	}
+	
+	 private: System::Void backgroundWorker1_DoWork(System::Object^ sender, System::ComponentModel::DoWorkEventArgs^ e) {
+	 }
 
 	private: System::Void timer1_Tick(System::Object^ sender, System::EventArgs^ e) {
 
 		if (teclaPresionadaNave != Direccion::Ninguno) {
 			mundoColab->moverNave(teclaPresionadaNave);
 		}
+		mundoColab->moverMeteorito(); //spawner de meteoritos
+		mundoColab->moverEstrella(); // lo mismo
+
 
 		//Reenderizado
 		Graphics^ canvas = pnlJuego->CreateGraphics();
@@ -152,6 +152,8 @@ namespace NEXUSV2 {
 		delete buffer;
 		delete canvas;
 	}
+
+
 	private: System::Void FrmMundoColab_KeyDown(System::Object^ sender, System::Windows::Forms::KeyEventArgs^ e) {
 	
 
@@ -176,5 +178,11 @@ namespace NEXUSV2 {
 			teclaPresionadaNave = Direccion::Ninguno;
 		}
 	}
+private: System::Void pnlJuego_Paint(System::Object^ sender, System::Windows::Forms::PaintEventArgs^ e) { //porsiaca (creo que si se borra no pasa nada)
+	if (mundoColab == nullptr) {
+		mundoColab = new MundoColabService(pnlJuego->Width, pnlJuego->Height, 3);
+	}
+	mundoColab->dibujarTodo(e->Graphics);
+}
 };
 }

@@ -25,6 +25,7 @@ Enemigo::Enemigo(int x, int y, int velocidad, int tipoMovimiento) : Sprite(x, y)
         dy = 0;
         indiceY = 2;  // Derecha
     }
+
     else if (tipoMovimiento == 1) {
         // Solo vertical
         dx = 0;

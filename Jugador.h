@@ -4,7 +4,7 @@ using namespace System::Drawing;
 
 class Jugador : public Sprite
 {
-private:
+private:                  
     int vida;
     int velocidad;
 public:
@@ -17,6 +17,7 @@ public:
     int getVelocidad();
     void setVelocidad(int vel) { velocidad = vel; }
 
-    int getVidas();
+    int getVidas();                //agregue lo de vidas
+	void setVidas(int v) { vida = v; } 
 };
 

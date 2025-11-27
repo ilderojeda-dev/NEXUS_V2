@@ -27,6 +27,6 @@ public:
     int getAlto();
     void setX(int x);
     void setY(int y);
-    Rectangle getRectangle();
+    virtual Rectangle getRectangle(); //cambio a virtual
 };
 
