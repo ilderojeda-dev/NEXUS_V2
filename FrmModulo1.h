@@ -1,5 +1,5 @@
 ﻿#pragma once
-
+#include "MundoHumanoService.h"  
 namespace NEXUSV2 {
 
 	using namespace System;
@@ -14,13 +14,12 @@ namespace NEXUSV2 {
 	/// </summary>
 	public ref class FrmModulo1 : public System::Windows::Forms::Form
 	{
+		
+
 	public:
-		FrmModulo1(void)
-		{
+		FrmModulo1(MundoHumanoService* serviceRef) {
 			InitializeComponent();
-			//
-			//TODO: Add the constructor code here
-			//
+			service = serviceRef;
 		}
 
 	protected:
@@ -40,7 +39,7 @@ namespace NEXUSV2 {
 
 
 	private: System::Windows::Forms::Button^ btnOpcion1;
-	private: System::Windows::Forms::Button^ btnSalir;
+
 	protected:
 
 
@@ -53,6 +52,7 @@ namespace NEXUSV2 {
 		/// Required designer variable.
 		/// </summary>
 		System::ComponentModel::Container ^components;
+		MundoHumanoService* service; // puntero nativo
 
 #pragma region Windows Form Designer generated code
 		/// <summary>
@@ -66,14 +66,12 @@ namespace NEXUSV2 {
 			this->btnOpcion3 = (gcnew System::Windows::Forms::Button());
 			this->btnOpcion2 = (gcnew System::Windows::Forms::Button());
 			this->btnOpcion1 = (gcnew System::Windows::Forms::Button());
-			this->btnSalir = (gcnew System::Windows::Forms::Button());
 			this->pnlModulo->SuspendLayout();
 			this->SuspendLayout();
 			// 
 			// pnlModulo
 			// 
 			this->pnlModulo->BackgroundImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pnlModulo.BackgroundImage")));
-			this->pnlModulo->Controls->Add(this->btnSalir);
 			this->pnlModulo->Controls->Add(this->btnOpcion3);
 			this->pnlModulo->Controls->Add(this->btnOpcion2);
 			this->pnlModulo->Controls->Add(this->btnOpcion1);
@@ -96,6 +94,7 @@ namespace NEXUSV2 {
 			this->btnOpcion3->TabIndex = 2;
 			this->btnOpcion3->Text = L"Conectar rojo → Puerto Alfa\n y negro → Puerto Beta";
 			this->btnOpcion3->UseVisualStyleBackColor = false;
+			this->btnOpcion3->Click += gcnew System::EventHandler(this, &FrmModulo1::btnOpcion3_Click);
 			// 
 			// btnOpcion2
 			// 
@@ -110,6 +109,7 @@ namespace NEXUSV2 {
 			this->btnOpcion2->TabIndex = 1;
 			this->btnOpcion2->Text = L"Conectar negro → P2(+)\n y rojo→ P1 (−)";
 			this->btnOpcion2->UseVisualStyleBackColor = false;
+			this->btnOpcion2->Click += gcnew System::EventHandler(this, &FrmModulo1::btnOpcion2_Click);
 			// 
 			// btnOpcion1
 			// 
@@ -124,21 +124,7 @@ namespace NEXUSV2 {
 			this->btnOpcion1->TabIndex = 0;
 			this->btnOpcion1->Text = L"Conectar rojo → P2 (+)\n y negro → P1 (−)";
 			this->btnOpcion1->UseVisualStyleBackColor = false;
-			// 
-			// btnSalir
-			// 
-			this->btnSalir->BackColor = System::Drawing::Color::LightCoral;
-			this->btnSalir->Cursor = System::Windows::Forms::Cursors::Default;
-			this->btnSalir->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
-			this->btnSalir->Font = (gcnew System::Drawing::Font(L"Microsoft YaHei UI", 11.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
-				static_cast<System::Byte>(0)));
-			this->btnSalir->Location = System::Drawing::Point(15, 14);
-			this->btnSalir->Name = L"btnSalir";
-			this->btnSalir->Size = System::Drawing::Size(75, 29);
-			this->btnSalir->TabIndex = 3;
-			this->btnSalir->Text = L"Salir";
-			this->btnSalir->UseVisualStyleBackColor = false;
-			this->btnSalir->Click += gcnew System::EventHandler(this, &FrmModulo1::btnSalir_Click);
+			this->btnOpcion1->Click += gcnew System::EventHandler(this, &FrmModulo1::btnOpcion1_Click);
 			// 
 			// FrmModulo1
 			// 
@@ -163,5 +149,20 @@ namespace NEXUSV2 {
 	private: System::Void btnSalir_Click(System::Object^ sender, System::EventArgs^ e) {
 		this->Close();
 	}
+private: System::Void btnOpcion1_Click(System::Object^ sender, System::EventArgs^ e) {
+	service->aplicarResultadoModulo(0, true);
+	MessageBox::Show("Conexión completa.\nEl módulo de energía se está estabilizando.", "Estado del sistema", MessageBoxButtons::OK, MessageBoxIcon::Information);
+	this->Close();
+}
+private: System::Void btnOpcion2_Click(System::Object^ sender, System::EventArgs^ e) {
+	service->aplicarResultadoModulo(0, false);
+	MessageBox::Show("Error: conexión incorrecta.\n¡El módulo está a punto de explotar!\nIntenta nuevamente.", "¡Advertencia crítica!", MessageBoxButtons::OK, MessageBoxIcon::Error);
+	
+}
+private: System::Void btnOpcion3_Click(System::Object^ sender, System::EventArgs^ e) {
+	service->aplicarResultadoModulo(0, false);
+	MessageBox::Show("Error: conexión incorrecta.\n¡El módulo está a punto de explotar!\nIntenta nuevamente.", "¡Advertencia crítica!", MessageBoxButtons::OK, MessageBoxIcon::Error);
+
+}
 };
 }

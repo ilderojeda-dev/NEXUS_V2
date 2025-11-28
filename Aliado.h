@@ -14,7 +14,7 @@ public:
 
     virtual void mover(Direccion tecla, int limiteAncho, int limiteAlto) = 0;
 
-    void dibujar(Graphics^ canvas) override;
+    void dibujar(Graphics^ canvas);
 
     int getVelocidad();
     bool getActivo();

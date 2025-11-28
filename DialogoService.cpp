@@ -1,4 +1,4 @@
-#include "DialogoService.h"
+﻿#include "DialogoService.h"
 
 DialogoService::DialogoService() {
     dialogoActual = new Dialogo();
@@ -33,7 +33,7 @@ void DialogoService::inicializarDialogos() {
     dialogos.push_back("Genial!\n\nHas encontrado una moneda dorada.\n\nSigue explorando para encontrar mas tesoros...");
     dialogos.push_back("Fantastico!\n\nTu perseverancia esta dando frutos.\n\nContinua tu aventura...");
     dialogos.push_back("Bien hecho!\n\nCada moneda te acerca a tu objetivo.\n\nNo te rindas ahora...");
-    dialogos.push_back("Sorprendente!\n\nEres un verdadero recolector de tesoros.\n\nSigue asi campe�n...");
+    dialogos.push_back("Sorprendente!\n\nEres un verdadero recolector de tesoros.\n\nSigue asi campeón...");
     dialogos.push_back("Perfecto!\n\nTus habilidades mejoran con cada paso.\n\nEl exito esta cerca...");
     dialogos.push_back("Maravilloso!\n\nHas demostrado ser digno de estos tesoros.\n\nLa aventura continua...");
     dialogos.push_back("Estupendo!\n\nTu determinacion es admirable.\n\nSigue recolectando monedas...");
@@ -57,6 +57,15 @@ void DialogoService::inicializarDialogos() {
     dialogos.push_back("Glorioso!\n\nEsta moneda brilla especialmente.\n\nTu victoria esta cerca...");
     dialogos.push_back("Fenomenal!\n\nTu tesoro es invaluable.\n\nLa aventura continua...");
     dialogos.push_back("Esplendido!\n\nCada moneda cuenta tu historia.\n\nSigue escribiendo tu leyenda...");
+    // 🔽 Agrega desde aquí tus nuevos mensajes del papel
+	dialogos.push_back("Explorador...");//indice 60
+    dialogos.push_back("Si estas leyendo esto, significa que llegaste a la nave en medio del caos.");
+    dialogos.push_back("El sistema de comunicaciones esta caido y no recibimos ayuda desde la Tierra.");
+    dialogos.push_back("Debes actuar con logica humana para reparar los sistemas principales.");
+    dialogos.push_back("Tu primera mision es reparar el Modulo de Comunicaciones (panel verde).");
+    dialogos.push_back("Sin eso no podremos contactarnos con la base terrestre.");
+    dialogos.push_back("Recuerda: sin razonamiento humano, no hay esperanza...");
+	dialogos.push_back("Buena suerte, explorador.");//indice 67
 }
 
 

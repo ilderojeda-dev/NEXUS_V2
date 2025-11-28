@@ -14,7 +14,7 @@ public:
 	~Enemigo();
 	virtual void mover(Direccion tecla, int limiteAncho, int limiteAlto) = 0;
 	virtual void aplicarEfectoAlJugador(Jugador& jugador) = 0;
-	void dibujar(Graphics^ canvas) override;
+	virtual void dibujar(Graphics^ canvas) override =0;
 	int getVelocidad();
 	bool getActivo();
 	void setVelocidad(int velocidad);

@@ -1,4 +1,5 @@
 #pragma once
+#include "MundoHumanoService.h"
 
 namespace NEXUSV2 {
 
@@ -15,12 +16,13 @@ namespace NEXUSV2 {
 	public ref class FrmModulo2 : public System::Windows::Forms::Form
 	{
 	public:
-		FrmModulo2(void)
+		FrmModulo2(MundoHumanoService* serviceRef)
 		{
 			InitializeComponent();
 			//
 			//TODO: Add the constructor code here
 			//
+			service = serviceRef;
 		}
 
 	protected:
@@ -41,7 +43,7 @@ namespace NEXUSV2 {
 	private: System::Windows::Forms::Button^ btnOpcion2;
 	private: System::Windows::Forms::Button^ btnOpcion1;
 	private: System::Windows::Forms::Label^ label1;
-	private: System::Windows::Forms::Button^ btnSalir;
+
 
 	protected:
 
@@ -50,6 +52,7 @@ namespace NEXUSV2 {
 		/// Required designer variable.
 		/// </summary>
 		System::ComponentModel::Container ^components;
+		MundoHumanoService* service; // puntero nativo
 
 #pragma region Windows Form Designer generated code
 		/// <summary>
@@ -65,14 +68,12 @@ namespace NEXUSV2 {
 			this->btnOpcion2 = (gcnew System::Windows::Forms::Button());
 			this->btnOpcion1 = (gcnew System::Windows::Forms::Button());
 			this->label1 = (gcnew System::Windows::Forms::Label());
-			this->btnSalir = (gcnew System::Windows::Forms::Button());
 			this->pnlModulo2->SuspendLayout();
 			this->SuspendLayout();
 			// 
 			// pnlModulo2
 			// 
 			this->pnlModulo2->BackgroundImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pnlModulo2.BackgroundImage")));
-			this->pnlModulo2->Controls->Add(this->btnSalir);
 			this->pnlModulo2->Controls->Add(this->btnOpcion4);
 			this->pnlModulo2->Controls->Add(this->btnOpcion3);
 			this->pnlModulo2->Controls->Add(this->btnOpcion2);
@@ -92,6 +93,7 @@ namespace NEXUSV2 {
 			this->btnOpcion4->TabIndex = 4;
 			this->btnOpcion4->Text = L"4";
 			this->btnOpcion4->UseVisualStyleBackColor = true;
+			this->btnOpcion4->Click += gcnew System::EventHandler(this, &FrmModulo2::btnOpcion4_Click);
 			// 
 			// btnOpcion3
 			// 
@@ -102,6 +104,7 @@ namespace NEXUSV2 {
 			this->btnOpcion3->TabIndex = 3;
 			this->btnOpcion3->Text = L"3";
 			this->btnOpcion3->UseVisualStyleBackColor = true;
+			this->btnOpcion3->Click += gcnew System::EventHandler(this, &FrmModulo2::btnOpcion3_Click);
 			// 
 			// btnOpcion2
 			// 
@@ -112,6 +115,7 @@ namespace NEXUSV2 {
 			this->btnOpcion2->TabIndex = 2;
 			this->btnOpcion2->Text = L"2";
 			this->btnOpcion2->UseVisualStyleBackColor = true;
+			this->btnOpcion2->Click += gcnew System::EventHandler(this, &FrmModulo2::btnOpcion2_Click);
 			// 
 			// btnOpcion1
 			// 
@@ -123,6 +127,7 @@ namespace NEXUSV2 {
 			this->btnOpcion1->TabIndex = 1;
 			this->btnOpcion1->Text = L"1";
 			this->btnOpcion1->UseVisualStyleBackColor = true;
+			this->btnOpcion1->Click += gcnew System::EventHandler(this, &FrmModulo2::btnOpcion1_Click);
 			// 
 			// label1
 			// 
@@ -137,21 +142,6 @@ namespace NEXUSV2 {
 			this->label1->Size = System::Drawing::Size(162, 19);
 			this->label1->TabIndex = 0;
 			this->label1->Text = L"Selecciona una opcion:";
-			// 
-			// btnSalir
-			// 
-			this->btnSalir->BackColor = System::Drawing::Color::LightCoral;
-			this->btnSalir->Cursor = System::Windows::Forms::Cursors::Default;
-			this->btnSalir->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
-			this->btnSalir->Font = (gcnew System::Drawing::Font(L"Microsoft YaHei UI", 11.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
-				static_cast<System::Byte>(0)));
-			this->btnSalir->Location = System::Drawing::Point(35, 23);
-			this->btnSalir->Name = L"btnSalir";
-			this->btnSalir->Size = System::Drawing::Size(75, 29);
-			this->btnSalir->TabIndex = 4;
-			this->btnSalir->Text = L"Salir";
-			this->btnSalir->UseVisualStyleBackColor = false;
-			this->btnSalir->Click += gcnew System::EventHandler(this, &FrmModulo2::btnSalir_Click);
 			// 
 			// FrmModulo2
 			// 
@@ -175,5 +165,25 @@ namespace NEXUSV2 {
 	private: System::Void btnSalir_Click(System::Object^ sender, System::EventArgs^ e) {
 		this->Close();
 	}
+private: System::Void btnOpcion1_Click(System::Object^ sender, System::EventArgs^ e) {
+	service->aplicarResultadoModulo(1, false);	
+	MessageBox::Show("Mala elección.\nLa llave inglesa está oxidada y no sirve para reparar el sistema de flujo.\nIntenta nuevamente.", "Error de herramienta", MessageBoxButtons::OK, MessageBoxIcon::Error);
+
+}
+private: System::Void btnOpcion2_Click(System::Object^ sender, System::EventArgs^ e) {
+	service->aplicarResultadoModulo(1, false);
+	MessageBox::Show("Mala elección.\nLa cinta metálica no soporta la presión del sistema de oxígeno.\nIntenta nuevamente.", "Error de herramienta", MessageBoxButtons::OK, MessageBoxIcon::Error);
+}
+
+private: System::Void btnOpcion3_Click(System::Object^ sender, System::EventArgs^ e) {
+	service->aplicarResultadoModulo(1, true);
+	MessageBox::Show("¡Excelente elección!\nEl nuevo fijador de flujo de turbina es la mejor opción para restaurar el sistema de oxígeno.\nEl módulo comienza a estabilizarse.", "Reparación exitosa", MessageBoxButtons::OK, MessageBoxIcon::Information);
+	this->Close();
+}
+private: System::Void btnOpcion4_Click(System::Object^ sender, System::EventArgs^ e) {
+	service->aplicarResultadoModulo(1, false);
+	MessageBox::Show("Mala elección.\nLa batería auxiliar no está conectada al sistema de ventilación.\nIntenta nuevamente.", "Error de herramienta", MessageBoxButtons::OK, MessageBoxIcon::Error);
+
+}
 };
 }

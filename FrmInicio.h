@@ -338,7 +338,7 @@ namespace NEXUSV2 {
 		gestorSonido->ReproducirEfecto("EfectoClick.wav", 1.0);
 		FrmMundoHumano^ frmMundoHumano = gcnew FrmMundoHumano();
 		frmMundoHumano->Show();
-		this->Hide();
+		this->Hide();// this -> hide hace que se oculte el formulario actual
 	}
 	private: System::Void FrmInicio_FormClosing(System::Object^ sender, System::Windows::Forms::FormClosingEventArgs^ e) {
 			   
@@ -375,7 +375,7 @@ namespace NEXUSV2 {
 		
 	}
 	private: System::Void btnNivel2_Click(System::Object^ sender, System::EventArgs^ e) {
-		gestorSonido->ReproducirEfecto("Click.wav", 1.0);
+		gestorSonido->ReproducirEfecto("EfectoClick.wav", 1.0);
 		gestorSonido->DetenerMusica();
 
 		// 2. Crear el nivel

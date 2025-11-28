@@ -1,4 +1,6 @@
 #pragma once
+#include "MundoHumanoService.h"
+#include <vector>
 
 namespace NEXUSV2 {
 
@@ -15,12 +17,18 @@ namespace NEXUSV2 {
 	public ref class FrmModulo3 : public System::Windows::Forms::Form
 	{
 	public:
-		FrmModulo3(void)
+		FrmModulo3(MundoHumanoService* serviceRef)
 		{
 			InitializeComponent();
 			//
 			//TODO: Add the constructor code here
 			//
+			service = serviceRef;
+			generarNumerosAleatoreos();
+			
+
+			
+
 		}
 
 	protected:
@@ -39,7 +47,16 @@ namespace NEXUSV2 {
 	private: System::Windows::Forms::Button^ btnSur;
 	private: System::Windows::Forms::Button^ btnEste;
 	private: System::Windows::Forms::Button^ btnNorte;
-	private: System::Windows::Forms::Button^ btnSalir;
+
+	private: System::Windows::Forms::PictureBox^ picRadar;
+	private: System::Windows::Forms::ProgressBar^ prgSeñal;
+		   int btnNorteValue = 0;
+		   int btnEsteValue = 0;
+		   int btnSurValue = 0;
+		   int btnOesteValue = 0;
+
+	private: System::ComponentModel::IContainer^ components;
+
 
 
 
@@ -50,7 +67,8 @@ namespace NEXUSV2 {
 		/// <summary>
 		/// Required designer variable.
 		/// </summary>
-		System::ComponentModel::Container ^components;
+		MundoHumanoService* service; // puntero nativo
+
 
 #pragma region Windows Form Designer generated code
 		/// <summary>
@@ -61,18 +79,21 @@ namespace NEXUSV2 {
 		{
 			System::ComponentModel::ComponentResourceManager^ resources = (gcnew System::ComponentModel::ComponentResourceManager(FrmModulo3::typeid));
 			this->pnlModulo3 = (gcnew System::Windows::Forms::Panel());
+			this->picRadar = (gcnew System::Windows::Forms::PictureBox());
+			this->prgSeñal = (gcnew System::Windows::Forms::ProgressBar());
 			this->btnOeste = (gcnew System::Windows::Forms::Button());
 			this->btnSur = (gcnew System::Windows::Forms::Button());
 			this->btnEste = (gcnew System::Windows::Forms::Button());
 			this->btnNorte = (gcnew System::Windows::Forms::Button());
-			this->btnSalir = (gcnew System::Windows::Forms::Button());
 			this->pnlModulo3->SuspendLayout();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->picRadar))->BeginInit();
 			this->SuspendLayout();
 			// 
 			// pnlModulo3
 			// 
 			this->pnlModulo3->BackgroundImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pnlModulo3.BackgroundImage")));
-			this->pnlModulo3->Controls->Add(this->btnSalir);
+			this->pnlModulo3->Controls->Add(this->picRadar);
+			this->pnlModulo3->Controls->Add(this->prgSeñal);
 			this->pnlModulo3->Controls->Add(this->btnOeste);
 			this->pnlModulo3->Controls->Add(this->btnSur);
 			this->pnlModulo3->Controls->Add(this->btnEste);
@@ -81,6 +102,24 @@ namespace NEXUSV2 {
 			this->pnlModulo3->Name = L"pnlModulo3";
 			this->pnlModulo3->Size = System::Drawing::Size(1032, 923);
 			this->pnlModulo3->TabIndex = 0;
+			this->pnlModulo3->Paint += gcnew System::Windows::Forms::PaintEventHandler(this, &FrmModulo3::pnlModulo3_Paint);
+			// 
+			// picRadar
+			// 
+			this->picRadar->BackgroundImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"picRadar.BackgroundImage")));
+			this->picRadar->BackgroundImageLayout = System::Windows::Forms::ImageLayout::None;
+			this->picRadar->Location = System::Drawing::Point(338, 359);
+			this->picRadar->Name = L"picRadar";
+			this->picRadar->Size = System::Drawing::Size(336, 330);
+			this->picRadar->TabIndex = 6;
+			this->picRadar->TabStop = false;
+			// 
+			// prgSeñal
+			// 
+			this->prgSeñal->Location = System::Drawing::Point(663, 263);
+			this->prgSeñal->Name = L"prgSeñal";
+			this->prgSeñal->Size = System::Drawing::Size(219, 31);
+			this->prgSeñal->TabIndex = 5;
 			// 
 			// btnOeste
 			// 
@@ -92,6 +131,7 @@ namespace NEXUSV2 {
 			this->btnOeste->TabIndex = 3;
 			this->btnOeste->Text = L"W";
 			this->btnOeste->UseVisualStyleBackColor = true;
+			this->btnOeste->Click += gcnew System::EventHandler(this, &FrmModulo3::btnOeste_Click);
 			// 
 			// btnSur
 			// 
@@ -103,6 +143,7 @@ namespace NEXUSV2 {
 			this->btnSur->TabIndex = 2;
 			this->btnSur->Text = L"S";
 			this->btnSur->UseVisualStyleBackColor = true;
+			this->btnSur->Click += gcnew System::EventHandler(this, &FrmModulo3::btnSur_Click);
 			// 
 			// btnEste
 			// 
@@ -114,6 +155,7 @@ namespace NEXUSV2 {
 			this->btnEste->TabIndex = 1;
 			this->btnEste->Text = L"E";
 			this->btnEste->UseVisualStyleBackColor = true;
+			this->btnEste->Click += gcnew System::EventHandler(this, &FrmModulo3::btnEste_Click);
 			// 
 			// btnNorte
 			// 
@@ -125,21 +167,7 @@ namespace NEXUSV2 {
 			this->btnNorte->TabIndex = 0;
 			this->btnNorte->Text = L"N";
 			this->btnNorte->UseVisualStyleBackColor = true;
-			// 
-			// btnSalir
-			// 
-			this->btnSalir->BackColor = System::Drawing::Color::LightCoral;
-			this->btnSalir->Cursor = System::Windows::Forms::Cursors::Default;
-			this->btnSalir->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
-			this->btnSalir->Font = (gcnew System::Drawing::Font(L"Microsoft YaHei UI", 11.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
-				static_cast<System::Byte>(0)));
-			this->btnSalir->Location = System::Drawing::Point(18, 64);
-			this->btnSalir->Name = L"btnSalir";
-			this->btnSalir->Size = System::Drawing::Size(75, 29);
-			this->btnSalir->TabIndex = 4;
-			this->btnSalir->Text = L"Salir";
-			this->btnSalir->UseVisualStyleBackColor = false;
-			this->btnSalir->Click += gcnew System::EventHandler(this, &FrmModulo3::btnSalir_Click);
+			this->btnNorte->Click += gcnew System::EventHandler(this, &FrmModulo3::btnNorte_Click);
 			// 
 			// FrmModulo3
 			// 
@@ -153,14 +181,104 @@ namespace NEXUSV2 {
 			this->Text = L"FrmModulo3";
 			this->Load += gcnew System::EventHandler(this, &FrmModulo3::FrmModulo3_Load);
 			this->pnlModulo3->ResumeLayout(false);
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->picRadar))->EndInit();
 			this->ResumeLayout(false);
 
 		}
 #pragma endregion
+	private:
+		void generarNumerosAleatoreos() {
+			// Lista de valores posibles
+			cli::array<int>^ valores = gcnew cli::array<int>(4) { 25, 50, 75, 100 };
+
+			// Mezclar aleatoriamente los valores
+			Random^ rand = gcnew Random();
+			for (int i = 0; i < valores->Length; i++) {
+				int j = rand->Next(i, valores->Length);
+				int temp = valores[i];
+				valores[i] = valores[j];
+				valores[j] = temp;
+			}
+
+			// Asignar los valores mezclados a los botones
+			btnNorteValue = valores[0];
+			btnEsteValue = valores[1];
+			btnSurValue = valores[2];
+			btnOesteValue = valores[3];
+		}
 	private: System::Void FrmModulo3_Load(System::Object^ sender, System::EventArgs^ e) {
 	}
 	private: System::Void btnSalir_Click(System::Object^ sender, System::EventArgs^ e) {
 		this->Close();
 	}
+	private: System::Void pnlModulo3_Paint(System::Object^ sender, System::Windows::Forms::PaintEventArgs^ e) {
+	}
+	private: System::Void btnNorte_Click(System::Object^ sender, System::EventArgs^ e) {
+		//cambiar la imagen del radar para que gire hacia el norte
+		picRadar->Image = Image::FromFile("RadarNorte.png");
+		//aumentar el valor de la barra de progreso al maximo
+		prgSeñal->Value = btnNorteValue;	
+		if (prgSeñal->Value == 100) {
+			prgSeñal->Value = 99;
+			//MOSTRAR UN MENSAJES QUE DIGA Q SE LOGRO RESTABLECER LA SEÑAL CON LA TIERRA. y QUE EL MODULO SE COMPLETO. 
+			
+			MessageBox::Show("¡Se logró restablecer la señal con la Tierra!\nMódulo completado.", "Confirmación", MessageBoxButtons::OK, MessageBoxIcon::Information);
+			service->aplicarResultadoModulo(2, true);
+			this->Close();
+		}
+		else {
+			//si no es 100, mostrar un mensaje que diga que la señal no se restablecio y que intente con otra direccion
+			MessageBox::Show("La señal no se restableció.\nIntenta con otra dirección.", "Error de señal", MessageBoxButtons::OK, MessageBoxIcon::Error);
+			service->aplicarResultadoModulo(2, false);
+		}
+	
+	}
+	private: System::Void btnEste_Click(System::Object^ sender, System::EventArgs^ e) {
+		picRadar->Image = Image::FromFile("RadarEste.png");
+		prgSeñal->Value = btnEsteValue;
+		if (prgSeñal->Value == 100) {
+			prgSeñal->Value = 99;
+			MessageBox::Show("¡Se logró restablecer la señal con la Tierra!\nMódulo completado.", "Confirmación", MessageBoxButtons::OK, MessageBoxIcon::Information);
+			service->aplicarResultadoModulo(2, true);
+			this->Close();
+		}
+		else {
+			//si no es 100, mostrar un mensaje que diga que la señal no se restablecio y que intente con otra direccion
+			MessageBox::Show("La señal no se restableció.\nIntenta con otra dirección.", "Error de señal", MessageBoxButtons::OK, MessageBoxIcon::Error);
+			service->aplicarResultadoModulo(2, false);
+		}
+	}
+	private: System::Void btnSur_Click(System::Object^ sender, System::EventArgs^ e) {
+		picRadar->Image = Image::FromFile("RadarSur.png");
+		prgSeñal->Value = btnSurValue;
+		if (prgSeñal->Value == 100) {
+			prgSeñal->Value = 99;
+			service->aplicarResultadoModulo(2, true);
+			MessageBox::Show("¡Se logró restablecer la señal con la Tierra!\nMódulo completado.", "Confirmación", MessageBoxButtons::OK, MessageBoxIcon::Information);
+			this->Close();
+		}
+		else {
+			//si no es 100, mostrar un mensaje que diga que la señal no se restablecio y que intente con otra direccion
+			MessageBox::Show("La señal no se restableció.\nIntenta con otra dirección.", "Error de señal", MessageBoxButtons::OK, MessageBoxIcon::Error);
+			service->aplicarResultadoModulo(2, false);
+		}
+	}
+	private: System::Void btnOeste_Click(System::Object^ sender, System::EventArgs^ e) {
+		picRadar->Image = Image::FromFile("RadarOeste.png");
+		prgSeñal->Value = btnOesteValue;
+		if (prgSeñal->Value == 100) {
+			prgSeñal->Value = 99;
+			service->aplicarResultadoModulo(2, true);
+			MessageBox::Show("¡Se logró restablecer la señal con la Tierra!\nMódulo completado.", "Confirmación", MessageBoxButtons::OK, MessageBoxIcon::Information);
+			this->Close();
+		}
+		else {
+			//si no es 100, mostrar un mensaje que diga que la señal no se restablecio y que intente con otra direccion
+			MessageBox::Show("La señal no se restableció.\nIntenta con otra dirección.", "Error de señal", MessageBoxButtons::OK, MessageBoxIcon::Error);
+			service->aplicarResultadoModulo(2, false);
+		}
+	}
+	
+
 };
 }

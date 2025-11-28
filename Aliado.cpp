@@ -41,7 +41,7 @@ Aliado::~Aliado() {
 }
 
 void Aliado::dibujar(Graphics^ canvas) {
-    if (activo && image != nullptr && ancho > 0 && alto > 0) {
+    if (image != nullptr && ancho > 0 && alto > 0) {
         Bitmap^ bitmap = gcnew Bitmap(gcnew System::String(image));
 
         Rectangle cuadroOrigen = Rectangle(

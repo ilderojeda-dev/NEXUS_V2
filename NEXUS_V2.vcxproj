@@ -119,16 +119,18 @@
   <ItemGroup>
     <ClCompile Include="Alerta.cpp" />
     <ClCompile Include="Aliado.cpp" />
+    <ClCompile Include="CortoCircuito.cpp" />
     <ClCompile Include="Dialogo.cpp" />
     <ClCompile Include="DialogoService.cpp" />
     <ClCompile Include="Enemigo.cpp" />
     <ClCompile Include="Fondo.cpp" />
+    <ClCompile Include="FrmFinMundoHumano.cpp" />
     <ClCompile Include="FrmInicio.cpp" />
     <ClCompile Include="FrmModulo1.cpp" />
     <ClCompile Include="FrmModulo2.cpp" />
     <ClCompile Include="FrmModulo3.cpp" />
-    <ClCompile Include="FrmModulo4.cpp" />
     <ClCompile Include="FrmMundoHumano.cpp" />
+    <ClCompile Include="GasToxico.cpp" />
     <ClCompile Include="Jugador.cpp" />
     <ClCompile Include="Mundo.cpp" />
     <ClCompile Include="MundoHumanoService.cpp" />
@@ -138,6 +140,7 @@
     <ClCompile Include="FrmMundoColab.cpp" />
     <ClCompile Include="MundoColabService.cpp" />
     <ClCompile Include="Nave.cpp" />
+    <ClCompile Include="PapelSeñal.cpp" />
     <ClCompile Include="Pregunta.cpp" />
     <ClCompile Include="PreguntaService.cpp" />
     <ClCompile Include="Principal.cpp" />
@@ -145,14 +148,19 @@
     <ClCompile Include="RobotEnemigo.cpp" />
     <ClCompile Include="SoundManager.cpp" />
     <ClCompile Include="Sprite.cpp" />
+    <ClCompile Include="VozTerrestre.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Alerta.h" />
     <ClInclude Include="Aliado.h" />
+    <ClInclude Include="CortoCircuito.h" />
     <ClInclude Include="Dialogo.h" />
     <ClInclude Include="DialogoService.h" />
     <ClInclude Include="Enemigo.h" />
     <ClInclude Include="Fondo.h" />
+    <ClInclude Include="FrmFinMundoHumano.h">
+      <FileType>CppForm</FileType>
+    </ClInclude>
     <ClInclude Include="FrmInicio.h">
       <FileType>CppForm</FileType>
     </ClInclude>
@@ -165,9 +173,6 @@
     <ClInclude Include="FrmModulo3.h">
       <FileType>CppForm</FileType>
     </ClInclude>
-    <ClInclude Include="FrmModulo4.h">
-      <FileType>CppForm</FileType>
-    </ClInclude>
     <ClInclude Include="FrmMundoHumano.h">
       <FileType>CppForm</FileType>
     </ClInclude>
@@ -177,6 +182,7 @@
     <ClInclude Include="FrmMundoColab.h">
       <FileType>CppForm</FileType>
     </ClInclude>
+    <ClInclude Include="GasToxico.h" />
     <ClInclude Include="Jugador.h" />
     <ClInclude Include="Mundo.h" />
     <ClInclude Include="MundoHumanoService.h" />
@@ -184,12 +190,14 @@
     <ClInclude Include="MundoIAService.h" />
     <ClInclude Include="MundoColabService.h" />
     <ClInclude Include="Nave.h" />
+    <ClInclude Include="PapelSeñal.h" />
     <ClInclude Include="Pregunta.h" />
     <ClInclude Include="PreguntaService.h" />
     <ClInclude Include="Recurso.h" />
     <ClInclude Include="RobotEnemigo.h" />
     <ClInclude Include="SoundManager.h" />
     <ClInclude Include="Sprite.h" />
+    <ClInclude Include="VozTerrestre.h" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="PresentationCore" />
@@ -201,6 +209,9 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="FrmFinMundoHumano.resx">
+      <DependentUpon>FrmFinMundoHumano.h</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FrmInicio.resx">
       <DependentUpon>FrmInicio.h</DependentUpon>
     </EmbeddedResource>
@@ -213,9 +224,6 @@
     <EmbeddedResource Include="FrmModulo3.resx">
       <DependentUpon>FrmModulo3.h</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FrmModulo4.resx">
-      <DependentUpon>FrmModulo4.h</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="FrmMundoHumano.resx">
       <DependentUpon>FrmMundoHumano.h</DependentUpon>
     </EmbeddedResource>
@@ -223,12 +231,18 @@
   <ItemGroup>
     <Image Include="Alerta.png" />
     <Image Include="Astronauta.png" />
+    <Image Include="DescargaElectrica.png" />
+    <Image Include="FondoMensajeTerrestre.png" />
     <Image Include="FondoMundoIA.png" />
+    <Image Include="GasToxico.png" />
+    <Image Include="IconoTrajeAntiElectricidad.png" />
     <Image Include="InicioJuego.png" />
     <Image Include="MundoHumano.png" />
     <EmbeddedResource Include="FrmMundoIA.resx">
       <DependentUpon>FrmMundoIA.h</DependentUpon>
     </EmbeddedResource>
+    <Image Include="TrajeAntiGasToxico.png" />
+    <Image Include="TrajeAntiElectricidad.png" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="FrmMundoColab.resx">
@@ -238,6 +252,7 @@
   <ItemGroup>
     <Image Include="FondoMundoCOlab.png" />
     <Image Include="MeteoritoSprite.png" />
+    <Image Include="PapelSeñal.png" />
     <Image Include="PersonajeMundoIA.png" />
     <Image Include="R2D2 Sprite.png" />
     <Image Include="RobotMundoIA.png" />

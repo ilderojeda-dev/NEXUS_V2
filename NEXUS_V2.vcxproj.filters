@@ -85,9 +85,6 @@
     <ClCompile Include="FrmModulo3.cpp">
       <Filter>UI</Filter>
     </ClCompile>
-    <ClCompile Include="FrmModulo4.cpp">
-      <Filter>UI</Filter>
-    </ClCompile>
     <ClCompile Include="FrmMundoIA.cpp">
       <Filter>UI</Filter>
     </ClCompile>
@@ -97,11 +94,23 @@
     <ClCompile Include="SoundManager.cpp">
       <Filter>Service</Filter>
     </ClCompile>
+    <ClCompile Include="PapelSeñal.cpp">
+      <Filter>Model</Filter>
+    </ClCompile>
+    <ClCompile Include="CortoCircuito.cpp">
+      <Filter>Model</Filter>
+    </ClCompile>
+    <ClCompile Include="GasToxico.cpp">
+      <Filter>Model</Filter>
+    </ClCompile>
+    <ClCompile Include="VozTerrestre.cpp">
+      <Filter>Model</Filter>
+    </ClCompile>
+    <ClCompile Include="FrmFinMundoHumano.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Mundo.h">
-      <Filter>Model</Filter>
-    </ClInclude>
     <ClInclude Include="Sprite.h">
       <Filter>Model</Filter>
     </ClInclude>
@@ -168,9 +177,6 @@
     <ClInclude Include="FrmModulo3.h">
       <Filter>UI</Filter>
     </ClInclude>
-    <ClInclude Include="FrmModulo4.h">
-      <Filter>UI</Filter>
-    </ClInclude>
     <ClInclude Include="FrmMundoIA.h">
       <Filter>UI</Filter>
     </ClInclude>
@@ -180,12 +186,27 @@
     <ClInclude Include="SoundManager.h">
       <Filter>Service</Filter>
     </ClInclude>
+    <ClInclude Include="PapelSeñal.h">
+      <Filter>Model</Filter>
+    </ClInclude>
+    <ClInclude Include="CortoCircuito.h">
+      <Filter>Model</Filter>
+    </ClInclude>
+    <ClInclude Include="Mundo.h">
+      <Filter>Model</Filter>
+    </ClInclude>
+    <ClInclude Include="GasToxico.h">
+      <Filter>Model</Filter>
+    </ClInclude>
+    <ClInclude Include="VozTerrestre.h">
+      <Filter>Model</Filter>
+    </ClInclude>
+    <ClInclude Include="FrmFinMundoHumano.h">
+      <Filter>UI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="MundoHumano.png">
-      <Filter>Resource</Filter>
-    </Image>
-    <Image Include="Astronauta.png">
       <Filter>Resource</Filter>
     </Image>
     <Image Include="InicioJuego.png">
@@ -218,12 +239,45 @@
     <Image Include="RobotMundoIA.png">
       <Filter>Resource</Filter>
     </Image>
+    <Image Include="DescargaElectrica.png">
+      <Filter>Resource</Filter>
+    </Image>
+    <Image Include="GasToxico.png">
+      <Filter>Resource</Filter>
+    </Image>
+    <Image Include="PapelSeñal.png">
+      <Filter>Resource</Filter>
+    </Image>
+    <Image Include="Astronauta.png">
+      <Filter>Resource</Filter>
+    </Image>
+    <Image Include="TrajeAntiGasToxico.png">
+      <Filter>Resource</Filter>
+    </Image>
+    <Image Include="TrajeAntiElectricidad.png">
+      <Filter>Resource</Filter>
+    </Image>
+    <Image Include="FondoMensajeTerrestre.png">
+      <Filter>Resource</Filter>
+    </Image>
+    <Image Include="IconoTrajeAntiElectricidad.png">
+      <Filter>Resource</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <CopyFileToFolders Include="MusicaFondoInicio.wav">
       <Filter>Resource</Filter>
     </CopyFileToFolders>
     <CopyFileToFolders Include="EfectoClick.wav">
+      <Filter>Resource</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="MusicaFondoMundoHumano.wav">
+      <Filter>Resource</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="PasosJuga.wav">
+      <Filter>Resource</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="PasosJugador.wav">
       <Filter>Resource</Filter>
     </CopyFileToFolders>
   </ItemGroup>
