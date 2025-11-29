@@ -2,10 +2,7 @@
 #include "Mundo.h"
 #include "FrmMundoHumano.h"
 #include "FrmMundoIA.h"
-
 #include "SoundManager.h"
-
-
 #include "FrmMundoColab.h"
 
 namespace NEXUSV2 {
@@ -58,7 +55,8 @@ namespace NEXUSV2 {
 	private: System::Windows::Forms::Button^ btnSalir;
 	private: System::Windows::Forms::Button^ btnCreditos;
 	private: System::Windows::Forms::Button^ btnHistoria;
-	private: System::Windows::Forms::PictureBox^ pictureBox1;
+	private: System::Windows::Forms::PictureBox^ pbNiveles;
+
 	private: System::Windows::Forms::Button^ btnNivel1;
 	private: System::Windows::Forms::Button^ btnVolver;
 
@@ -85,7 +83,7 @@ namespace NEXUSV2 {
 		/// Required designer variable.
 		/// </summary>
 		System::ComponentModel::Container ^components;
-		
+		bool modoHistoria = false;
 		
 
 #pragma region Windows Form Designer generated code
@@ -101,7 +99,7 @@ namespace NEXUSV2 {
 			this->btnNivel3 = (gcnew System::Windows::Forms::Button());
 			this->btnNivel2 = (gcnew System::Windows::Forms::Button());
 			this->btnNivel1 = (gcnew System::Windows::Forms::Button());
-			this->pictureBox1 = (gcnew System::Windows::Forms::PictureBox());
+			this->pbNiveles = (gcnew System::Windows::Forms::PictureBox());
 			this->btnCreditos = (gcnew System::Windows::Forms::Button());
 			this->btnHistoria = (gcnew System::Windows::Forms::Button());
 			this->btnNiveles = (gcnew System::Windows::Forms::Button());
@@ -111,7 +109,7 @@ namespace NEXUSV2 {
 			this->button2 = (gcnew System::Windows::Forms::Button());
 			this->button3 = (gcnew System::Windows::Forms::Button());
 			this->pnlFondo->SuspendLayout();
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->BeginInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pbNiveles))->BeginInit();
 			this->SuspendLayout();
 			// 
 			// pnlFondo
@@ -122,7 +120,7 @@ namespace NEXUSV2 {
 			this->pnlFondo->Controls->Add(this->btnNivel3);
 			this->pnlFondo->Controls->Add(this->btnNivel2);
 			this->pnlFondo->Controls->Add(this->btnNivel1);
-			this->pnlFondo->Controls->Add(this->pictureBox1);
+			this->pnlFondo->Controls->Add(this->pbNiveles);
 			this->pnlFondo->Controls->Add(this->btnCreditos);
 			this->pnlFondo->Controls->Add(this->btnHistoria);
 			this->pnlFondo->Controls->Add(this->btnNiveles);
@@ -194,17 +192,17 @@ namespace NEXUSV2 {
 			this->btnNivel1->Visible = false;
 			this->btnNivel1->Click += gcnew System::EventHandler(this, &FrmInicio::btnNivel1_Click);
 			// 
-			// pictureBox1
+			// pbNiveles
 			// 
-			this->pictureBox1->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(0)), static_cast<System::Int32>(static_cast<System::Byte>(65)),
+			this->pbNiveles->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(0)), static_cast<System::Int32>(static_cast<System::Byte>(65)),
 				static_cast<System::Int32>(static_cast<System::Byte>(118)));
-			this->pictureBox1->BackgroundImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pictureBox1.BackgroundImage")));
-			this->pictureBox1->Location = System::Drawing::Point(200, 13);
-			this->pictureBox1->Name = L"pictureBox1";
-			this->pictureBox1->Size = System::Drawing::Size(1529, 1013);
-			this->pictureBox1->TabIndex = 5;
-			this->pictureBox1->TabStop = false;
-			this->pictureBox1->Visible = false;
+			this->pbNiveles->BackgroundImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pbNiveles.BackgroundImage")));
+			this->pbNiveles->Location = System::Drawing::Point(200, 13);
+			this->pbNiveles->Name = L"pbNiveles";
+			this->pbNiveles->Size = System::Drawing::Size(1529, 1013);
+			this->pbNiveles->TabIndex = 5;
+			this->pbNiveles->TabStop = false;
+			this->pbNiveles->Visible = false;
 			// 
 			// btnCreditos
 			// 
@@ -322,11 +320,42 @@ namespace NEXUSV2 {
 			this->WindowState = System::Windows::Forms::FormWindowState::Maximized;
 			this->Load += gcnew System::EventHandler(this, &FrmInicio::FrmInicio_Load);
 			this->pnlFondo->ResumeLayout(false);
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->EndInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pbNiveles))->EndInit();
 			this->ResumeLayout(false);
 
 		}
 #pragma endregion
+	private: System::Void AlCerrarMundoHumano(System::Object^ sender, FormClosedEventArgs^ e) {
+		FrmMundoHumano^ mundoCerrado = (FrmMundoHumano^)sender;
+
+		// CASO 1: GANÓ EL NIVEL
+		if (mundoCerrado->DialogResult == System::Windows::Forms::DialogResult::OK) {
+
+			if (modoHistoria == true) {
+				// --- MODO HISTORIA: SIGUIENTE NIVEL ---
+				// Como ganaste el Humano (Nivel 2), toca el Colaborativo (Nivel 3)
+
+				// FrmMundoColaborativo^ mundo3 = gcnew FrmMundoColaborativo();
+				// mundo3->FormClosed += gcnew FormClosedEventHandler(this, &FrmInicio::AlCerrarMundoColaborativo);
+				// mundo3->Show();
+
+				// IMPORTANTE: NO hacemos this->Show() aquí, porque seguimos jugando.
+			}
+			else {
+				// --- MODO NIVELES: VOLVER AL MENÚ ---
+				// Solo quería jugar este nivel, así que regresamos.
+				this->Show();
+				gestorSonido->ReproducirMusica("MusicaFondoInicio.wav", 0.5);
+			}
+		}
+		// CASO 2: PERDIÓ O SALIÓ
+		else {
+			// En cualquier modo, si pierdes o sales, vuelves al menú
+			this->Show();
+			gestorSonido->ReproducirMusica("MusicaFondoInicio.wav", 0.5);
+		}
+	}
+
 	private: System::Void FrmInicio_Load(System::Object^ sender, System::EventArgs^ e) {
 	}
 	private: System::Void pnlFondo_Paint(System::Object^ sender, System::Windows::Forms::PaintEventArgs^ e) {
@@ -335,10 +364,14 @@ namespace NEXUSV2 {
 		this->Close();
 	}
 	private: System::Void btnIniciarJuego_Click(System::Object^ sender, System::EventArgs^ e) {
-		gestorSonido->ReproducirEfecto("EfectoClick.wav", 1.0);
-		FrmMundoHumano^ frmMundoHumano = gcnew FrmMundoHumano();
-		frmMundoHumano->Show();
-		this->Hide();// this -> hide hace que se oculte el formulario actual
+		// 1. ACTIVAMOS EL MODO HISTORIA
+		modoHistoria = true;
+
+		// 2. Abrimos el PRIMER MUNDO (Mundo IA)
+		// FrmMundoIA^ mundo1 = gcnew FrmMundoIA();
+		// mundo1->FormClosed += gcnew FormClosedEventHandler(this, &FrmInicio::AlCerrarMundoIA);
+		// mundo1->Show();
+		this->Hide();
 	}
 	private: System::Void FrmInicio_FormClosing(System::Object^ sender, System::Windows::Forms::FormClosingEventArgs^ e) {
 			   
@@ -360,7 +393,7 @@ namespace NEXUSV2 {
 		btnNivel2->Visible = true;
 		btnNivel3->Visible = true;
 		btnVolver->Visible = true;
-		pictureBox1->Visible = true;
+		pbNiveles->Visible = true;
 
 		
 	}
@@ -371,23 +404,20 @@ namespace NEXUSV2 {
 		btnNivel2->Visible = false;
 		btnNivel3->Visible = false;
 		btnVolver->Visible = false;
-		pictureBox1->Visible = false;
+		pbNiveles->Visible = false;
 		
 	}
 	private: System::Void btnNivel2_Click(System::Object^ sender, System::EventArgs^ e) {
 		gestorSonido->ReproducirEfecto("EfectoClick.wav", 1.0);
 		gestorSonido->DetenerMusica();
 
-		// 2. Crear el nivel
-		FrmMundoHumano^ frmMundoHumano = gcnew FrmMundoHumano();
+		// 1. DESACTIVAMOS EL MODO HISTORIA (Solo quiere jugar este)
+		modoHistoria = false;
 
-		// --- AQUÍ ESTÁ EL TRUCO ---
-		// Le decimos: "Cuando 'mundo' se cierre, ejecuta 'AlCerrarMundo'"
-		frmMundoHumano->FormClosed += gcnew System::Windows::Forms::FormClosedEventHandler(this, &FrmInicio::AlCerrarMundo);
-		// ---------------------------
-
-		// 3. Mostrar nivel y ocultar menú
-		frmMundoHumano->Show();
+		// 2. Abrimos DIRECTO el Mundo Humano
+		FrmMundoHumano^ mundo2 = gcnew FrmMundoHumano(false);
+		mundo2->FormClosed += gcnew FormClosedEventHandler(this, &FrmInicio::AlCerrarMundoHumano);
+		mundo2->Show();
 		this->Hide();
 	}
 	private: System::Void btnCreditos_Click(System::Object^ sender, System::EventArgs^ e) {

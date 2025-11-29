@@ -1,188 +1,308 @@
 ﻿#include "MundoHumanoService.h"
 #include <cstdlib>
 #include <ctime>
-#include <cstring> 
+#include <cstring>
+#include <sstream>
 
+using namespace std;
 
 MundoHumanoService::MundoHumanoService(int ancho, int alto, int vidasIniciales) : Mundo(ancho, alto, vidasIniciales) {
 	srand(time(NULL));
-	this->jugador = new Jugador(700, 200); // initialize base's jugador
-	dialogoActual = new Dialogo(); 
-	inicializarMuros();
+
+	archivoService = new ArchivoService();
+	jugador = nullptr;
+	dialogoActual = new Dialogo();
 	vozTerrestre = nullptr;
 
-	jugador->setVelocidad(16.5);
+	cargarParametrosDelArchivo();
+
+	if (jugador == nullptr) {
+		jugador = new Jugador(700, 200);
+	} 
+	jugador->setVelocidad(16);
 	cambiarTraje(TipoTraje::Normal);
-
 }
+
 MundoHumanoService::~MundoHumanoService() {
-	delete dialogoActual;
-	for (int i = 0; i < alertas.size(); i++) {
-		delete alertas[i];
-	}
-	alertas.clear();
-	if (vozTerrestre != nullptr) delete vozTerrestre;
+	if (dialogoActual) delete dialogoActual;
 
+	for (int i = 0; i < alertas.size(); i++) delete alertas[i];
+	alertas.clear();
+
+	for (int i = 0; i < enemigos.size(); i++) delete enemigos[i];
+	enemigos.clear();
+
+	for (int i = 0; i < papelSeñal.size(); i++) delete papelSeñal[i];
+	papelSeñal.clear();
+
+	if (vozTerrestre != nullptr) delete vozTerrestre;
+	if (archivoService != nullptr) delete archivoService;
 }
 
-void MundoHumanoService::aplicarResultadoModulo(int idModulo, bool respuestaCorrecta) {
-	if (!respuestaCorrecta) {
-		estabilidadNave -= 10;
-		indiceCriterio -= 5;
+// PARÁMETROS (ARCHIVO + BACKUP HARDCODE)
+void MundoHumanoService::cargarParametrosDelArchivo() {
+	string ruta = "Files/PARAMETERS.txt";
+
+	// Verificar si existe
+	if (!archivoService->archivoExiste(ruta)) {
+		CargarValoresPorDefecto();  
+		return;
 	}
-	else {
-		estabilidadNave += 5;
-		indiceCriterio += 10;
 
-		// Solo si el módulo pasa de NO completado → completado
-		if (!modulosCompletados[idModulo]) {
-			modulosCompletados[idModulo] = true;
-			progresoMision += 33;   // 3 modulos → ~99, luego lo clamp
+	vector<string> lineas = archivoService->leerTodasLineas(ruta);
 
-			// 🔹 Aquí reaccionamos según el módulo
-			switch (idModulo) {
-			case 0: // Módulo 1 → electricidad
-				eliminarEnemigosCortoCircuito();
-				break;
-			case 1: // Módulo 2 → gas
-				eliminarEnemigosGasToxico();
-				break;
-			case 2: // Módulo 3 → comunicaciones
-				// aquí no borramos enemigos, solo comunicaciones
-				break;
-			}
+	// Verificar que tenga datos suficientes (mínimo unas líneas)
+	if (lineas.size() < 5) {
+		CargarValoresPorDefecto();
+		return;
+	}
+
+	int idx = 0;//Inicializar la linea desde donde empezara a leer los datos
+	try {
+		// 1. LEER VIDAS (Línea 0)
+		int vidasLeidas = stoi(lineas[idx++]);
+		this->setVidas(vidasLeidas);
+
+		// 2. LEER JUGADOR (Línea 1)
+		stringstream ssJug(lineas[idx++]);
+		string jX, jY;
+		getline(ssJug, jX, ';');
+		getline(ssJug, jY);
+		this->jugador = new Jugador(stoi(jX), stoi(jY));
+
+		// 3. LEER ENEMIGOS ELÉCTRICOS
+		int cantElec = stoi(lineas[idx++]);
+		char rutaCorto[] = "DescargaElectrica.png";
+
+		for (int i = 0; i < cantElec; i++) {
+			stringstream ss(lineas[idx++]);
+			string eX, eY;
+			getline(ss, eX, ';');
+			getline(ss, eY);
+
+			CortoCircuito* enemigo = new CortoCircuito(stoi(eX), stoi(eY), 2);
+			enemigo->cargarImagen(rutaCorto, 1, 3);
+			enemigos.push_back(enemigo);
+		}
+
+		// 4. LEER ENEMIGOS GAS
+		int cantGas = stoi(lineas[idx++]); 
+		char rutaGas[] = "GasToxico.png";
+
+		for (int i = 0; i < cantGas; i++) {
+			stringstream ss(lineas[idx++]);
+			string gX, gY;
+			getline(ss, gX, ';');
+			getline(ss, gY);
+
+			GasToxico* gas = new GasToxico(stoi(gX), stoi(gY), 2);
+			gas->cargarImagen(rutaGas, 1, 4);
+			enemigos.push_back(gas);
+		}
+
+		// 5. LEER ALIADOS (Papel)
+		int cantAliados = stoi(lineas[idx++]);
+		char rutaPapel[] = "PapelSeñal.png";
+
+		for (int i = 0; i < cantAliados; i++) {
+			stringstream ss(lineas[idx++]);
+			string aX, aY;
+			getline(ss, aX, ';');
+			getline(ss, aY);
+
+			PapelSeñal* papel = new PapelSeñal(stoi(aX), stoi(aY));
+			papel->cargarImagen(rutaPapel, 1, 3);
+			papelSeñal.push_back(papel);
+		}
+		// 6. ALERTAS
+		int cantAlertas = stoi(lineas[idx++]);	 
+		char rutaAlerta[] = "Alerta.png";
+		for (int k = 0; k < cantAlertas; k++) {
+			stringstream ss(lineas[idx++]);  
+			string alX, alY;
+
+			getline(ss, alX, ';');
+			getline(ss, alY);
+
+			Alerta* nuevaAlerta = new Alerta(stoi(alX), stoi(alY));
+			nuevaAlerta->cargarImagen(rutaAlerta, 1, 4);
+ 			nuevaAlerta->setTipoAlerta(k);
+			alertas.push_back(nuevaAlerta);
+		}
+		// 7. LEER MUROS (Formato: x;y;ancho;alto)
+		int cantMuros = stoi(lineas[idx++]); 
+
+		for (int k = 0; k < cantMuros; k++) {
+			stringstream ss(lineas[idx++]);
+			string mX, mY, mW, mH;
+
+			getline(ss, mX, ';');
+			getline(ss, mY, ';');
+			getline(ss, mW, ';');
+			getline(ss, mH);
+
+			muros.push_back(Muro(stoi(mX), stoi(mY), stoi(mW), stoi(mH)));
 		}
 	}
+	catch (...) {
+		// Si algo falla leyendo (formato incorrecto), cargamos default
+		System::Windows::Forms::MessageBox::Show("Error leyendo PARAMETERS.txt. Se usaran valores por defecto.");
+		CargarValoresPorDefecto();
+	}
+}
+// --- VALORES POR DEFECTO (Datos hardcoded originales) ---
+void MundoHumanoService::CargarValoresPorDefecto() {
+	this->setVidas(3);
+	if (this->jugador == nullptr) this->jugador = new Jugador(700, 200);
+	else { this->jugador->setX(700); this->jugador->setY(200); }
 
-	// clamp
-	if (estabilidadNave < 0)  estabilidadNave = 0;
-	if (estabilidadNave > 100) estabilidadNave = 100;
+	// Usamos las funciones de generación Hardcoded como respaldo
+	generarEnemigosCortoCircuito();
+	generarEnemigosGasToxico();
+	generarPapelSeñal();
+	generarAlertas();
+	inicializarMuros();
+}
 
-	if (indiceCriterio < 0)   indiceCriterio = 0;
-	if (indiceCriterio > 100) indiceCriterio = 100;
+// =========================================================
+// 3. LÓGICA PRINCIPAL (DIBUJO Y MÓDULOS)
+// =========================================================
+void MundoHumanoService::dibujarTodo(Graphics^ canvas) {
+	fondo->dibujar(canvas);
 
-	if (progresoMision < 0)   progresoMision = 0;
-	if (progresoMision > 100) progresoMision = 100;
+	for (int i = 0; i < alertas.size(); i++) alertas[i]->dibujar(canvas);
+	for (int i = 0; i < enemigos.size(); i++) enemigos[i]->dibujar(canvas);
+	for (int i = 0; i < papelSeñal.size(); i++) papelSeñal[i]->dibujar(canvas);
+
+	if (vozTerrestre != nullptr && vozTerrestre->getActivo())
+		vozTerrestre->dibujar(canvas);
+
+	if (jugador) jugador->dibujar(canvas);
+	//Solo para validar
+	//dibuajr el rectangle del jugador para pruebas
+	Pen^ p = gcnew Pen(Color::Blue, 2);
+	Rectangle rJugador = jugador->getRectangle();
+	canvas->DrawRectangle(p, rJugador);
+
+	//dibujar rectangulos de las alertas para pruebas
+	for (int i = 0; i < alertas.size(); i++) {
+		Rectangle rAlerta = alertas[i]->getRectangle();
+		canvas->DrawRectangle(p, rAlerta);
+	}
+
+	//dibujar rectangulos de los enemigos para pruebas	
+	for (int i = 0; i < enemigos.size(); i++) {
+		Rectangle rEnemigo = enemigos[i]->getRectangle();
+		canvas->DrawRectangle(p, rEnemigo);
+	}
+	//dibujar rectangulos de los aliados papel señal para pruebas
+	for (int i = 0; i < papelSeñal.size(); i++) {
+		Rectangle rAliado = papelSeñal[i]->getRectangle();
+		canvas->DrawRectangle(p, rAliado);
+	}
+
 }
 
 void MundoHumanoService::inicializarMuros() {
-	muros.clear();
+	if (muros.size() > 0) return;
 	muros.push_back(Muro(109, 421, 430, 210));
 	muros.push_back(Muro(109, 888, 450, 210));
 	muros.push_back(Muro(935, 888, 450, 210));
 	muros.push_back(Muro(519, 491, 80, 230));
-
 	muros.push_back(Muro(889, 500, 100, 220));
 	muros.push_back(Muro(969, 421, 410, 80));
-
 	muros.push_back(Muro(929, 51, 497, 130));
-
-	muros.push_back(Muro(69, 61, 490, 120)); //modulo 1
-
+	muros.push_back(Muro(69, 61, 490, 120));
 }
-
 bool MundoHumanoService::hayColisionMuros(Rectangle rectJugador) {
 	for (auto& m : muros) {
-		if (rectJugador.IntersectsWith(m.getRectangle())) {
-			return true;
-		}
+		if (rectJugador.IntersectsWith(m.getRectangle())) return true;
 	}
 	return false;
 }
 
-
-//Alertas
-void MundoHumanoService::agregarAlerta(Alerta* alerta) {
-	alertas.push_back(alerta);
-
-}
-void MundoHumanoService::generarAlertas() {
-	char rutaAlerta[] = "Alerta.png";
-	Alerta* alertaM1 = new Alerta(186, 161);
-	alertaM1->cargarImagen(rutaAlerta, 1, 4);
-	alertaM1->setTipoAlerta(0); // Tipo 1 para la primera alerta
-	alertas.push_back(alertaM1);
-
-	Alerta* alertaM2 = new Alerta(1169, 161);
-	alertaM2->cargarImagen(rutaAlerta, 1, 4);
-	alertaM2->setTipoAlerta(1); // Tipo 2 para la segunda alerta
-	alertas.push_back(alertaM2);
-
-	Alerta* alertaM3 = new Alerta(319, 601);
-	alertaM3->cargarImagen(rutaAlerta, 1, 4);
-	alertaM3->setTipoAlerta(2);
-	alertas.push_back(alertaM3);
-
-}
-void MundoHumanoService::moverAlertas() {
-	for (int i = 0; i < alertas.size(); i++) {
-		alertas[i]->mover(Direccion::Ninguno, anchoPanel, altoPanel);
+void MundoHumanoService::aplicarResultadoModulo(int idModulo, bool respuestaCorrecta) {
+	if (!respuestaCorrecta) {
+		estabilidadNave -= 20;
+		indiceCriterio -= 10;
 	}
-}
-vector<Alerta*> MundoHumanoService::getAlertas() {
-	return alertas;
-}
-int MundoHumanoService::verificarColisionAlerta() {
+	else {
+		estabilidadNave += 20;
 
-	Rectangle rectJugador = jugador->getRectangle();
+		if (!modulosCompletados[idModulo]) {
+			modulosCompletados[idModulo] = true;
+			progresoMision += 34;
 
-	for (int i = 0; i < alertas.size(); i++) {
-
-		Rectangle rectAlerta = alertas[i]->getRectangle();
-
-		if (rectJugador.IntersectsWith(rectAlerta)) {
-			int tipoAlerta = alertas[i]->getTipoAlerta();
-
-			delete alertas[i];
-			alertas.erase(alertas.begin() + i);
-
-			return tipoAlerta;   // ← devuelve la alerta que colisionó
+			switch (idModulo) {
+			case 0: eliminarEnemigosCortoCircuito(); break;
+			case 1: eliminarEnemigosGasToxico(); break;
+			case 2: break;
+			}
 		}
 	}
-
-	return -1; // ← NO hubo colisión
+	// Clamp manual
+	if (estabilidadNave < 0) estabilidadNave = 0; if (estabilidadNave > 100) estabilidadNave = 100;
+	if (indiceCriterio < 0) indiceCriterio = 0; if (indiceCriterio > 100) indiceCriterio = 100;
+	if (progresoMision < 0) progresoMision = 0; if (progresoMision > 100) progresoMision = 100;
+}
+bool MundoHumanoService::estaModuloCompletado(int idModulo) {
+	// Verificamos que el índice sea válido (0, 1 o 2)
+	if (idModulo >= 0 && idModulo < 3) {
+		return modulosCompletados[idModulo];
+	}
+	return false;
 }
 
-//enemigos
+// =========================================================
+// 4. JUGADOR
+// =========================================================
+
+void MundoHumanoService::moverJugador(Direccion tecla) {
+	if (tecla == Direccion::Ninguno) return;
+	Rectangle actual = jugador->getRectangle();
+	Rectangle siguiente = actual;
+	int vel = jugador->getVelocidad();
+
+	if (tecla == Direccion::Arriba) siguiente.Y -= vel;
+	if (tecla == Direccion::Abajo) siguiente.Y += vel;
+	if (tecla == Direccion::Izquierda) siguiente.X -= vel;
+	if (tecla == Direccion::Derecha) siguiente.X += vel;
+
+	if (!hayColisionMuros(siguiente)) {
+		jugador->mover(tecla, anchoPanel, altoPanel);
+	}
+}
+
+void MundoHumanoService::cambiarTraje(TipoTraje tipo) {
+	trajeActivo = tipo;
+	char ruta[64];
+	switch (tipo) {
+	case TipoTraje::Normal: strcpy_s(ruta, "Astronauta.png"); break;
+	case TipoTraje::AntiElectricidad: strcpy_s(ruta, "TrajeAntiElectricidad.png"); break;
+	case TipoTraje::AntiGas: strcpy_s(ruta, "TrajeAntiGas.png"); break;
+	}
+	if (jugador) jugador->cargarImagen(ruta, 4, 4);
+}
+// =========================================================
+// 5. ENEMIGOS (IMPLEMENTACIÓN Y HARDCODE)
+// =========================================================
 
 void MundoHumanoService::agregarEnemigo(Enemigo* enemigo) {
 	enemigos.push_back(enemigo);
 }
-void MundoHumanoService::generarEnemigosCortoCircuito() {
-	char rutaCortoCircuito[] = "DescargaElectrica.png";
-	CortoCircuito* enemigo1 = new CortoCircuito(170, 287, 2);
-	enemigo1->cargarImagen(rutaCortoCircuito, 1, 3);
-	enemigos.push_back(enemigo1);
 
-	CortoCircuito* enemigo2 = new CortoCircuito(400, 150, 2);
-	enemigo2->cargarImagen(rutaCortoCircuito, 1, 3);
-	enemigos.push_back(enemigo2);
-}
-void MundoHumanoService::generarEnemigosGasToxico() {
-	char rutaGasToxico[] = "GasToxico.png";
-	GasToxico* enemigoGas1 = new GasToxico(1000, 240, 2);
-	enemigoGas1->cargarImagen(rutaGasToxico, 1, 4);
-	enemigos.push_back(enemigoGas1);
-	GasToxico* enemigoGas2 = new GasToxico(1150, 240, 2);
-	enemigoGas2->cargarImagen(rutaGasToxico, 1, 4);
-	enemigos.push_back(enemigoGas2);
-}
 void MundoHumanoService::moverEnemigos() {
-	for (int i = 0; i < enemigos.size(); i++) {
-		enemigos[i]->mover(Direccion::Ninguno, anchoPanel, altoPanel);
-	}
+	for (int i = 0; i < enemigos.size(); i++) enemigos[i]->mover(Direccion::Ninguno, anchoPanel, altoPanel);
 }
+
 bool MundoHumanoService::hayColisionEnemigos(Rectangle rectJugador) {
 	for (auto& e : enemigos) {
-		if (rectJugador.IntersectsWith(e->getRectangle())) {
-			return true;
-		}
+		if (rectJugador.IntersectsWith(e->getRectangle())) return true;
 	}
 	return false;
 }
 
 void MundoHumanoService::eliminarEnemigosCortoCircuito() {
-	// Recorremos de atrás hacia adelante para borrar seguro
 	for (int i = enemigos.size() - 1; i >= 0; --i) {
 		CortoCircuito* corto = dynamic_cast<CortoCircuito*>(enemigos[i]);
 		if (corto != nullptr) {
@@ -202,14 +322,63 @@ void MundoHumanoService::eliminarEnemigosGasToxico() {
 	}
 }
 
-//aliados
-void MundoHumanoService::generarAliadoPapelSeñal() {
-	char rutaPapelSeñal[] = "PapelSeñal.png";
-	PapelSeñal* racursoPapel = new PapelSeñal(600, 800);
-	racursoPapel->cargarImagen(rutaPapelSeñal, 1, 3);
-	papelSeñal.push_back(racursoPapel);
-
+// --- GENERACIÓN HARDCODE (RESPALDO) ---
+void MundoHumanoService::generarEnemigosCortoCircuito() {
+	char rutaCorto[] = "DescargaElectrica.png";
+	CortoCircuito* e1 = new CortoCircuito(170, 287, 2); e1->cargarImagen(rutaCorto, 1, 3); enemigos.push_back(e1);
+	CortoCircuito* e2 = new CortoCircuito(400, 150, 2); e2->cargarImagen(rutaCorto, 1, 3); enemigos.push_back(e2);
 }
+
+void MundoHumanoService::generarEnemigosGasToxico() {
+	char rutaGas[] = "GasToxico.png";
+	GasToxico* g1 = new GasToxico(1000, 240, 2); g1->cargarImagen(rutaGas, 1, 4); enemigos.push_back(g1);
+	GasToxico* g2 = new GasToxico(1150, 240, 2); g2->cargarImagen(rutaGas, 1, 4); enemigos.push_back(g2);
+}
+
+// =========================================================
+// 6. ALERTAS (IMPLEMENTACIÓN Y HARDCODE)
+// =========================================================
+
+void MundoHumanoService::agregarAlerta(Alerta* alerta) {
+	alertas.push_back(alerta);
+}
+
+void MundoHumanoService::moverAlertas() {
+	for (int i = 0; i < alertas.size(); i++) alertas[i]->mover(Direccion::Ninguno, anchoPanel, altoPanel);
+}
+
+int MundoHumanoService::verificarColisionAlerta() {
+	Rectangle rectJugador = jugador->getRectangle();
+	for (int i = 0; i < alertas.size(); i++) {
+		if (rectJugador.IntersectsWith(alertas[i]->getRectangle())) {
+			int tipo = alertas[i]->getTipoAlerta();
+			delete alertas[i];
+			alertas.erase(alertas.begin() + i);
+			return tipo;
+		}
+	}
+	return -1;
+}
+vector<Alerta*> MundoHumanoService::getAlertas() {
+	return alertas;
+}
+
+// --- GENERACIÓN HARDCODE (RESPALDO) ---
+void MundoHumanoService::generarAlertas() {
+	char rutaAlerta[] = "Alerta.png";
+	Alerta* a1 = new Alerta(186, 161); a1->cargarImagen(rutaAlerta, 1, 4); a1->setTipoAlerta(0); alertas.push_back(a1);
+	Alerta* a2 = new Alerta(1169, 161); a2->cargarImagen(rutaAlerta, 1, 4); a2->setTipoAlerta(1); alertas.push_back(a2);
+	Alerta* a3 = new Alerta(319, 601); a3->cargarImagen(rutaAlerta, 1, 4); a3->setTipoAlerta(2); alertas.push_back(a3);
+}
+
+// =========================================================
+// 7. RECURSOS Y ALIADOS (IMPLEMENTACIÓN Y HARDCODE)
+// =========================================================
+
+void MundoHumanoService::moverAliadoPapelSeñal() {
+	for (int i = 0; i < papelSeñal.size(); i++) papelSeñal[i]->mover(Direccion::Ninguno, anchoPanel, altoPanel);
+}
+
 bool MundoHumanoService::hayColisionPapelSeñal(Rectangle rectJugador) {
 	for (int i = 0; i < papelSeñal.size(); i++) {
 		if (rectJugador.IntersectsWith(papelSeñal[i]->getRectangle())) {
@@ -217,106 +386,27 @@ bool MundoHumanoService::hayColisionPapelSeñal(Rectangle rectJugador) {
 			papelSeñal.erase(papelSeñal.begin() + i);
 			return true;
 		}
-		
 	}
 	return false;
 }
-void MundoHumanoService::moverAliadoPapelSeñal() {
-	for (int i = 0; i < papelSeñal.size(); i++) {
-		papelSeñal[i]->mover(Direccion::Ninguno, anchoPanel, altoPanel);
-	}
-}	
 
 void MundoHumanoService::generarVozTerrestre() {
 	if (vozTerrestre == nullptr) {
-		char rutaVozTerrestre[] = "FondoMensajeTerrestre.png";
-		// Ajusta (268, 286) según donde quieres el panel
+		char rutaVoz[] = "FondoMensajeTerrestre.png";
 		vozTerrestre = new VozTerrestre(272, 296, 0, 0);
-		vozTerrestre->cargarImagen(rutaVozTerrestre, 1, 1);
+		vozTerrestre->cargarImagen(rutaVoz, 1, 1);
 	}
-	vozTerrestre->setActivo(true);   // se dibuja
+	vozTerrestre->setActivo(true);
 }
 
 void MundoHumanoService::mostrarVozTerrestre(bool on) {
-	if (vozTerrestre != nullptr)
-		vozTerrestre->setActivo(on);
-}
-//ugador
-
-void MundoHumanoService::moverJugador(Direccion tecla) {
-	if (tecla == Direccion::Ninguno) return;
-	Rectangle actual = jugador->getRectangle();
-	
-	Rectangle siguiente = actual;
-
-	int vel = jugador->getVelocidad(); 
-	if (tecla == Direccion::Arriba) siguiente.Y -= vel;
-	if (tecla == Direccion::Abajo) siguiente.Y += vel;
-	if (tecla == Direccion::Izquierda) siguiente.X -= vel;
-	if (tecla == Direccion::Derecha) siguiente.X += vel;
-	if (!hayColisionMuros(siguiente)) {
-		jugador->mover(tecla, anchoPanel, altoPanel);
-	}
-	else {
-		// Si quieres, aquí puedes poner sonido de choque
-		// playlist.reproducir("golpe.wav");
-	}
+	if (vozTerrestre) vozTerrestre->setActivo(on);
 }
 
-
-
-void MundoHumanoService::cambiarTraje(TipoTraje tipo)
-{
-	trajeActivo = tipo;
-
-	char ruta[64];// ruta de la imagen del traje a cargar es decir la del jugador
-
-	switch (tipo) {
-	case TipoTraje::Normal:
-		strcpy_s(ruta, "Astronauta.png");              // traje blanco, strcpy_s para copiar cadenas es decir la ruta
-		break;
-
-	case TipoTraje::AntiElectricidad:
-		strcpy_s(ruta, "TrajeAntiElectricidad.png");   // AZUL
-		break;
-
-	case TipoTraje::AntiGas:
-		strcpy_s(ruta, "TrajeAntiGas.png");            // NARANJA
-		break;
-	}
-
-	// Usa las filas/columnas reales de tu sprite
-	cargarSpriteJugador(ruta, 4, 4);
+// --- GENERACIÓN HARDCODE (RESPALDO) ---
+void MundoHumanoService::generarPapelSeñal() {
+	char rutaPapel[] = "PapelSeñal.png";
+	PapelSeñal* p = new PapelSeñal(600, 800);
+	p->cargarImagen(rutaPapel, 1, 3);
+	papelSeñal.push_back(p);
 }
-
-
-
-void MundoHumanoService::dibujarTodo(Graphics^ canvas) {
-	fondo->dibujar(canvas);
-	for (int i = 0; i < alertas.size(); i++) {
-		alertas[i]->dibujar(canvas);
-	}
-	for (int i = 0; i < enemigos.size(); i++)	 {
-		enemigos[i]->dibujar(canvas);
-	}
-	for (int i = 0; i < papelSeñal.size(); i++) {
-		papelSeñal[i]->dibujar(canvas);
-	}
-	if (vozTerrestre != nullptr && vozTerrestre->getActivo())
-		vozTerrestre->dibujar(canvas);   // 👈 panel sci-fi
-
-	jugador->dibujar(canvas);
-	
-	
-	/*Pen^ p = gcnew Pen(Color::Red, 2);
-
-	for (auto& m : muros) {
-		Rectangle r = m.getRectangle();
-		canvas->DrawRectangle(p, r);
-	}*/
-	
-
-
-}
-
-

@@ -119,6 +119,7 @@
   <ItemGroup>
     <ClCompile Include="Alerta.cpp" />
     <ClCompile Include="Aliado.cpp" />
+    <ClCompile Include="ArchivoService.cpp" />
     <ClCompile Include="CortoCircuito.cpp" />
     <ClCompile Include="Dialogo.cpp" />
     <ClCompile Include="DialogoService.cpp" />
@@ -153,6 +154,7 @@
   <ItemGroup>
     <ClInclude Include="Alerta.h" />
     <ClInclude Include="Aliado.h" />
+    <ClInclude Include="ArchivoService.h" />
     <ClInclude Include="CortoCircuito.h" />
     <ClInclude Include="Dialogo.h" />
     <ClInclude Include="DialogoService.h" />
@@ -194,6 +196,7 @@
     <ClInclude Include="Pregunta.h" />
     <ClInclude Include="PreguntaService.h" />
     <ClInclude Include="Recurso.h" />
+    <ClInclude Include="resource.h" />
     <ClInclude Include="RobotEnemigo.h" />
     <ClInclude Include="SoundManager.h" />
     <ClInclude Include="Sprite.h" />
@@ -243,6 +246,8 @@
     </EmbeddedResource>
     <Image Include="TrajeAntiGasToxico.png" />
     <Image Include="TrajeAntiElectricidad.png" />
+    <Image Include="VidaEmpty.png" />
+    <Image Include="VidaFull.png" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="FrmMundoColab.resx">
@@ -287,6 +292,12 @@
       <FileType>Document</FileType>
       <DestinationFolders Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(OutDir)Resource\</DestinationFolders>
     </CopyFileToFolders>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="NEXUS_V2.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="Files\PARAMETERS.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

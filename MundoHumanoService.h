@@ -9,96 +9,109 @@
 #include "GasToxico.h"
 #include "PapelSeñal.h"
 #include "VozTerrestre.h"
+#include "ArchivoService.h"
+#include <string>
+#include <sstream>
+
 using namespace System::Drawing;
+using namespace std;
+
 enum class TipoTraje {
 	Normal = 0,
 	AntiElectricidad = 1,
 	AntiGas = 2
 };
 
-
 class MundoHumanoService : public Mundo
 {
 private:
+	// --- ENTIDADES ---
 	Dialogo* dialogoActual;
 	vector<Alerta*> alertas;
 	vector<Enemigo*> enemigos;
 	vector<PapelSeñal*> papelSeñal;
-	VozTerrestre* vozTerrestre; 
-	// ---- ESTO SÍ, y solo esto para trajes ----
+	VozTerrestre* vozTerrestre;
+	vector<Muro> muros;
+
+	// --- VARIABLES DE JUGADOR (TRAJES) ---
 	bool tieneTrajeAntiElectricidad = false;
 	bool tieneTrajeAntiGas = false;
 	TipoTraje trajeActivo = TipoTraje::Normal;
 
+	// --- ESTADO DE LA MISIÓN ---
+	int estabilidadNave = 70;  
+	int indiceCriterio = 100;   
+	int progresoMision = 0;     
 
-	vector<Muro> muros;
-	int estabilidadNave = 65;
-	int indiceCriterio = 50;   
-	int progresoMision = 0;
 	bool modulosCompletados[3] = { false, false, false };
-	
 
+	// --- ARCHIVOS ---
+	ArchivoService* archivoService;
 
 public:
+	// 1. CONSTRUCTOR Y DESTRUCTOR
 	MundoHumanoService(int ancho, int alto, int vidasIniciales);
 	~MundoHumanoService();
-	void aplicarResultadoModulo(int idModulo, bool respuestaCorrecta);
-	bool estaModuloCompletado(int idModulo) {
-		return modulosCompletados[idModulo];
-	}
 
+	// 2. GESTIÓN DE ARCHIVOS (CARGA)
+	void cargarParametrosDelArchivo();
+	void CargarValoresPorDefecto();
+
+	// 3. LÓGICA PRINCIPAL (DIBUJO Y MÓDULOS)
+	void dibujarTodo(Graphics^ canvas);
 	void inicializarMuros();
 	bool hayColisionMuros(Rectangle rectJugador);
+	void aplicarResultadoModulo(int idModulo, bool respuestaCorrecta);
+	bool estaModuloCompletado(int idModulo);
+
+	// 4. JUGADOR
+	void moverJugador(Direccion tecla);
+	void cambiarTraje(TipoTraje tipo);
+	TipoTraje getTrajeActivo() { return trajeActivo; }
+	void setTieneTrajeAntiElectricidad(bool tiene) { tieneTrajeAntiElectricidad = tiene; }
+	void setTieneTrajeAntiGas(bool tiene) { tieneTrajeAntiGas = tiene; }
+	bool getTieneTrajeAntiElectricidad() { return tieneTrajeAntiElectricidad; }
+	bool getTieneTrajeAntiGas() { return tieneTrajeAntiGas; }
+
+	// 5. ENEMIGOS
+	void agregarEnemigo(Enemigo* enemigo);
+	void moverEnemigos();
+	bool hayColisionEnemigos(Rectangle rectJugador);
+	void eliminarEnemigosCortoCircuito();
+	void eliminarEnemigosGasToxico();
+	vector<Enemigo*> getEnemigos() { return enemigos; }
+
+	// Funciones de generación (Respaldo/Hardcode)
+	void generarEnemigosCortoCircuito();
+	void generarEnemigosGasToxico();
+
+	// 6. ALERTAS
+	void agregarAlerta(Alerta* alerta);
+	void moverAlertas();
+	int verificarColisionAlerta();
+	vector<Alerta*> getAlertas();
+
+	// Función de generación (Respaldo/Hardcode)
+	void generarAlertas();
+
+	// 7. RECURSOS Y ALIADOS
+	void moverAliadoPapelSeñal();
+	bool hayColisionPapelSeñal(Rectangle rectJugador);
+	vector<PapelSeñal*> getPapelSeñal() { return papelSeñal; } // Getter simple inline
+
+	// Función de generación (Respaldo/Hardcode)
+	void generarPapelSeñal();
+
+	// 8. VOZ TERRESTRE (ALIADO)
+	void generarVozTerrestre();
+	void mostrarVozTerrestre(bool on);
+	VozTerrestre* getVozTerrestre() { return vozTerrestre; }
+
+	// 9. GETTERS Y SETTERS (ESTADÍSTICAS)
 	int getEstabilidadNave() { return estabilidadNave; }
 	void setEstabilidadNave(int est) { estabilidadNave = est; }
 	int getIndiceCriterio() { return indiceCriterio; }
 	void setIndiceCriterio(int ind) { indiceCriterio = ind; }
 	int getProgresoMision() { return progresoMision; }
 	void setProgresoMision(int prog) { progresoMision = prog; }
-
-
-	//Alertas
-	void agregarAlerta(Alerta* alerta);
-	void generarAlertas();
-	void moverAlertas();
-	vector<Alerta*> getAlertas();
-	int verificarColisionAlerta();
-	
-
-	//enemigos 
-	void generarEnemigosCortoCircuito();
-	void generarEnemigosGasToxico();
-	void agregarEnemigo(Enemigo* enemigo);
-	vector<Enemigo*> getEnemigos() { return enemigos; }
-	void moverEnemigos();
-	bool hayColisionEnemigos(Rectangle rectJugador);
-	void eliminarEnemigosCortoCircuito();
-	void eliminarEnemigosGasToxico();
-
-	//Recursos
-	void generarAliadoPapelSeñal();
-	vector<PapelSeñal*> getAliado() { return papelSeñal; }
-	bool hayColisionPapelSeñal(Rectangle rectJugador);
-	void moverAliadoPapelSeñal();	
-
-	// Aliados
-	void generarVozTerrestre();          // crea/activa
-	void mostrarVozTerrestre(bool on);   // solo ON/OFF del panel
-	VozTerrestre* getVozTerrestre() { return vozTerrestre; }
-
-	void moverJugador(Direccion tecla);//en este caso se sobreescribe el metodo moverJugador de la clase base Mundo
-
-	//trejes
-	void cambiarTraje(TipoTraje tipo);      // 👈 nuevo método
-	TipoTraje getTrajeActivo() { return trajeActivo; }
-	void setTieneTrajeAntiElectricidad(bool tiene) { tieneTrajeAntiElectricidad = tiene; }
-	void setTieneTrajeAntiGas(bool tiene) { tieneTrajeAntiGas = tiene; }
-
-	bool getTieneTrajeAntiElectricidad() { return tieneTrajeAntiElectricidad; }
-	bool getTieneTrajeAntiGas() { return tieneTrajeAntiGas; }
-
-
-
-	void dibujarTodo(Graphics^ canvas);
 };
-

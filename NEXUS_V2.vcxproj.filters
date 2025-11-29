@@ -13,6 +13,9 @@
     <Filter Include="Resource">
       <UniqueIdentifier>{65180669-2efb-485b-88df-bf6c3373b9ab}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Files">
+      <UniqueIdentifier>{eeed6676-3c1f-4b0b-b783-6d175f063157}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Principal.cpp" />
@@ -109,6 +112,9 @@
     <ClCompile Include="FrmFinMundoHumano.cpp">
       <Filter>UI</Filter>
     </ClCompile>
+    <ClCompile Include="ArchivoService.cpp">
+      <Filter>Service</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Sprite.h">
@@ -204,6 +210,10 @@
     <ClInclude Include="FrmFinMundoHumano.h">
       <Filter>UI</Filter>
     </ClInclude>
+    <ClInclude Include="resource.h" />
+    <ClInclude Include="ArchivoService.h">
+      <Filter>Service</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="MundoHumano.png">
@@ -263,6 +273,12 @@
     <Image Include="IconoTrajeAntiElectricidad.png">
       <Filter>Resource</Filter>
     </Image>
+    <Image Include="VidaEmpty.png">
+      <Filter>Resource</Filter>
+    </Image>
+    <Image Include="VidaFull.png">
+      <Filter>Resource</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <CopyFileToFolders Include="MusicaFondoInicio.wav">
@@ -280,5 +296,13 @@
     <CopyFileToFolders Include="PasosJugador.wav">
       <Filter>Resource</Filter>
     </CopyFileToFolders>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="NEXUS_V2.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="Files\PARAMETERS.txt">
+      <Filter>Files</Filter>
+    </Text>
   </ItemGroup>
 </Project>
