@@ -14,7 +14,7 @@ Nave::Nave(int x, int y) : Jugador(x, y) {
 Nave::~Nave() {
 }
 
-void Nave::mover(Direccion tecla, int limiteAncho, int limiteAlto) {
+void Nave::mover(Direccion tecla, int limiteAncho, int limiteAlto, int velocidad) {
 	if (tecla == Direccion::Ninguno) return;
 	if (tecla == Direccion::Arriba) { dx = 0;  dy = -1; }
 	if (tecla == Direccion::Abajo) { dx = 0;  dy = 1;  }

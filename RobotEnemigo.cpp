@@ -1,87 +1,60 @@
+
 #include "RobotEnemigo.h"
 
-RobotEnemigo::RobotEnemigo()
-	:Sprite()
-{
+RobotEnemigo::RobotEnemigo() : Sprite() {}
 
-}
-RobotEnemigo::RobotEnemigo(int x, int y)
-	:Sprite(x, y)
-{
+RobotEnemigo::RobotEnemigo(int x, int y) : Sprite(x, y) {}
 
-}
-RobotEnemigo::~RobotEnemigo()
-{
+RobotEnemigo::~RobotEnemigo() {}
 
-}
-
-void RobotEnemigo::mover(Direccion direccion, int limiteAncho, int limiteAlto) {
-    // Actualizar animación
-    indiceX++;
-    if (indiceX >= columnas) indiceX = 0;
-
-    // Calcular dimensiones escaladas
-    int anchoEscalado = (int)(ancho * escala);
-    int altoEscalado = (int)(alto * escala);
-
-    // Aplicar movimiento
-    x += dx;
-    y += dy;
-
-    // Patrullaje en rectángulo con dimensiones escaladas
-    // Borde superior derecho: ir a la derecha
-    if (x < limiteAncho - anchoEscalado && y == 20) {
-        dx = 5;
-        dy = 0;
-        indiceY = 3;
+void RobotEnemigo::mover(Direccion direccion, int posInicial, int posFinal, int velocidad) {
+    switch (direccion) {
+    case Direccion::Arriba:
+        this->y -= velocidad;
+        if (this->y < posInicial) this->y = posInicial;
+        this->setIndiceY(0);
+        break;
+    case Direccion::Abajo:
+        this->y += velocidad;
+        if (this->y > posFinal) this->y = posFinal;
+        this->setIndiceY(2);
+        break;
+    case Direccion::Izquierda:
+        this->x -= velocidad;
+        if (this->x < posFinal) this->x = posFinal;
+        this->setIndiceY(1);
+        break;
+    case Direccion::Derecha:
+        this->x += velocidad;
+        if (this->x > posFinal) this->x = posFinal;
+        this->setIndiceY(3);
+        break;
     }
 
-    // Esquina derecha: bajar
-    if (x >= limiteAncho - anchoEscalado && y < limiteAlto - altoEscalado) {
-        dx = 0;
-        dy = 5;
-        indiceY = 2;
-    }
-
-    // Borde inferior: ir a la izquierda
-    if (y >= limiteAlto - altoEscalado && x > 20) {
-        dx = -5;
-        dy = 0;
-        indiceY = 1;
-    }
-
-    // Esquina izquierda: subir
-    if (x <= 20 && y > 20) {
-        dx = 0;
-        dy = -5;
-        indiceY = 0;
-    }
+    // Animación
+    indiceX = (indiceX < 8) ? (indiceX + 1) % columnas : 0;
 }
+
 void RobotEnemigo::dibujar(Graphics^ canvas) {
+    if (image == nullptr) return;
 
-    if (image != nullptr) {
-        Bitmap^ bmp = gcnew Bitmap(gcnew System::String(image));
+    Bitmap^ bmp = gcnew Bitmap(gcnew System::String(image));
+    int anchoFrame = bmp->Width / columnas;
+    int altoFrame = bmp->Height / filas;
 
-        int anchoFrame = bmp->Width / columnas;
-        int altoFrame = bmp->Height / filas;
+    Rectangle porcion = Rectangle(
+        indiceX * anchoFrame,
+        indiceY * altoFrame,
+        anchoFrame,
+        altoFrame
+    );
 
-        Rectangle porcion = Rectangle(
-            indiceX * anchoFrame,
-            indiceY * altoFrame,
-            anchoFrame,
-            altoFrame
-        );
+    Rectangle destino = Rectangle(
+        x, y,
+        (int)(anchoFrame * escala),
+        (int)(altoFrame * escala)
+    );
 
-        // Usar la escala definida
-        Rectangle destino = Rectangle(
-            x,
-            y,
-            (int)(anchoFrame * escala),
-            (int)(altoFrame * escala)
-        );
-
-        canvas->DrawImage(bmp, destino, porcion, GraphicsUnit::Pixel);
-        delete bmp;
-    }
-
+    canvas->DrawImage(bmp, destino, porcion, GraphicsUnit::Pixel);
+    delete bmp;
 }

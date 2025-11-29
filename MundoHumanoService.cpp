@@ -18,6 +18,17 @@ MundoHumanoService::~MundoHumanoService() {
 	alertas.clear();
 
 }
+
+void MundoHumanoService::cargarSpriteJugador(char* ruta, int filas, int columnas) {
+	if (jugador == nullptr) {
+		jugador = new Jugador(100, 400);
+	}
+	jugador->cargarImagen(ruta, filas, columnas);
+
+	// Configurar para Mundo Humano
+	jugador->setConfiguracion(ConfiguracionSprite::ConfiguracionMundoHumano());
+}
+
 void MundoHumanoService::inicializarMuros() {
 	muros.clear();
 	muros.push_back(Muro(109, 421, 430, 210));
@@ -75,7 +86,7 @@ void MundoHumanoService::generarAlertas() {
 }
 void MundoHumanoService::moverAlertas() {
 	for (int i = 0; i < alertas.size(); i++) {
-		alertas[i]->mover(Direccion::Ninguno, anchoPanel, altoPanel);
+		alertas[i]->mover(Direccion::Ninguno, anchoPanel, altoPanel, 0);
 	}
 }
 vector<Alerta*> MundoHumanoService::getAlertas() {
@@ -117,7 +128,7 @@ void MundoHumanoService::moverJugador(Direccion tecla) {
 	if (tecla == Direccion::Izquierda) siguiente.X -= vel;
 	if (tecla == Direccion::Derecha) siguiente.X += vel;
 	if (!hayColisionMuros(siguiente)) {
-		jugador->mover(tecla, anchoPanel, altoPanel);
+		jugador->mover(tecla, anchoPanel, altoPanel,0);
 	}
 	else {
 		// Si quieres, aquí puedes poner sonido de choque

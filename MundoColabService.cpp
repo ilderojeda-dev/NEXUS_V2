@@ -2,6 +2,8 @@
 #include "Nave.h"
 #include <cstdlib>
 #include <ctime>
+#include "ConfiguracionSprite.h"
+
 MundoColabService::MundoColabService(int ancho, int alto, int vidasIniciales)
 : Mundo(ancho, alto, vidasIniciales) {
 nave = new Nave(50, 50);
@@ -13,10 +15,17 @@ MundoColabService::~MundoColabService() {
 }
 
 void MundoColabService::CargarSpriteNave(char* ruta, int filas, int columnas) {
-	nave->cargarImagen(ruta, filas, columnas);
+    if (nave == nullptr) {
+        nave = new Nave(100, 400);
+    }
+    nave->cargarImagen(ruta, filas, columnas);
+
+    // Configurar para Mundo Colab (igual que humano)
+    nave->setConfiguracion(ConfiguracionSprite::ConfiguracionMundoColab());
 }
+
 void MundoColabService::moverNave(Direccion tecla) {
-	nave->mover(tecla, anchoPanel, altoPanel);
+	nave->mover(tecla, anchoPanel, altoPanel,0);
 }
 
 void MundoColabService::dibujarTodo(Graphics^ canvas) {

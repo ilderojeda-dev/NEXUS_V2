@@ -1,7 +1,7 @@
 #pragma once
 using namespace System::Drawing;
 
-enum Direccion { Arriba, Abajo, Derecha, Izquierda, Ninguno };
+enum Direccion { Arriba, Abajo, Derecha, Izquierda, Ninguno, espacio };
 
 class Sprite {
 protected:
@@ -19,7 +19,7 @@ public:
     ~Sprite();
 
     void cargarImagen(char* ruta, int filas, int columnas);
-    virtual void mover(Direccion tecla, int limiteAncho, int limiteAlto) = 0;
+    virtual void mover(Direccion tecla, int limiteAncho, int limiteAlto, int velocidad) = 0;
     virtual void dibujar(Graphics^ canvas) = 0;
 
     float getEscala();
@@ -32,5 +32,18 @@ public:
     void setX(int x);
     void setY(int y);
     Rectangle getRectangle();
+
+    void setIndiceX(int ix) {
+		indiceX = ix;
+    }
+    void setIndiceY(int iy) {
+		indiceY = iy;
+    }
+    int getIndiceX() {
+        return indiceX;
+    }
+    int getIndiceY() {
+        return indiceY;
+    }
 };
 

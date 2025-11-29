@@ -97,6 +97,18 @@
     <ClCompile Include="SoundManager.cpp">
       <Filter>Service</Filter>
     </ClCompile>
+    <ClCompile Include="ConfiguracionSprite.cpp">
+      <Filter>Model</Filter>
+    </ClCompile>
+    <ClCompile Include="FinalBossMundoIA.cpp">
+      <Filter>Model</Filter>
+    </ClCompile>
+    <ClCompile Include="ChipRecurso.cpp">
+      <Filter>Model</Filter>
+    </ClCompile>
+    <ClCompile Include="Bala.cpp">
+      <Filter>Model</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Mundo.h">
@@ -180,6 +192,18 @@
     <ClInclude Include="SoundManager.h">
       <Filter>Service</Filter>
     </ClInclude>
+    <ClInclude Include="ConfiguracionSprite.h">
+      <Filter>Model</Filter>
+    </ClInclude>
+    <ClInclude Include="FinalBossMundoIA.h">
+      <Filter>Model</Filter>
+    </ClInclude>
+    <ClInclude Include="ChipRecurso.h">
+      <Filter>Model</Filter>
+    </ClInclude>
+    <ClInclude Include="Bala.h">
+      <Filter>Model</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="MundoHumano.png">
@@ -216,6 +240,13 @@
       <Filter>Resource</Filter>
     </Image>
     <Image Include="RobotMundoIA.png">
+      <Filter>Resource</Filter>
+    </Image>
+    <Image Include="FondoMundoIANoche.png" />
+    <Image Include="FinalBossMundoIA.png">
+      <Filter>Resource</Filter>
+    </Image>
+    <Image Include="Chip.png">
       <Filter>Resource</Filter>
     </Image>
   </ItemGroup>

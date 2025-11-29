@@ -32,7 +32,7 @@ namespace NEXUSV2 {
 
 			// Reproduce la música. Asegúrate de que "MusicaFondoInicio.wav"
 			// esté en tu carpeta Resource y configurado para "Copiar siempre".
-			gestorSonido->ReproducirMusica("MusicaFondoInicio.wav", 0.3); // 0.3 es volumen bajito (30%)
+			//gestorSonido->ReproducirMusica("MusicaFondoInicio.wav", 0.3); // 0.3 es volumen bajito (30%)
 
 			
 

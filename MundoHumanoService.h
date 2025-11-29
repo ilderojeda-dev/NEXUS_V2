@@ -5,6 +5,7 @@
 #include <vector>
 #include "Jugador.h"
 #include "Dialogo.h"
+#include "ConfiguracionSprite.h"
 
 using namespace System::Drawing;
 
@@ -23,6 +24,7 @@ public:
 	~MundoHumanoService();
 	void inicializarMuros();
 	bool hayColisionMuros(Rectangle rectJugador);
+	void cargarSpriteJugador(char* ruta, int filas, int columnas);
 
 	//Alertas
 	void agregarAlerta(Alerta* alerta);

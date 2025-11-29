@@ -26,7 +26,7 @@ void Alerta::setTipoAlerta(int n) {
 int Alerta::getTipoAlerta() {
     return numeroAlerta;
 }
-void Alerta::mover(Direccion tecla, int limiteAncho, int limiteAlto)  {
+void Alerta::mover(Direccion tecla, int limiteAncho, int limiteAlto, int velocidad)  {
     indiceX++;
     if (indiceX >= columnas) indiceX = 0;
 }

@@ -119,9 +119,13 @@
   <ItemGroup>
     <ClCompile Include="Alerta.cpp" />
     <ClCompile Include="Aliado.cpp" />
+    <ClCompile Include="Bala.cpp" />
+    <ClCompile Include="ChipRecurso.cpp" />
+    <ClCompile Include="ConfiguracionSprite.cpp" />
     <ClCompile Include="Dialogo.cpp" />
     <ClCompile Include="DialogoService.cpp" />
     <ClCompile Include="Enemigo.cpp" />
+    <ClCompile Include="FinalBossMundoIA.cpp" />
     <ClCompile Include="Fondo.cpp" />
     <ClCompile Include="FrmInicio.cpp" />
     <ClCompile Include="FrmModulo1.cpp" />
@@ -149,9 +153,13 @@
   <ItemGroup>
     <ClInclude Include="Alerta.h" />
     <ClInclude Include="Aliado.h" />
+    <ClInclude Include="Bala.h" />
+    <ClInclude Include="ChipRecurso.h" />
+    <ClInclude Include="ConfiguracionSprite.h" />
     <ClInclude Include="Dialogo.h" />
     <ClInclude Include="DialogoService.h" />
     <ClInclude Include="Enemigo.h" />
+    <ClInclude Include="FinalBossMundoIA.h" />
     <ClInclude Include="Fondo.h" />
     <ClInclude Include="FrmInicio.h">
       <FileType>CppForm</FileType>
@@ -223,6 +231,8 @@
   <ItemGroup>
     <Image Include="Alerta.png" />
     <Image Include="Astronauta.png" />
+    <Image Include="Chip.png" />
+    <Image Include="FinalBossMundoIA.png" />
     <Image Include="FondoMundoIA.png" />
     <Image Include="FondoMundoIANoche.png" />
     <Image Include="InicioJuego.png" />

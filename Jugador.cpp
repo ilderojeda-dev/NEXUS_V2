@@ -4,105 +4,159 @@ Jugador::Jugador() : Sprite() {
     vida = 3;
     velocidad = 10;
     saltando = false;
-    velocidadSalto = 0;
-    gravedadSalto = 2;
+    velocidadSalto = 0.0f;
+    gravedadSalto = 0.6f;
     alturaInicial = 0;
+    duracionSaltoActual = 0;
+    direccionSalto = Direccion::Ninguno;
+    config = ConfiguracionSprite();
 }
 
 Jugador::Jugador(int x, int y) : Sprite(x, y) {
     vida = 3;
     velocidad = 10;
     saltando = false;
-    velocidadSalto = 0;
-    gravedadSalto = 2;
+    velocidadSalto = 0.0f;
+    gravedadSalto = 0.6f;
     alturaInicial = y;
+    duracionSaltoActual = 0;
+    direccionSalto = Direccion::Ninguno;
+    config = ConfiguracionSprite();
 }
 
 Jugador::~Jugador() {}
 
-void Jugador::saltar() {
-    if (!saltando) {
-        saltando = true;
-        velocidadSalto = -20;  // Velocidad inicial hacia arriba (negativa)
-        alturaInicial = y;
+void Jugador::setConfiguracion(ConfiguracionSprite configuracion) {
+    config = configuracion;
+    duracionSaltoMaxima = config.getFramesSalto() * 3;
+}
+
+void Jugador::saltar(Direccion direccion) {
+    if (saltando) return;
+
+    saltando = true;
+    velocidadSalto = -12.0f;
+    alturaInicial = y;
+    duracionSaltoActual = 0;
+    direccionSalto = direccion;
+    indiceX = 0;
+
+    // Establecer animación según dirección
+    if (direccion == Direccion::Izquierda) {
+        indiceY = config.getIndiceSaltoIzquierda();
+    }
+    else if (direccion == Direccion::Derecha) {
+        indiceY = config.getIndiceSaltoDerecha();
+    }
+    else {
+        // Salto sin dirección (mantener última)
+        if (dx < 0 || indiceY == config.getIndiceIzquierda()) {
+            indiceY = config.getIndiceSaltoIzquierda();
+            direccionSalto = Direccion::Izquierda;
+        }
+        else {
+            indiceY = config.getIndiceSaltoDerecha();
+            direccionSalto = Direccion::Derecha;
+        }
     }
 }
 
 void Jugador::actualizarSalto(int limiteAlto) {
-    if (saltando) {
-        // Aplicar velocidad de salto
-        y += velocidadSalto;
+    if (!saltando) return;
 
-        // Aplicar gravedad
-        velocidadSalto += gravedadSalto;
+    // Aplicar física
+    y += (int)velocidadSalto * 2;
+    velocidadSalto += gravedadSalto;
 
-        // Verificar si llegó al suelo
-        if (y >= alturaInicial) {
-            y = alturaInicial;
-            saltando = false;
-            velocidadSalto = 0;
-        }
+    // Movimiento horizontal durante salto
+    if (direccionSalto == Direccion::Izquierda) {
+        x -= velocidad;
+    }
+    else if (direccionSalto == Direccion::Derecha) {
+        x += velocidad;
+    }
 
-        // Limitar altura máxima (opcional)
-        if (y < 50) {
-            y = 50;
-            velocidadSalto = 0;
-        }
+    // Animación
+    duracionSaltoActual++;
+    int frameCalculado = duracionSaltoActual / 2;
+    indiceX = (frameCalculado >= config.getFramesSalto() - 1) ?
+        config.getFramesSalto() - 1 : frameCalculado;
+
+    // Verificar aterrizaje
+    if (y >= alturaInicial) {
+        y = alturaInicial;
+        saltando = false;
+        velocidadSalto = 0.0f;
+        duracionSaltoActual = 0;
+        indiceX = 0;
+
+        // Restaurar animación de correr
+        indiceY = (direccionSalto == Direccion::Izquierda) ?
+            config.getIndiceIzquierda() : config.getIndiceDerecha();
+    }
+
+    // Límite altura máxima
+    if (y < alturaInicial - 120) {
+        y = alturaInicial - 120;
+        velocidadSalto = 0.0f;
     }
 }
 
-void Jugador::mover(Direccion tecla, int limiteAncho, int limiteAlto) {
+void Jugador::mover(Direccion tecla, int limiteAncho, int limiteAlto, int velocidads) {
     if (tecla == Direccion::Ninguno) return;
 
-    // Configurar dirección y animación
-    if (tecla == Direccion::Arriba) {
-        dx = 0;
+    // Control en el aire
+    if (saltando) {
+        if (tecla == Direccion::Izquierda) x -= velocidad * 2;
+        if (tecla == Direccion::Derecha) x += velocidad * 2;
+        return;
+    }
+
+    // Configurar animación
+    int maxFrames = config.getFramesAbajo();
+    dx = 0; dy = 0;
+
+    switch (tecla) {
+    case Direccion::Arriba:
         dy = -1;
-        indiceY = 3;
-    }
-    if (tecla == Direccion::Abajo) {
-        dx = 0;
+        indiceY = config.getIndiceArriba();
+        maxFrames = config.getFramesArriba();
+        break;
+    case Direccion::Abajo:
         dy = 1;
-        indiceY = 0;
-    }
-    if (tecla == Direccion::Izquierda) {
+        indiceY = config.getIndiceAbajo();
+        maxFrames = config.getFramesAbajo();
+        break;
+    case Direccion::Izquierda:
         dx = -1;
-        dy = 0;
-        indiceY = 1;
-    }
-    if (tecla == Direccion::Derecha) {
+        indiceY = config.getIndiceIzquierda();
+        maxFrames = config.getFramesIzquierda();
+        break;
+    case Direccion::Derecha:
         dx = 1;
-        dy = 0;
-        indiceY = 2;
+        indiceY = config.getIndiceDerecha();
+        maxFrames = config.getFramesDerecha();
+        break;
     }
 
-    // Actualizar animación
-    indiceX++;
-    if (indiceX >= columnas) indiceX = 0;
+    // Animación
+    indiceX = (indiceX >= maxFrames - 1) ? 0 : indiceX + 1;
 
-    // Calcular dimensiones escaladas
+    // Movimiento
+    x += dx * velocidad;
+    y += dy * velocidad;
+
+    // Límites
     int anchoEscalado = (int)(ancho * escala);
     int altoEscalado = (int)(alto * escala);
 
-    // Aplicar movimiento horizontal (no vertical si está saltando)
-    if (!saltando) {
-        x += dx * velocidad;
-        y += dy * velocidad;
-    }
-    else {
-        // Solo movimiento horizontal al saltar
-        x += dx * velocidad;
-    }
-
-    // Límites ajustados con escala
-    if (x < 110)
-        x = 110;
-    if (y < 0)
-        y = 0;
-    if (x > limiteAncho - anchoEscalado)
-        x = limiteAncho - anchoEscalado;
-    if (y > limiteAlto - altoEscalado)
+    if (x < 110) x = 110;
+    if (y < 0) y = 0;
+    if (x > limiteAncho - anchoEscalado) x = limiteAncho - anchoEscalado;
+    if (y > limiteAlto - altoEscalado) {
         y = limiteAlto - altoEscalado;
+        alturaInicial = y;
+    }
 }
 
 void Jugador::dibujar(Graphics^ canvas) {
@@ -110,22 +164,9 @@ void Jugador::dibujar(Graphics^ canvas) {
     int anchoEscalado = (int)(ancho * escala);
     int altoEscalado = (int)(alto * escala);
 
-    Rectangle seccion = Rectangle(
-        indiceX * ancho,
-        indiceY * alto,
-        ancho,
-        alto
-    );
-
+    Rectangle seccion = Rectangle(indiceX * ancho, indiceY * alto, ancho, alto);
     Rectangle destino = Rectangle(x, y, anchoEscalado, altoEscalado);
+
     canvas->DrawImage(bmp, destino, seccion, GraphicsUnit::Pixel);
     delete bmp;
-}
-
-int Jugador::getVelocidad() {
-    return velocidad;
-}
-
-int Jugador::getVidas() {
-    return vida;
 }

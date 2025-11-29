@@ -12,7 +12,7 @@ public:
     Aliado(int x, int y, int velocidad, int tipoMovimiento);
     ~Aliado();
 
-    virtual void mover(Direccion tecla, int limiteAncho, int limiteAlto) = 0;
+    virtual void mover(Direccion tecla, int limiteAncho, int limiteAlto, int velocidad) = 0;
 
     void dibujar(Graphics^ canvas) override;
 
