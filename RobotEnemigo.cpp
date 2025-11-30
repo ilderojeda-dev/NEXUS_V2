@@ -11,7 +11,7 @@ void RobotEnemigo::mover(Direccion direccion, int posInicial, int posFinal, int 
     switch (direccion) {
     case Direccion::Arriba:
         this->y -= velocidad;
-        if (this->y < posInicial) this->y = posInicial;
+        if (this->y < posFinal) this->y = posFinal;
         this->setIndiceY(0);
         break;
     case Direccion::Abajo:
@@ -21,7 +21,7 @@ void RobotEnemigo::mover(Direccion direccion, int posInicial, int posFinal, int 
         break;
     case Direccion::Izquierda:
         this->x -= velocidad;
-        if (this->x < posFinal) this->x = posFinal;
+        if (this->x < posFinal) this->x = posFinal;  
         this->setIndiceY(1);
         break;
     case Direccion::Derecha:
@@ -31,7 +31,6 @@ void RobotEnemigo::mover(Direccion direccion, int posInicial, int posFinal, int 
         break;
     }
 
-    // Animación
     indiceX = (indiceX < 8) ? (indiceX + 1) % columnas : 0;
 }
 

@@ -127,6 +127,7 @@
     <ClCompile Include="Enemigo.cpp" />
     <ClCompile Include="FinalBossMundoIA.cpp" />
     <ClCompile Include="Fondo.cpp" />
+    <ClCompile Include="FrmFinMundoIA.cpp" />
     <ClCompile Include="FrmInicio.cpp" />
     <ClCompile Include="FrmModulo1.cpp" />
     <ClCompile Include="FrmModulo2.cpp" />
@@ -147,6 +148,7 @@
     <ClCompile Include="Principal.cpp" />
     <ClCompile Include="Recurso.cpp" />
     <ClCompile Include="RobotEnemigo.cpp" />
+    <ClCompile Include="SintIA.cpp" />
     <ClCompile Include="SoundManager.cpp" />
     <ClCompile Include="Sprite.cpp" />
   </ItemGroup>
@@ -161,6 +163,9 @@
     <ClInclude Include="Enemigo.h" />
     <ClInclude Include="FinalBossMundoIA.h" />
     <ClInclude Include="Fondo.h" />
+    <ClInclude Include="FrmFinMundoIA.h">
+      <FileType>CppForm</FileType>
+    </ClInclude>
     <ClInclude Include="FrmInicio.h">
       <FileType>CppForm</FileType>
     </ClInclude>
@@ -196,6 +201,7 @@
     <ClInclude Include="PreguntaService.h" />
     <ClInclude Include="Recurso.h" />
     <ClInclude Include="RobotEnemigo.h" />
+    <ClInclude Include="SintIA.h" />
     <ClInclude Include="SoundManager.h" />
     <ClInclude Include="Sprite.h" />
   </ItemGroup>
@@ -209,6 +215,9 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="FrmFinMundoIA.resx">
+      <DependentUpon>FrmFinMundoIA.h</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FrmInicio.resx">
       <DependentUpon>FrmInicio.h</DependentUpon>
     </EmbeddedResource>
@@ -231,8 +240,12 @@
   <ItemGroup>
     <Image Include="Alerta.png" />
     <Image Include="Astronauta.png" />
+    <Image Include="Autonomia.png" />
     <Image Include="Chip.png" />
+    <Image Include="ChipImagen.png" />
+    <Image Include="corazon.png" />
     <Image Include="FinalBossMundoIA.png" />
+    <Image Include="FinMundoIA.png" />
     <Image Include="FondoMundoIA.png" />
     <Image Include="FondoMundoIANoche.png" />
     <Image Include="InicioJuego.png" />
@@ -240,6 +253,9 @@
     <EmbeddedResource Include="FrmMundoIA.resx">
       <DependentUpon>FrmMundoIA.h</DependentUpon>
     </EmbeddedResource>
+    <Image Include="RobotImagen.png" />
+    <Image Include="SintIA.png" />
+    <Image Include="vidas.png" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="FrmMundoColab.resx">
@@ -262,6 +278,22 @@
     </CopyFileToFolders>
     <CopyFileToFolders Include="MusicaFondoInicio.wav">
       <DeploymentContent>false</DeploymentContent>
+      <FileType>Document</FileType>
+      <DestinationFolders Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(OutDir)Resource\</DestinationFolders>
+    </CopyFileToFolders>
+  </ItemGroup>
+  <ItemGroup>
+    <CopyFileToFolders Include="MusicaFondoMundoIA.wav">
+      <FileType>Document</FileType>
+      <DestinationFolders Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(OutDir)Resource\</DestinationFolders>
+    </CopyFileToFolders>
+  </ItemGroup>
+  <ItemGroup>
+    <CopyFileToFolders Include="EfectoSonidoBala.wav">
+      <FileType>Document</FileType>
+      <DestinationFolders Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(OutDir)Resource\</DestinationFolders>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="EfectoSonidoExplosion.wav">
       <FileType>Document</FileType>
       <DestinationFolders Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(OutDir)Resource\</DestinationFolders>
     </CopyFileToFolders>

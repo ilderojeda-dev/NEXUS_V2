@@ -10,6 +10,9 @@ private:
     int indice;
     int contador;
     bool enProgreso;
+    bool autoCerrar;
+    int tiempoVisible;
+    int tiempoMaximo;
 
 public:
     Dialogo();
@@ -21,4 +24,10 @@ public:
     string getTextoActual();
     bool estaEnProgreso();
     void detener();
+
+    void setAutoCerrar(bool ac, int tiempo = 180) {
+        autoCerrar = ac;
+        tiempoMaximo = tiempo;
+        tiempoVisible = 0;
+    }
 };

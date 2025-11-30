@@ -1,4 +1,3 @@
-// Jugador.h
 #pragma once
 #include "Sprite.h"
 #include "ConfiguracionSprite.h"

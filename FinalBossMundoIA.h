@@ -1,19 +1,16 @@
-// FinalBossMundoIA.h
 #pragma once
 #include "Sprite.h"
-#include <cmath> 
-
-using namespace System;
+#include "ConfiguracionSprite.h"
 using namespace System::Drawing;
 
+using namespace std;
 class FinalBossMundoIA : public Sprite
 {
 private:
     int vidaActual;
     int vidaMaxima;
-    bool enFuria;
-    float anguloFlotacion;
-    int cooldownAtaque;
+    ConfiguracionSprite config;
+
 
 public:
     FinalBossMundoIA(int x, int y, int dificultad);
@@ -22,8 +19,9 @@ public:
     void mover(Direccion direccion, int posInicial, int PosFinal, int velocidad) override;
     void dibujar(Graphics^ canvas) override;
     void recibirDano(int cantidad);
-    bool estaDerrotado();
-
+    bool estaDerrotado() { return vidaActual <= 0; }
     int getVida() { return vidaActual; }
-    bool getEnFuria() { return enFuria; }
+    void setConfiguracion(ConfiguracionSprite configuracion);
+    int getVidaMaxima() { return vidaMaxima; }
+
 };

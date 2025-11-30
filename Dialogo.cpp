@@ -6,6 +6,11 @@ Dialogo::Dialogo() {
     indice = 0;
     contador = 0;
     enProgreso = false;
+
+    // ? AGREGAR ESTAS INICIALIZACIONES
+    autoCerrar = false;
+    tiempoVisible = 0;
+    tiempoMaximo = 0;
 }
 
 Dialogo::~Dialogo() {
@@ -17,24 +22,7 @@ void Dialogo::iniciar(string texto) {
     indice = 0;
     contador = 0;
     enProgreso = true;
-}
-
-bool Dialogo::actualizar() {
-    if (!enProgreso) return false;
-
-    // Agregar 3 letras por frame para efecto rapido de escritura
-    for (int i = 0; i < 3; i++) {
-        if (indice < textoCompleto.length()) {
-            textoActual += textoCompleto[indice];
-            indice++;
-        }
-        else {
-            enProgreso = false;
-            return false;
-        }
-    }
-
-    return true;
+    tiempoVisible = 0; // ? Resetear contador
 }
 
 string Dialogo::getTextoActual() {
@@ -49,3 +37,30 @@ void Dialogo::detener() {
     enProgreso = false;
 }
 
+bool Dialogo::actualizar() {
+    // Si el diálogo terminó de escribirse
+    if (!enProgreso) {
+        if (autoCerrar) {
+            tiempoVisible++;
+            if (tiempoVisible >= tiempoMaximo) {
+                return false; // Señal para cerrar
+            }
+            return true; // ? Mantener visible mientras cuenta
+        }
+        return true; // ? Mantener visible hasta que el usuario presione Enter
+    }
+
+    // Escribir 3 caracteres por frame
+    for (int i = 0; i < 3; i++) {
+        if (indice < textoCompleto.length()) {
+            textoActual += textoCompleto[indice];
+            indice++;
+        }
+        else {
+            enProgreso = false;
+            return true; // ? Completado pero seguir mostrando
+        }
+    }
+
+    return true;
+}

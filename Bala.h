@@ -1,5 +1,4 @@
 #pragma once
-#pragma once
 #include "Sprite.h"
 
 using namespace System::Drawing;

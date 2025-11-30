@@ -109,6 +109,12 @@
     <ClCompile Include="Bala.cpp">
       <Filter>Model</Filter>
     </ClCompile>
+    <ClCompile Include="SintIA.cpp">
+      <Filter>Model</Filter>
+    </ClCompile>
+    <ClCompile Include="FrmFinMundoIA.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Mundo.h">
@@ -204,6 +210,12 @@
     <ClInclude Include="Bala.h">
       <Filter>Model</Filter>
     </ClInclude>
+    <ClInclude Include="SintIA.h">
+      <Filter>Model</Filter>
+    </ClInclude>
+    <ClInclude Include="FrmFinMundoIA.h">
+      <Filter>UI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="MundoHumano.png">
@@ -249,12 +261,42 @@
     <Image Include="Chip.png">
       <Filter>Resource</Filter>
     </Image>
+    <Image Include="vidas.png">
+      <Filter>Resource</Filter>
+    </Image>
+    <Image Include="corazon.png">
+      <Filter>Resource</Filter>
+    </Image>
+    <Image Include="RobotImagen.png">
+      <Filter>Resource</Filter>
+    </Image>
+    <Image Include="ChipImagen.png">
+      <Filter>Resource</Filter>
+    </Image>
+    <Image Include="SintIA.png">
+      <Filter>Resource</Filter>
+    </Image>
+    <Image Include="Autonomia.png">
+      <Filter>Resource</Filter>
+    </Image>
+    <Image Include="FinMundoIA.png">
+      <Filter>Resource</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <CopyFileToFolders Include="MusicaFondoInicio.wav">
       <Filter>Resource</Filter>
     </CopyFileToFolders>
     <CopyFileToFolders Include="EfectoClick.wav">
+      <Filter>Resource</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="MusicaFondoMundoIA.wav">
+      <Filter>Resource</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="EfectoSonidoBala.wav">
+      <Filter>Resource</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="EfectoSonidoExplosion.wav">
       <Filter>Resource</Filter>
     </CopyFileToFolders>
   </ItemGroup>
