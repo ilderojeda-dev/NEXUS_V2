@@ -7,8 +7,7 @@ MundoHumanoService::MundoHumanoService(int ancho, int alto, int vidasIniciales) 
 	srand(time(NULL));
 	this->jugador = new Jugador(500, 200); // initialize base's jugador
 	dialogoActual = new Dialogo(); 
-	inicializarMuros();
-	jugador->setVelocidad(16.5);
+	inicializarMuros(); jugador->setVelocidad(16);
 
 }
 MundoHumanoService::~MundoHumanoService() {
@@ -19,6 +18,17 @@ MundoHumanoService::~MundoHumanoService() {
 	alertas.clear();
 
 }
+
+void MundoHumanoService::cargarSpriteJugador(char* ruta, int filas, int columnas) {
+	if (jugador == nullptr) {
+		jugador = new Jugador(100, 400);
+	}
+	jugador->cargarImagen(ruta, filas, columnas);
+
+	// Configurar para Mundo Humano
+	jugador->setConfiguracion(ConfiguracionSprite::ConfiguracionMundoHumano());
+}
+
 void MundoHumanoService::inicializarMuros() {
 	muros.clear();
 	muros.push_back(Muro(109, 421, 430, 210));

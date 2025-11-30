@@ -63,10 +63,10 @@ namespace NEXUSV2 {
 		{
 			System::ComponentModel::ComponentResourceManager^ resources = (gcnew System::ComponentModel::ComponentResourceManager(FrmModulo1::typeid));
 			this->pnlModulo = (gcnew System::Windows::Forms::Panel());
+			this->btnSalir = (gcnew System::Windows::Forms::Button());
 			this->btnOpcion3 = (gcnew System::Windows::Forms::Button());
 			this->btnOpcion2 = (gcnew System::Windows::Forms::Button());
 			this->btnOpcion1 = (gcnew System::Windows::Forms::Button());
-			this->btnSalir = (gcnew System::Windows::Forms::Button());
 			this->pnlModulo->SuspendLayout();
 			this->SuspendLayout();
 			// 
@@ -82,6 +82,22 @@ namespace NEXUSV2 {
 			this->pnlModulo->Name = L"pnlModulo";
 			this->pnlModulo->Size = System::Drawing::Size(1241, 831);
 			this->pnlModulo->TabIndex = 0;
+			this->pnlModulo->Paint += gcnew System::Windows::Forms::PaintEventHandler(this, &FrmModulo1::pnlModulo_Paint);
+			// 
+			// btnSalir
+			// 
+			this->btnSalir->BackColor = System::Drawing::Color::LightCoral;
+			this->btnSalir->Cursor = System::Windows::Forms::Cursors::Default;
+			this->btnSalir->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
+			this->btnSalir->Font = (gcnew System::Drawing::Font(L"Microsoft YaHei UI", 11.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->btnSalir->Location = System::Drawing::Point(15, 14);
+			this->btnSalir->Name = L"btnSalir";
+			this->btnSalir->Size = System::Drawing::Size(75, 29);
+			this->btnSalir->TabIndex = 3;
+			this->btnSalir->Text = L"Salir";
+			this->btnSalir->UseVisualStyleBackColor = false;
+			this->btnSalir->Click += gcnew System::EventHandler(this, &FrmModulo1::btnSalir_Click);
 			// 
 			// btnOpcion3
 			// 
@@ -125,21 +141,6 @@ namespace NEXUSV2 {
 			this->btnOpcion1->Text = L"Conectar rojo → P2 (+)\n y negro → P1 (−)";
 			this->btnOpcion1->UseVisualStyleBackColor = false;
 			// 
-			// btnSalir
-			// 
-			this->btnSalir->BackColor = System::Drawing::Color::LightCoral;
-			this->btnSalir->Cursor = System::Windows::Forms::Cursors::Default;
-			this->btnSalir->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
-			this->btnSalir->Font = (gcnew System::Drawing::Font(L"Microsoft YaHei UI", 11.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
-				static_cast<System::Byte>(0)));
-			this->btnSalir->Location = System::Drawing::Point(15, 14);
-			this->btnSalir->Name = L"btnSalir";
-			this->btnSalir->Size = System::Drawing::Size(75, 29);
-			this->btnSalir->TabIndex = 3;
-			this->btnSalir->Text = L"Salir";
-			this->btnSalir->UseVisualStyleBackColor = false;
-			this->btnSalir->Click += gcnew System::EventHandler(this, &FrmModulo1::btnSalir_Click);
-			// 
 			// FrmModulo1
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
@@ -163,5 +164,7 @@ namespace NEXUSV2 {
 	private: System::Void btnSalir_Click(System::Object^ sender, System::EventArgs^ e) {
 		this->Close();
 	}
+private: System::Void pnlModulo_Paint(System::Object^ sender, System::Windows::Forms::PaintEventArgs^ e) {
+}
 };
 }

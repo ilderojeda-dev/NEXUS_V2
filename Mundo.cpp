@@ -5,7 +5,6 @@ Mundo::Mundo(int ancho, int alto, int vidasIniciales) {
     altoPanel = alto;
     fondo = new Fondo();
 
-    // Inicializar como nullptr - las clases hijas son responsables de crear Hamp
     jugador = nullptr;
 
     // Inicializar gestores

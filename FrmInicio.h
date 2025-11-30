@@ -30,9 +30,9 @@ namespace NEXUSV2 {
 			// --- AGREGA ESTO ---
 			gestorSonido = gcnew NEXUS_V2::Service::SoundManager();
 
-			// Reproduce la música. Asegúrate de que "MusicaFondoInicio.wav"
+			//Reproduce la música. Asegúrate de que "MusicaFondoInicio.wav"
 			// esté en tu carpeta Resource y configurado para "Copiar siempre".
-			gestorSonido->ReproducirMusica("MusicaFondoInicio.wav", 0.3); // 0.3 es volumen bajito (30%)
+			gestorSonido->ReproducirMusica("MusicaFondoInicio.wav", 0.01); // 0.3 es volumen bajito (30%)
 
 
 
@@ -265,6 +265,7 @@ namespace NEXUSV2 {
 			this->pictureBox1->TabIndex = 5;
 			this->pictureBox1->TabStop = false;
 			this->pictureBox1->Visible = false;
+			this->pictureBox1->Click += gcnew System::EventHandler(this, &FrmInicio::pictureBox1_Click);
 			// 
 			// btnCreditos
 			// 
@@ -406,7 +407,7 @@ namespace NEXUSV2 {
 	}
 	private: System::Void btnNivel2_Click(System::Object^ sender, System::EventArgs^ e) {
 		gestorSonido->ReproducirEfecto("EfectoClick.wav", 1.0);
-
+		
 		FrmMundoHumano^ frmMundoHumano = gcnew FrmMundoHumano();
 
 		frmMundoHumano->Show();
@@ -420,7 +421,7 @@ namespace NEXUSV2 {
 
 	private: System::Void btnNivel1_Click(System::Object^ sender, System::EventArgs^ e) {
 		gestorSonido->ReproducirEfecto("EfectoClick.wav", 1.0);
-
+		gestorSonido->DetenerMusica();
 		FrmMundoIA^ frmMundoIA = gcnew FrmMundoIA();
 		frmMundoIA->Show();
 
@@ -433,10 +434,12 @@ namespace NEXUSV2 {
 		frmMundoColab->Show();
 		this->Hide();
 	}
-	private: System::Void btnHistoria_Click_1(System::Object^ sender, System::EventArgs^ e) {
-		gestorSonido->ReproducirEfecto("EfectoClick.wav", 1.0);
-		//Agregar formulario de historia
-	}
-	};
-
+private: System::Void btnHistoria_Click_1(System::Object^ sender, System::EventArgs^ e) {
+	gestorSonido->ReproducirEfecto("EfectoClick.wav", 1.0);
+	//Agregar formulario de historia
+}
+private: System::Void pictureBox1_Click(System::Object^ sender, System::EventArgs^ e) {
+}
+};
+	
 }

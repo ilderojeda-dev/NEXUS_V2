@@ -9,6 +9,7 @@ ancho(0), alto(0), filas(0), columnas(0) {
 Sprite::Sprite(int x, int y) : x(x), y(y), dx(0), dy(0), indiceX(0), indiceY(0),
 ancho(0), alto(0), filas(0), columnas(0) {
     image = new char[100];
+    escala = 1.0f;  
 }
 
 Sprite::~Sprite() {
@@ -28,6 +29,9 @@ void Sprite::cargarImagen(char* ruta, int filas, int columnas) {
     delete bitmap;
 }
 
+float Sprite::getEscala() { return escala; }
+void Sprite::setEscala(float e) { escala = e; }
+
 int Sprite::getX() { return x; }
 int Sprite::getY() { return y; }
 int Sprite::getAncho() { return ancho; }
@@ -36,14 +40,23 @@ void Sprite::setX(int x) { this->x = x; }
 void Sprite::setY(int y) { this->y = y; }
 
 Rectangle Sprite::getRectangle() {
-    // Reducir el área de colisión al 60% del tamaño del sprite para detectar colisiones más precisas
+    // Aplicar escala primero a las dimensiones base
+    int anchoEscalado = (int)(ancho * escala);
+    int altoEscalado = (int)(alto * escala);
+
+    // Reducir el área de colisión al 60% del tamaño escalado
     // Esto evita colisiones con espacios transparentes del spritesheet
-    int anchoColision = (int)(ancho * 0.6);
-    int altoColision = (int)(alto * 0.6);
+    int anchoColision = (int)(anchoEscalado * 0.6);
+    int altoColision = (int)(altoEscalado * 0.6);
 
-    // Centrar el área de colisión en el sprite
-    int desplazamientoX = (ancho - anchoColision) / 2;
-    int desplazamientoY = (alto - altoColision) / 2;
+    // Centrar el área de colisión en el sprite escalado
+    int desplazamientoX = (anchoEscalado - anchoColision) / 2;
+    int desplazamientoY = (altoEscalado - altoColision) / 2;
 
-    return Rectangle(x + desplazamientoX, y + desplazamientoY, anchoColision, altoColision);
+    return Rectangle(
+        x + desplazamientoX,
+        y + desplazamientoY,
+        anchoColision,
+        altoColision
+    );
 }

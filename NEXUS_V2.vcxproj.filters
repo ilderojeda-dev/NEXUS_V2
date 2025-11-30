@@ -101,6 +101,24 @@
     <ClCompile Include="SoundManager.cpp">
       <Filter>Service</Filter>
     </ClCompile>
+    <ClCompile Include="ConfiguracionSprite.cpp">
+      <Filter>Model</Filter>
+    </ClCompile>
+    <ClCompile Include="FinalBossMundoIA.cpp">
+      <Filter>Model</Filter>
+    </ClCompile>
+    <ClCompile Include="ChipRecurso.cpp">
+      <Filter>Model</Filter>
+    </ClCompile>
+    <ClCompile Include="Bala.cpp">
+      <Filter>Model</Filter>
+    </ClCompile>
+    <ClCompile Include="SintIA.cpp">
+      <Filter>Model</Filter>
+    </ClCompile>
+    <ClCompile Include="FrmFinMundoIA.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
     <ClCompile Include="Sprite.cpp">
       <Filter>Model</Filter>
     </ClCompile>
@@ -185,6 +203,24 @@
     <ClInclude Include="SoundManager.h">
       <Filter>Service</Filter>
     </ClInclude>
+    <ClInclude Include="ConfiguracionSprite.h">
+      <Filter>Model</Filter>
+    </ClInclude>
+    <ClInclude Include="FinalBossMundoIA.h">
+      <Filter>Model</Filter>
+    </ClInclude>
+    <ClInclude Include="ChipRecurso.h">
+      <Filter>Model</Filter>
+    </ClInclude>
+    <ClInclude Include="Bala.h">
+      <Filter>Model</Filter>
+    </ClInclude>
+    <ClInclude Include="SintIA.h">
+      <Filter>Model</Filter>
+    </ClInclude>
+    <ClInclude Include="FrmFinMundoIA.h">
+      <Filter>UI</Filter>
+    </ClInclude>
     <ClInclude Include="Sprite.h">
       <Filter>Model</Filter>
     </ClInclude>
@@ -235,6 +271,32 @@
     <Image Include="RobotMundoIA.png">
       <Filter>Resource</Filter>
     </Image>
+    <Image Include="FondoMundoIANoche.png" />
+    <Image Include="FinalBossMundoIA.png">
+      <Filter>Resource</Filter>
+    </Image>
+    <Image Include="Chip.png">
+      <Filter>Resource</Filter>
+    </Image>
+    <Image Include="vidas.png">
+      <Filter>Resource</Filter>
+    </Image>
+    <Image Include="corazon.png">
+      <Filter>Resource</Filter>
+    </Image>
+    <Image Include="RobotImagen.png">
+      <Filter>Resource</Filter>
+    </Image>
+    <Image Include="ChipImagen.png">
+      <Filter>Resource</Filter>
+    </Image>
+    <Image Include="SintIA.png">
+      <Filter>Resource</Filter>
+    </Image>
+    <Image Include="Autonomia.png">
+      <Filter>Resource</Filter>
+    </Image>
+    <Image Include="FinMundoIA.png">
     <Image Include="SpriteEstrella.png">
       <Filter>Resource</Filter>
     </Image>
@@ -255,6 +317,16 @@
     <CopyFileToFolders Include="EfectoClick.wav">
       <Filter>Resource</Filter>
     </CopyFileToFolders>
+<CopyFileToFolders Include="MusicaFondoMundoIA.wav">
+      <Filter>Resource</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="EfectoSonidoBala.wav">
+      <Filter>Resource</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="EfectoSonidoExplosion.wav">
+      <Filter>Resource</Filter>
+    </CopyFileToFolders>
+
     <CopyFileToFolders Include="ImpactoMeteorito.wav">
       <Filter>Resource</Filter>
     </CopyFileToFolders>
@@ -280,6 +352,7 @@
       <Filter>Resource</Filter>
     </CopyFileToFolders>
   </ItemGroup>
+
   <ItemGroup>
     <Filter Include="UI">
       <UniqueIdentifier>{6043e56a-b602-43d0-917f-2c243aae0df2}</UniqueIdentifier>

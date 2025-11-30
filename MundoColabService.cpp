@@ -2,14 +2,16 @@
 
 #include <cstdlib>
 #include <ctime>
+#include "ConfiguracionSprite.h"
 using namespace System::Drawing;
+
 
 MundoColabService::MundoColabService(int ancho, int alto, int vidasIniciales)
 : Mundo(ancho, alto, vidasIniciales) {
 nave = new Nave(50, 50);
 
 necesitaRecargar = false;
-srand(time(NULL)); // Inicializar la semilla para números aleatorios
+srand(time(NULL)); // Inicializar la semilla para nÃºmeros aleatorios
 mostrandoPregunta = false;
 respuestaSeleccionada = -1;
 respuestaCorrecta = -1;
@@ -39,8 +41,15 @@ MundoColabService::~MundoColabService() {
 //NAVE
 //---------------------------------------------------------------------------------//
 void MundoColabService::CargarSpriteNave(char* ruta, int filas, int columnas) {
-	nave->cargarImagen(ruta, filas, columnas);
+    if (nave == nullptr) {
+        nave = new Nave(100, 400);
+    }
+    nave->cargarImagen(ruta, filas, columnas);
+
+    // Configurar para Mundo Colab (igual que humano)
+    nave->setConfiguracion(ConfiguracionSprite::ConfiguracionMundoColab());
 }
+
 void MundoColabService::moverNave(Direccion tecla) {
 	if(nave->getNaveActiva()) nave->mover(tecla, this->anchoPanel, this->altoPanel);
 }
@@ -71,17 +80,17 @@ void MundoColabService::moverMeteorito() {
 	//se eliminan los que salen de la pantalla
 	for (int i = 0; i < enemigos.size(); i++) {
 
-		// Si sale totalmente por la izquierda o está desactivado
+		// Si sale totalmente por la izquierda o estÃ¡ desactivado
 		if (!enemigos[i]->getActivo() ||
 			enemigos[i]->getX() < -enemigos[i]->getAncho())
 		{
 			delete enemigos[i];
 			enemigos.erase(enemigos.begin() + i);
-			i--; // Ajustar índice después del erase
+			i--; // Ajustar Ã­ndice despuÃ©s del erase
 		}
 	}
 
-	// ---- 2. REPOSICIÓN (mínimo asegurado) ----
+	// ---- 2. REPOSICIÃ“N (mÃ­nimo asegurado) ----
 	while (enemigos.size() < minMeteoritos) {
 		spawnMeteoritosAleatorios();
 	}
@@ -106,15 +115,15 @@ void MundoColabService::spawnMeteoritosAleatorios() {
 	//velocidad aleatoria				//modificar para aumentar velocidad de meteoritos
 	int velocidadRandom = 10 + rand() % 30;
 		
-	//tamaño aleatorio
-	double tamaño = 0.5 + (rand() % 200) / 100.0 ;
+	//tamaÃ±o aleatorio
+	double tamaÃ±o = 0.5 + (rand() % 200) / 100.0 ;
 
 
 	MeteoritoEnemigo* meteoritoEnemigo = new MeteoritoEnemigo(anchoPanel - 50, yRandom, velocidadRandom);
 	meteoritoEnemigo->cargarImagen(rutaMeteorito, 1, 4);
 	meteoritoEnemigo->setActivo(true);
 
-	meteoritoEnemigo->setTamaño(tamaño);
+	meteoritoEnemigo->setTamaÃ±o(tamaÃ±o);
 
 	enemigos.push_back(meteoritoEnemigo);
 
@@ -141,16 +150,16 @@ void MundoColabService::moverEstrella() {
 	}
 	//se eliminan las que salen de la pantalla
 	for (int i = 0; i < estrellas.size(); i++) {
-		// Si sale totalmente por la izquierda o está desactivado
+		// Si sale totalmente por la izquierda o estÃ¡ desactivado
 		if (!estrellas[i]->getActivo() ||
 			estrellas[i]->getX() < -estrellas[i]->getAncho())
 		{
 			delete estrellas[i];
 			estrellas.erase(estrellas.begin() + i);
-			i--; // Ajustar índice después del erase
+			i--; // Ajustar Ã­ndice despuÃ©s del erase
 		}
 	}
-	// ---- 2. REPOSICIÓN (mínimo asegurado) ----
+	// ---- 2. REPOSICIÃ“N (mÃ­nimo asegurado) ----
 	while (estrellas.size() < minEstrellas) {
 		spawnEstrellasAleatorias();
 	}
@@ -171,7 +180,7 @@ void MundoColabService::spawnEstrellasAleatorias() {
 	//velocidad aleatoria				//modificar para aumentar velocidad de meteoritos
 	int velocidadRandom = 10 + rand() % 30;
 
-	//tamaño aleatorio
+	//tamaÃ±o aleatorio
 	
 
 
@@ -187,7 +196,7 @@ void MundoColabService::spawnEstrellasAleatorias() {
 //BALAS LASER
 void MundoColabService::disparar() {
 
-	// Si estás mostrando una pregunta, no puedes disparar
+	// Si estÃ¡s mostrando una pregunta, no puedes disparar
 	if (mostrandoPregunta) return;
 
 	// Si NO hay balas ? activar recarga y bloquear disparo
@@ -230,7 +239,7 @@ void MundoColabService::moverBalas() {
 
 void MundoColabService::procesarRecargaPorRespuesta(bool correcta) {
 
-	mostrandoPregunta = false; // <- SE TERMINÓ LA PREGUNTA
+	mostrandoPregunta = false; // <- SE TERMINÃ“ LA PREGUNTA
 
 	if (!necesitaRecargar) return;
 
