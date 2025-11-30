@@ -39,6 +39,8 @@ namespace NEXUSV2 {
 		
 			//TODO: Add the constructor code here
 			//
+			if (!this->DesignMode)
+			{
 			int altoHUD = pnlHUD->Height;
 			mundoColab = new MundoColabService(pnlJuego->Width, pnlJuego->Height - altoHUD + 50, 3);
 
@@ -53,7 +55,7 @@ namespace NEXUSV2 {
 
 			mundoColab->spawnMeteorito(1); //mantener 1 meteorito si o si (no es necesario)
 			mundoColab->spawnEstrella(1); //lo mismo
-
+			}
 			teclaPresionadaNave = Direccion::Ninguno;
 			sonidoDialogoReproducido = false;
 
@@ -543,9 +545,9 @@ namespace NEXUSV2 {
 				   int n = rand() % 3; // 0, 1 o 2
 
 				   switch (n) {
-				   case 0: gestorSonido->ReproducirEfecto("R2D2.1..wav", 1.0);
-				   case 1:gestorSonido->ReproducirEfecto("R2D2.2..wav", 1.0);
-				   case 2: gestorSonido->ReproducirEfecto("R2D2.3..wav", 1.0);
+				   case 0: gestorSonido->ReproducirEfecto("R2D2.1..wav", 1.0); break;
+				   case 1:gestorSonido->ReproducirEfecto("R2D2.2..wav", 1.0); break;
+				   case 2: gestorSonido->ReproducirEfecto("R2D2.3..wav", 1.0); break;
 				   }
 			   }
 
