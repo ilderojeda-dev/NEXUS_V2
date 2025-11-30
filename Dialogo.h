@@ -7,6 +7,7 @@ class Dialogo {
 private:
     string textoCompleto;
     string textoActual;
+   
     int indice;
     int contador;
     bool enProgreso;
@@ -16,6 +17,7 @@ private:
 
 public:
     Dialogo();
+    Dialogo(string texto); //nuevo
     ~Dialogo();
 
     void iniciar(string texto);
@@ -25,9 +27,13 @@ public:
     bool estaEnProgreso();
     void detener();
 
+
     void setAutoCerrar(bool ac, int tiempo = 180) {
         autoCerrar = ac;
         tiempoMaximo = tiempo;
         tiempoVisible = 0;
     }
+
+    string getTextoCompleto() { return textoCompleto; }
+
 };

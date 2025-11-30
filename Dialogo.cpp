@@ -22,9 +22,10 @@ void Dialogo::iniciar(string texto) {
     indice = 0;
     contador = 0;
     enProgreso = true;
-    tiempoVisible = 0; // ? Resetear contador
+tiempoVisible = 0; // Resetear contador
 }
 
+// --- ESTO VIENE DE MUNDO IA (Mantenlo) ---
 string Dialogo::getTextoActual() {
     return textoActual;
 }
@@ -37,13 +38,18 @@ void Dialogo::detener() {
     enProgreso = false;
 }
 
+// --- ESTO VIENE DE DEVELOP/COLABORATIVO (Mantenlo tambiÃ©n) ---
+Dialogo::Dialogo(string texto) { //nuevo
+    iniciar(texto);
+}
+
 bool Dialogo::actualizar() {
-    // Si el diálogo terminó de escribirse
+    // Si el diï¿½logo terminï¿½ de escribirse
     if (!enProgreso) {
         if (autoCerrar) {
             tiempoVisible++;
             if (tiempoVisible >= tiempoMaximo) {
-                return false; // Señal para cerrar
+                return false; // Seï¿½al para cerrar
             }
             return true; // ? Mantener visible mientras cuenta
         }

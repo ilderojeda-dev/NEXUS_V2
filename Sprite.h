@@ -30,6 +30,7 @@ public:
     int getAlto();
     void setX(int x);
     void setY(int y);
+
     Rectangle getRectangle();
 
     void setIndiceX(int ix) {
@@ -44,5 +45,8 @@ public:
     int getIndiceY() {
         return indiceY;
     }
+
+    //virtual Rectangle getRectangle(); //cambio a virtual
+
 };
 

@@ -18,7 +18,6 @@ Enemigo::Enemigo(int x, int y, int velocidad, int tipoMovimiento) : Sprite(x, y)
     this->activo = true;
     this->tipoMovimiento = tipoMovimiento;
 
-    
 }
 
 Enemigo::~Enemigo() {

@@ -6,7 +6,7 @@ using namespace System::Drawing;
 
 class Jugador : public Sprite
 {
-private:
+private:                  
     int vida;
     int velocidad;
     bool saltando;
@@ -28,7 +28,6 @@ public:
     void saltar(Direccion direccion);
     void actualizarSalto(int limiteAlto);
     void setConfiguracion(ConfiguracionSprite configuracion);
-
     int getVelocidad() { return velocidad; }
     void setVelocidad(int vel) { velocidad = vel; }
     int getVidas() { return vida; }
@@ -36,4 +35,5 @@ public:
     bool estaSaltando() { return saltando; }
     void setIndiceY(int ny) { this->indiceY = ny; }
     int getIndiceY() { return this->indiceY; }
+
 };
