@@ -16,7 +16,7 @@ public:
     ~ChipRecurso();
 
     void dibujar(Graphics^ canvas) override;
-    void mover(Direccion tecla, int limiteAncho, int limiteAlto, int velocidad) override {}
+    void mover(Direccion tecla, int limiteAncho, int limiteAlto) override {}
 
     void actualizarAnimacion();
     bool estaRecolectado() { return recolectado; }

@@ -86,7 +86,7 @@ void MundoHumanoService::generarAlertas() {
 }
 void MundoHumanoService::moverAlertas() {
 	for (int i = 0; i < alertas.size(); i++) {
-		alertas[i]->mover(Direccion::Ninguno, anchoPanel, altoPanel, 0);
+		alertas[i]->mover(Direccion::Ninguno, anchoPanel, altoPanel);
 	}
 }
 vector<Alerta*> MundoHumanoService::getAlertas() {
@@ -128,7 +128,7 @@ void MundoHumanoService::moverJugador(Direccion tecla) {
 	if (tecla == Direccion::Izquierda) siguiente.X -= vel;
 	if (tecla == Direccion::Derecha) siguiente.X += vel;
 	if (!hayColisionMuros(siguiente)) {
-		jugador->mover(tecla, anchoPanel, altoPanel,0);
+		jugador->mover(tecla, anchoPanel, altoPanel);
 	}
 	else {
 		// Si quieres, aquí puedes poner sonido de choque

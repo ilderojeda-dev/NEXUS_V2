@@ -1,13 +1,13 @@
 
 #include "RobotEnemigo.h"
 
-RobotEnemigo::RobotEnemigo() : Sprite() {}
+RobotEnemigo::RobotEnemigo() : Enemigo() {}
 
-RobotEnemigo::RobotEnemigo(int x, int y) : Sprite(x, y) {}
+RobotEnemigo::RobotEnemigo(int x, int y) : Enemigo(x, y, 0 , 0) {}
 
 RobotEnemigo::~RobotEnemigo() {}
 
-void RobotEnemigo::mover(Direccion direccion, int posInicial, int posFinal, int velocidad) {
+void RobotEnemigo::mover(Direccion direccion, int posInicial, int posFinal) {
     switch (direccion) {
     case Direccion::Arriba:
         this->y -= velocidad;
@@ -57,3 +57,4 @@ void RobotEnemigo::dibujar(Graphics^ canvas) {
     canvas->DrawImage(bmp, destino, porcion, GraphicsUnit::Pixel);
     delete bmp;
 }
+

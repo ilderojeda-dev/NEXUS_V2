@@ -16,7 +16,7 @@ public:
     FinalBossMundoIA(int x, int y, int dificultad);
     ~FinalBossMundoIA();
 
-    void mover(Direccion direccion, int posInicial, int PosFinal, int velocidad) override;
+    void mover(Direccion direccion, int posInicial, int PosFinal) override;
     void dibujar(Graphics^ canvas) override;
     void recibirDano(int cantidad);
     bool estaDerrotado() { return vidaActual <= 0; }

@@ -10,7 +10,7 @@ public:
 	Nave();
 	Nave(int x, int y);
 	~Nave();
-	void mover(Direccion tecla, int limiteAncho, int limiteAlto, int velocidad) override;
+	void mover(Direccion tecla, int limiteAncho, int limiteAlto) override;
 	void dibujar(Graphics^ canvas) override;
 
 	int getVidaa() { return vidaa; }

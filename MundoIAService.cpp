@@ -130,7 +130,7 @@ void MundoIAService::cargarFondos(char* rutaDia, char* rutaNoche) {
 
 void MundoIAService::moverJugador(Direccion tecla) {
     if (jugador && (!mostrandoDialogo || !dialogoBloqueaMovimiento)) {
-        jugador->mover(tecla, anchoPanel, altoPanel, 0);
+        jugador->mover(tecla, anchoPanel, altoPanel);
     }
 }
 
@@ -396,9 +396,12 @@ void MundoIAService::actualizarCinematica() {
 
     case 1: {
         // Robots derecha bajan
-        robots[0]->mover(Direccion::Abajo, robots[0]->getY(), 500, 6);
-        robots[1]->mover(Direccion::Abajo, robots[1]->getY(), 600, 6);
-        robots[2]->mover(Direccion::Abajo, robots[2]->getY(), 550, 6);
+        robots[0]->setVelocidad(6);
+        robots[1]->setVelocidad(6);
+        robots[2]->setVelocidad(6);
+        robots[0]->mover(Direccion::Abajo, robots[0]->getY(), 500);
+        robots[1]->mover(Direccion::Abajo, robots[1]->getY(), 600);
+        robots[2]->mover(Direccion::Abajo, robots[2]->getY(), 550);
 
         if (robots[0]->getY() == 500 && robots[1]->getY() == 600 && robots[2]->getY() == 550) {
             for (int i = 0; i < 3; i++) robots[i]->setIndiceY(1);
@@ -413,10 +416,12 @@ void MundoIAService::actualizarCinematica() {
         int puntoMedio = (robots[0]->getX() + robots[3]->getX()) / 2;
 
         for (int i = 0; i < 3; i++) {
-            robots[i]->mover(Direccion::Izquierda, robots[i]->getX(), puntoMedio + 100, 13);
+			robots[i]->setVelocidad(13); 
+            robots[i]->mover(Direccion::Izquierda, robots[i]->getX(), puntoMedio + 100);
         }
         for (int i = 3; i < 6; i++) {
-            robots[i]->mover(Direccion::Derecha, robots[i]->getX(), puntoMedio - 100, 13);
+            robots[i]->setVelocidad(13);
+            robots[i]->mover(Direccion::Derecha, robots[i]->getX(), puntoMedio - 100);
         }
 
         // Jugador asustado
@@ -442,12 +447,14 @@ void MundoIAService::actualizarCinematica() {
         // Robots se retiran
         if (!mostrandoDialogo) {
             for (int i = 0; i < 3; i++) {
-                robots[i]->mover(Direccion::Izquierda, robots[i]->getX(), 100, 20);
+                robots[i]->setVelocidad(20);
+                robots[i]->mover(Direccion::Izquierda, robots[i]->getX(), 100);
                 if (robots[i]->getX() == 100) robots[i]->setIndiceY(3);
             }
 
             for (int i = 3; i < 6; i++) {
-                robots[i]->mover(Direccion::Derecha, robots[i]->getX(), 1700, 20);
+                robots[i]->setVelocidad(20);
+                robots[i]->mover(Direccion::Derecha, robots[i]->getX(), 1700);
                 if (robots[i]->getX() == 1700) robots[i]->setIndiceY(1);
             }
 
@@ -510,17 +517,17 @@ void MundoIAService::moverRobotsAuto() {
     // Movimiento con velocidades distintas
     for (size_t i = 0; i < robots.size(); i++) {
         if (!robots[i]) continue;
-
-        int velocidad = 8 + (i % 3);
+		robots[i]->setVelocidad(8 + (i % 3));
+      
 
         if (robots[i]->getIndiceY() == 1) {
-            robots[i]->mover(Direccion::Izquierda, LIMITE_DERECHO, LIMITE_IZQUIERDO, velocidad);
+            robots[i]->mover(Direccion::Izquierda, LIMITE_DERECHO, LIMITE_IZQUIERDO);
             if (robots[i]->getX() <= LIMITE_IZQUIERDO) {
                 robots[i]->setIndiceY(3);
             }
         }
         else if (robots[i]->getIndiceY() == 3) {
-            robots[i]->mover(Direccion::Derecha, LIMITE_IZQUIERDO, LIMITE_DERECHO, velocidad);
+            robots[i]->mover(Direccion::Derecha, LIMITE_IZQUIERDO, LIMITE_DERECHO);
             if (robots[i]->getX() >= LIMITE_DERECHO) {
                 robots[i]->setIndiceY(1);
             }
@@ -546,7 +553,7 @@ void MundoIAService::actualizarProyectiles() {
         Izquierda : Derecha;
 
     for (int i = 0; i < balas.size(); i++) {
-        balas[i]->mover(direccionBala, anchoPanel, altoPanel, 10);
+        balas[i]->mover(direccionBala, anchoPanel, altoPanel);
         bool huboImpacto = false;
 
         // Colisión con robots
@@ -602,6 +609,7 @@ void MundoIAService::generarRobotsAutomaticos() {
     for (int i = 0; i < robotsIzq; i++) {
         int posY = posDisponibles[rand() % posDisponibles.size()];
         RobotEnemigo* robot = new RobotEnemigo(LIMITE_IZQUIERDO, posY);
+        robot->setVelocidad(6);
         robot->setIndiceY(3);
         robot->cargarImagen(rutaSpriteRobot, filasRobot, columnasRobot);
         robot->setEscala(1.2f);
@@ -615,6 +623,7 @@ void MundoIAService::generarRobotsAutomaticos() {
     for (int i = 0; i < robotsDer; i++) {
         int posY = posDisponibles[rand() % posDisponibles.size()];
         RobotEnemigo* robot = new RobotEnemigo(LIMITE_DERECHO, posY);
+		robot->setVelocidad(6);
         robot->setIndiceY(1);
         robot->cargarImagen(rutaSpriteRobot, filasRobot, columnasRobot);
         robot->setEscala(1.2f);
@@ -645,7 +654,7 @@ void MundoIAService::moverBoss() {
 
     // Entrada gradual
     if (boss->getX() > 1500) {
-        boss->mover(Direccion::Izquierda, boss->getX(), 1500, 1);
+        boss->mover(Direccion::Izquierda, boss->getX(), 1500);
 		boss->setIndiceY(0);
     }
     
@@ -655,7 +664,7 @@ void MundoIAService::moverSintIA() {
     if (!sintiaVisible || !sintia) return;
     // Entrada gradual
     if (sintia->getX() < 1300) {
-        sintia->mover(Direccion::Derecha, sintia->getX(), 1300, 8);
+        sintia->mover(Direccion::Derecha, sintia->getX(), 1300);
     }
 }
 

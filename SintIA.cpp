@@ -8,7 +8,8 @@ SintIA::SintIA(int x, int y) : Sprite(x, y) {
 
 SintIA::~SintIA() {}
 
-void SintIA::mover(Direccion direccion, int posInicial, int posFinal, int velocidad) {
+void SintIA::mover(Direccion direccion, int posInicial, int posFinal) {
+	int velocidad = 8;
     switch (direccion) {
     case Direccion::Arriba:
         this->y -= velocidad;

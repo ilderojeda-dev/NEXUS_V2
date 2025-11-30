@@ -12,7 +12,7 @@ public:
 	Enemigo();
 	Enemigo(int x, int y, int v, int tm);
 	~Enemigo();
-	virtual void mover(Direccion tecla, int limiteAncho, int limiteAlto, int velocidad) = 0;
+	virtual void mover(Direccion tecla, int limiteAncho, int limiteAlto) = 0;
 	virtual void aplicarEfectoAlJugador(Jugador& jugador) = 0;
 	void dibujar(Graphics^ canvas) override;
 	int getVelocidad();

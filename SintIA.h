@@ -14,7 +14,8 @@ public:
     ~SintIA();
 
 
-    void mover(Direccion direccion, int posInicial, int PosFinal, int velocidad) override;
+    void mover(Direccion direccion, int posInicial, int PosFinal) override;
+   
     void dibujar(Graphics^ canvas) override;
  
 

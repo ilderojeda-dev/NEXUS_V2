@@ -102,7 +102,7 @@ void Jugador::actualizarSalto(int limiteAlto) {
     }
 }
 
-void Jugador::mover(Direccion tecla, int limiteAncho, int limiteAlto, int velocidads) {
+void Jugador::mover(Direccion tecla, int limiteAncho, int limiteAlto) {
     if (tecla == Direccion::Ninguno) return;
 
     // Control en el aire

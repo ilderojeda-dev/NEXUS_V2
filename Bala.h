@@ -33,7 +33,8 @@ public:
         delete pincel;
     }
 
-    void mover(Direccion tecla, int limiteAncho, int limiteAlto, int velocidad) override {
+    void mover(Direccion tecla, int limiteAncho, int limiteAlto) override {
+        int velocidad = 10;
         switch (direccion) {
         case Direccion::Derecha:
             x += velocidad;

@@ -23,7 +23,7 @@ public:
     Jugador(int x, int y);
     ~Jugador();
 
-    void mover(Direccion tecla, int limiteAncho, int limiteAlto, int velocidad) override;
+    void mover(Direccion tecla, int limiteAncho, int limiteAlto) override;
     void dibujar(Graphics^ canvas) override;
     void saltar(Direccion direccion);
     void actualizarSalto(int limiteAlto);

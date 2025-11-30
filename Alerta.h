@@ -18,7 +18,7 @@ public:
 	int getTipoAlerta();
 	void setTipoAlerta(int n);
 
-	void mover(Direccion tecla, int limiteAncho, int limiteAlto, int velocidad) override;
+	void mover(Direccion tecla, int limiteAncho, int limiteAlto) override;
 	void dibujar(Graphics^ canvas) override;
 
 

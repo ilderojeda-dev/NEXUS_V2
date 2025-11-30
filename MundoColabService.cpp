@@ -25,7 +25,7 @@ void MundoColabService::CargarSpriteNave(char* ruta, int filas, int columnas) {
 }
 
 void MundoColabService::moverNave(Direccion tecla) {
-	nave->mover(tecla, anchoPanel, altoPanel,0);
+	nave->mover(tecla, anchoPanel, altoPanel);
 }
 
 void MundoColabService::dibujarTodo(Graphics^ canvas) {

@@ -13,9 +13,9 @@ void FinalBossMundoIA::setConfiguracion(ConfiguracionSprite configuracion) {
     config = configuracion;
 }
 
-void FinalBossMundoIA::mover(Direccion tecla, int limiteAncho, int limiteAlto, int velocidads) {
+void FinalBossMundoIA::mover(Direccion tecla, int limiteAncho, int limiteAltos) {
     if (tecla == Direccion::Ninguno) return;
-
+    
    
     // Configurar animación
     int maxFrames = config.getFramesAbajo();

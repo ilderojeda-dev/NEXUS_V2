@@ -19,9 +19,8 @@ public:
     ~Sprite();
 
     void cargarImagen(char* ruta, int filas, int columnas);
-    virtual void mover(Direccion tecla, int limiteAncho, int limiteAlto, int velocidad) = 0;
     virtual void dibujar(Graphics^ canvas) = 0;
-
+    virtual void mover(Direccion tecla, int limiteAncho, int limiteAlto) = 0;
     float getEscala();
     void setEscala(float e);
 
