@@ -19,6 +19,6 @@ public:
 	bool getActivo();
 	void setVelocidad(int velocidad);
 	void setActivo(bool activo);
-
+	
 };
 

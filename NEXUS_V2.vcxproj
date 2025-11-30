@@ -121,18 +121,29 @@
     <ClCompile Include="Aliado.cpp" />
     <ClCompile Include="ArchivoService.cpp" />
     <ClCompile Include="CortoCircuito.cpp" />
+    <ClCompile Include="Bala.cpp" />
+    <ClCompile Include="ChipRecurso.cpp" />
+    <ClCompile Include="ConfiguracionSprite.cpp" />
     <ClCompile Include="Dialogo.cpp" />
     <ClCompile Include="DialogoService.cpp" />
     <ClCompile Include="Enemigo.cpp" />
+    <ClCompile Include="FinalBossMundoIA.cpp" />
     <ClCompile Include="Fondo.cpp" />
     <ClCompile Include="FrmFinMundoHumano.cpp" />
+    <ClCompile Include="FrmFinMundoIA.cpp" />
+    <ClCompile Include="AliadoR2D2.cpp" />
+    <ClCompile Include="BalaLaser.cpp" />
+    <ClCompile Include="EstrellaRecurso.cpp" />
+    <ClCompile Include="FrmGameOverMundoColab.cpp" />
     <ClCompile Include="FrmInicio.cpp" />
     <ClCompile Include="FrmModulo1.cpp" />
     <ClCompile Include="FrmModulo2.cpp" />
     <ClCompile Include="FrmModulo3.cpp" />
     <ClCompile Include="FrmMundoHumano.cpp" />
     <ClCompile Include="GasToxico.cpp" />
+    <ClCompile Include="FrmYouWinMundoColab.cpp" />
     <ClCompile Include="Jugador.cpp" />
+    <ClCompile Include="MeteoritoEnemigo.cpp" />
     <ClCompile Include="Mundo.cpp" />
     <ClCompile Include="MundoHumanoService.cpp" />
     <ClCompile Include="Muro.cpp" />
@@ -144,9 +155,11 @@
     <ClCompile Include="PapelSeñal.cpp" />
     <ClCompile Include="Pregunta.cpp" />
     <ClCompile Include="PreguntaService.cpp" />
+    <ClCompile Include="PreguntaDialogoServiceMundoColab.cpp" />
     <ClCompile Include="Principal.cpp" />
     <ClCompile Include="Recurso.cpp" />
     <ClCompile Include="RobotEnemigo.cpp" />
+    <ClCompile Include="SintIA.cpp" />
     <ClCompile Include="SoundManager.cpp" />
     <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="VozTerrestre.cpp" />
@@ -156,11 +169,22 @@
     <ClInclude Include="Aliado.h" />
     <ClInclude Include="ArchivoService.h" />
     <ClInclude Include="CortoCircuito.h" />
+    <ClInclude Include="Bala.h" />
+    <ClInclude Include="ChipRecurso.h" />
+    <ClInclude Include="ConfiguracionSprite.h" />
     <ClInclude Include="Dialogo.h" />
     <ClInclude Include="DialogoService.h" />
     <ClInclude Include="Enemigo.h" />
+    <ClInclude Include="FinalBossMundoIA.h" />
     <ClInclude Include="Fondo.h" />
     <ClInclude Include="FrmFinMundoHumano.h">
+      <FileType>CppForm</FileType>
+    </ClInclude>
+    <ClInclude Include="FrmFinMundoIA.h">
+    <ClInclude Include="AliadoR2D2.h" />
+    <ClInclude Include="BalaLaser.h" />
+    <ClInclude Include="EstrellaRecurso.h" />
+    <ClInclude Include="FrmGameOverMundoColab.h">
       <FileType>CppForm</FileType>
     </ClInclude>
     <ClInclude Include="FrmInicio.h">
@@ -185,7 +209,11 @@
       <FileType>CppForm</FileType>
     </ClInclude>
     <ClInclude Include="GasToxico.h" />
+    <ClInclude Include="FrmYouWinMundoColab.h">
+      <FileType>CppForm</FileType>
+    </ClInclude>
     <ClInclude Include="Jugador.h" />
+    <ClInclude Include="MeteoritoEnemigo.h" />
     <ClInclude Include="Mundo.h" />
     <ClInclude Include="MundoHumanoService.h" />
     <ClInclude Include="Muro.h" />
@@ -195,11 +223,13 @@
     <ClInclude Include="PapelSeñal.h" />
     <ClInclude Include="Pregunta.h" />
     <ClInclude Include="PreguntaService.h" />
+    <ClInclude Include="PreguntaDialogoServiceMundoColab.h" />
     <ClInclude Include="Recurso.h" />
     <ClInclude Include="RegistroScore.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="RobotEnemigo.h" />
     <ClInclude Include="Sesion.h" />
+    <ClInclude Include="SintIA.h" />
     <ClInclude Include="SoundManager.h" />
     <ClInclude Include="Sprite.h" />
     <ClInclude Include="VozTerrestre.h" />
@@ -217,8 +247,14 @@
     <EmbeddedResource Include="FrmFinMundoHumano.resx">
       <DependentUpon>FrmFinMundoHumano.h</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="FrmFinMundoIA.resx">
+      <DependentUpon>FrmFinMundoIA.h</DependentUpon>
+    <EmbeddedResource Include="FrmGameOverMundoColab.resx">
+      <DependentUpon>FrmGameOverMundoColab.h</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FrmInicio.resx">
       <DependentUpon>FrmInicio.h</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="FrmModulo1.resx">
       <DependentUpon>FrmModulo1.h</DependentUpon>
@@ -232,15 +268,30 @@
     <EmbeddedResource Include="FrmMundoHumano.resx">
       <DependentUpon>FrmMundoHumano.h</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="FrmYouWinMundoColab.resx">
+      <DependentUpon>FrmYouWinMundoColab.h</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <Image Include="Alerta.png" />
     <Image Include="Astronauta.png" />
     <Image Include="DescargaElectrica.png" />
     <Image Include="FondoMensajeTerrestre.png" />
+    <Image Include="Autonomia.png" />
+    <Image Include="Chip.png" />
+    <Image Include="ChipImagen.png" />
+    <Image Include="corazon.png" />
+    <Image Include="FinalBossMundoIA.png" />
+    <Image Include="FinMundoIA.png" />
     <Image Include="FondoMundoIA.png" />
     <Image Include="GasToxico.png" />
     <Image Include="IconoTrajeAntiElectricidad.png" />
+    <Image Include="FondoMundoIANoche.png" />
+    <Image Include="Bala.png" />
+    <Image Include="FondoMundoIA.png" />
+    <Image Include="gameOverMundoColab.png" />
+    <Image Include="HUD izquierda.png" />
+    <Image Include="HUD mitad.jpeg" />
     <Image Include="InicioJuego.png" />
     <Image Include="MundoHumano.png" />
     <EmbeddedResource Include="FrmMundoIA.resx">
@@ -250,6 +301,10 @@
     <Image Include="TrajeAntiElectricidad.png" />
     <Image Include="VidaEmpty.png" />
     <Image Include="VidaFull.png" />
+    <Image Include="RobotImagen.png" />
+    <Image Include="SintIA.png" />
+    <Image Include="vidas.png" />
+    <Image Include="youWinMundoColab.png" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="FrmMundoColab.resx">
@@ -262,6 +317,7 @@
     <Image Include="PapelSeñal.png" />
     <Image Include="PersonajeMundoIA.png" />
     <Image Include="R2D2 Sprite.png" />
+    <Image Include="rd2.png" />
     <Image Include="RobotMundoIA.png" />
     <Image Include="SpriteEstrella.png" />
     <Image Include="SpriteNave.png" />
@@ -329,6 +385,53 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Files\SCORES.bin" />
+  </ItemGroup>
+  <ItemGroup>
+    <CopyFileToFolders Include="MusicaFondoMundoIA.wav">
+    <CopyFileToFolders Include="Bala.wav">
+      <FileType>Document</FileType>
+      <DestinationFolders Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(OutDir)Resource\</DestinationFolders>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="BalaImpacta.wav">
+      <FileType>Document</FileType>
+      <DestinationFolders Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(OutDir)Resource\</DestinationFolders>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="ImpactoMeteorito.wav">
+      <FileType>Document</FileType>
+      <DestinationFolders Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(OutDir)Resource\</DestinationFolders>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="SonidoEstrellaoPreguntaCorrecta.wav">
+      <FileType>Document</FileType>
+      <DestinationFolders Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(OutDir)Resource\</DestinationFolders>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="SonidoGanador.wav">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(OutDir)Resource\</ExcludedFromBuild>
+      <FileType>Document</FileType>
+      <DestinationFolders Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(OutDir)Resource\</DestinationFolders>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="SonidoPerdedor.wav">
+      <FileType>Document</FileType>
+      <DestinationFolders Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(OutDir)Resource\</DestinationFolders>
+    </CopyFileToFolders>
+  </ItemGroup>
+  <ItemGroup>
+    <CopyFileToFolders Include="EfectoSonidoBala.wav">
+      <FileType>Document</FileType>
+      <DestinationFolders Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(OutDir)Resource\</DestinationFolders>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="EfectoSonidoExplosion.wav">
+    <CopyFileToFolders Include="R2D2.1..wav">
+      <FileType>Document</FileType>
+      <DestinationFolders Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(OutDir)Resource\</DestinationFolders>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="R2D2.2..wav">
+      <FileType>Document</FileType>
+      <DestinationFolders Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(OutDir)Resource\</DestinationFolders>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="R2D2.3..wav">
+      <FileType>Document</FileType>
+      <DestinationFolders Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(OutDir)Resource\</DestinationFolders>
+    </CopyFileToFolders>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

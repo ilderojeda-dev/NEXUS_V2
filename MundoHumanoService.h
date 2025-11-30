@@ -28,7 +28,7 @@ private:
 	Dialogo* dialogoActual;
 	vector<Alerta*> alertas;
 	vector<Enemigo*> enemigos;
-	vector<PapelSeñal*> papelSeñal;
+	vector<PapelSe�al*> papelSe�al;
 	VozTerrestre* vozTerrestre;
 	vector<Muro> muros;
 
@@ -37,7 +37,7 @@ private:
 	bool tieneTrajeAntiGas = false;
 	TipoTraje trajeActivo = TipoTraje::Normal;
 
-	// --- ESTADO DE LA MISIÓN ---
+	// --- ESTADO DE LA MISI�N ---
 	int estabilidadNave = 70;
 	int indiceCriterio = 100;
 	int progresoMision = 0;
@@ -52,11 +52,11 @@ public:
 	MundoHumanoService(int ancho, int alto, int vidasIniciales);
 	~MundoHumanoService();
 
-	// 2. GESTIÓN DE ARCHIVOS (CARGA)
+	// 2. GESTI�N DE ARCHIVOS (CARGA)
 	void cargarParametrosDelArchivo();
 	void CargarValoresPorDefecto();
 
-	// 3. LÓGICA PRINCIPAL (DIBUJO Y MÓDULOS)
+	// 3. L�GICA PRINCIPAL (DIBUJO Y M�DULOS)
 	void dibujarTodo(Graphics^ canvas);
 	void inicializarMuros();
 	bool hayColisionMuros(Rectangle rectJugador);
@@ -80,7 +80,7 @@ public:
 	void eliminarEnemigosGasToxico();
 	vector<Enemigo*> getEnemigos() { return enemigos; }
 
-	// Funciones de generación (Respaldo/Hardcode)
+	// Funciones de generaci�n (Respaldo/Hardcode)
 	void generarEnemigosCortoCircuito();
 	void generarEnemigosGasToxico();
 
@@ -90,23 +90,23 @@ public:
 	int verificarColisionAlerta();
 	vector<Alerta*> getAlertas();
 
-	// Función de generación (Respaldo/Hardcode)
+	// Funci�n de generaci�n (Respaldo/Hardcode)
 	void generarAlertas();
 
 	// 7. RECURSOS Y ALIADOS
-	void moverAliadoPapelSeñal();
-	bool hayColisionPapelSeñal(Rectangle rectJugador);
-	vector<PapelSeñal*> getPapelSeñal() { return papelSeñal; } // Getter simple inline
+	void moverAliadoPapelSe�al();
+	bool hayColisionPapelSe�al(Rectangle rectJugador);
+	vector<PapelSe�al*> getPapelSe�al() { return papelSe�al; } // Getter simple inline
 
-	// Función de generación (Respaldo/Hardcode)
-	void generarPapelSeñal();
+	// Funci�n de generaci�n (Respaldo/Hardcode)
+	void generarPapelSe�al();
 
 	// 8. VOZ TERRESTRE (ALIADO)
 	void generarVozTerrestre();
 	void mostrarVozTerrestre(bool on);
 	VozTerrestre* getVozTerrestre() { return vozTerrestre; }
 
-	// 9. GETTERS Y SETTERS (ESTADÍSTICAS)
+	// 9. GETTERS Y SETTERS (ESTAD�STICAS)
 	int getEstabilidadNave() { return estabilidadNave; }
 	void setEstabilidadNave(int est) { estabilidadNave = est; }
 	int getIndiceCriterio() { return indiceCriterio; }

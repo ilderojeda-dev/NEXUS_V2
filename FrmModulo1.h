@@ -64,6 +64,7 @@ namespace NEXUSV2 {
 		{
 			System::ComponentModel::ComponentResourceManager^ resources = (gcnew System::ComponentModel::ComponentResourceManager(FrmModulo1::typeid));
 			this->pnlModulo = (gcnew System::Windows::Forms::Panel());
+			this->btnSalir = (gcnew System::Windows::Forms::Button());
 			this->btnOpcion3 = (gcnew System::Windows::Forms::Button());
 			this->btnOpcion2 = (gcnew System::Windows::Forms::Button());
 			this->btnOpcion1 = (gcnew System::Windows::Forms::Button());
