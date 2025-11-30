@@ -9,6 +9,10 @@
 #include "Pregunta.h"
 #include "Dialogo.h"
 
+
+
+
+
 class MundoColabService : public Mundo
 {
 private:
@@ -28,6 +32,10 @@ private:
 	bool mostrandoPregunta;
 	int respuestaSeleccionada;
 	int respuestaCorrecta;
+
+	bool colisionBala;
+	bool meteoritoNave;
+	bool estrellaNave;
 
 
 	PreguntaDialogoServiceMundoColab preguntaServiceMundoColab;
@@ -73,6 +81,17 @@ public:
 	//colisiones
 	void verificarColisiones();
 	
+
+	bool getColisionBala() { return colisionBala; };
+	void resetColisioBala() { colisionBala = false; };
+
+
+	bool getMeteorito() { return meteoritoNave; };
+	void resetColisionMeteorito() { meteoritoNave = false; };
+
+	bool getEstrella(){ return estrellaNave; }
+	void resetColisioEstrella() { estrellaNave = false; }
+
 
 	int getBalasDisponibles() { return balasDisponibles; }
 	int getBalasMaximas() { return balasMaximas; }

@@ -55,9 +55,6 @@
     <ClCompile Include="PreguntaService.cpp">
       <Filter>Service</Filter>
     </ClCompile>
-    <ClCompile Include="Playlist.cpp">
-      <Filter>Service</Filter>
-    </ClCompile>
     <ClCompile Include="MundoHumanoService.cpp">
       <Filter>Service</Filter>
     </ClCompile>
@@ -121,6 +118,9 @@
     <ClCompile Include="FrmYouWinMundoColab.cpp">
       <Filter>UI</Filter>
     </ClCompile>
+    <ClCompile Include="SoundManager.cpp">
+      <Filter>Service</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Mundo.h">
@@ -159,9 +159,6 @@
     <ClInclude Include="PreguntaService.h">
       <Filter>Service</Filter>
     </ClInclude>
-    <ClInclude Include="Playlist.h">
-      <Filter>Service</Filter>
-    </ClInclude>
     <ClInclude Include="MundoHumanoService.h">
       <Filter>Service</Filter>
     </ClInclude>
@@ -198,6 +195,7 @@
     <ClInclude Include="FrmMundoColab.h">
       <Filter>UI</Filter>
     </ClInclude>
+<<<<<<< HEAD
     <ClInclude Include="EstrellaRecurso.h">
       <Filter>Model\MundoColab</Filter>
     </ClInclude>
@@ -223,6 +221,11 @@
     <ClInclude Include="FrmYouWinMundoColab.h">
       <Filter>UI</Filter>
     </ClInclude>
+=======
+    <ClInclude Include="SoundManager.h">
+      <Filter>Service</Filter>
+    </ClInclude>
+>>>>>>> origin/develop
   </ItemGroup>
   <ItemGroup>
     <Image Include="MundoHumano.png">
@@ -279,5 +282,13 @@
     <Image Include="youWinMundoColab.png">
       <Filter>Resource</Filter>
     </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <CopyFileToFolders Include="MusicaFondoInicio.wav">
+      <Filter>Resource</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="EfectoClick.wav">
+      <Filter>Resource</Filter>
+    </CopyFileToFolders>
   </ItemGroup>
 </Project>

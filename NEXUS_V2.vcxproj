@@ -84,6 +84,10 @@
       <SubSystem>Windows</SubSystem>
       <EntryPointSymbol>main</EntryPointSymbol>
     </Link>
+    <PostBuildEvent>
+      <Command>
+      </Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -140,13 +144,13 @@
     <ClCompile Include="FrmMundoColab.cpp" />
     <ClCompile Include="MundoColabService.cpp" />
     <ClCompile Include="Nave.cpp" />
-    <ClCompile Include="Playlist.cpp" />
     <ClCompile Include="Pregunta.cpp" />
     <ClCompile Include="PreguntaService.cpp" />
     <ClCompile Include="PreguntaDialogoServiceMundoColab.cpp" />
     <ClCompile Include="Principal.cpp" />
     <ClCompile Include="Recurso.cpp" />
     <ClCompile Include="RobotEnemigo.cpp" />
+    <ClCompile Include="SoundManager.cpp" />
     <ClCompile Include="Sprite.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -197,20 +201,22 @@
     <ClInclude Include="MundoIAService.h" />
     <ClInclude Include="MundoColabService.h" />
     <ClInclude Include="Nave.h" />
-    <ClInclude Include="Playlist.h" />
     <ClInclude Include="Pregunta.h" />
     <ClInclude Include="PreguntaService.h" />
     <ClInclude Include="PreguntaDialogoServiceMundoColab.h" />
     <ClInclude Include="Recurso.h" />
     <ClInclude Include="RobotEnemigo.h" />
+    <ClInclude Include="SoundManager.h" />
     <ClInclude Include="Sprite.h" />
   </ItemGroup>
   <ItemGroup>
+    <Reference Include="PresentationCore" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="FrmGameOverMundoColab.resx">
@@ -218,6 +224,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FrmInicio.resx">
       <DependentUpon>FrmInicio.h</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="FrmModulo1.resx">
       <DependentUpon>FrmModulo1.h</DependentUpon>
@@ -267,6 +274,30 @@
     <Image Include="RobotMundoIA.png" />
     <Image Include="SpriteEstrella.png" />
     <Image Include="SpriteNave.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <CopyFileToFolders Include="EfectoClick.wav">
+      <FileType>Document</FileType>
+      <DestinationFolders Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(OutDir)Resource\</DestinationFolders>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="MusicaFondoInicio.wav">
+      <DeploymentContent>false</DeploymentContent>
+      <FileType>Document</FileType>
+      <DestinationFolders Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(OutDir)Resource\</DestinationFolders>
+    </CopyFileToFolders>
+  </ItemGroup>
+  <ItemGroup>
+    <Media Include="Bala.wav" />
+    <Media Include="BalaImpacta.wav" />
+    <Media Include="ImpactoMeteorito.wav" />
+    <Media Include="SonidoEstrellaoPreguntaCorrecta.wav" />
+    <Media Include="SonidoGanador.wav" />
+    <Media Include="SonidoPerdedor.wav" />
+    <Media Include="x64\Debug\Resource\R2D2.1..wav">
+      <DeploymentContent>false</DeploymentContent>
+    </Media>
+    <Media Include="x64\Debug\Resource\R2D2.2..wav" />
+    <Media Include="x64\Debug\Resource\R2D2.3..wav" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

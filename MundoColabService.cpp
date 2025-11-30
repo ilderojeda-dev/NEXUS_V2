@@ -156,8 +156,8 @@ void MundoColabService::moverEstrella() {
 	}
 	//probabilidad de spawn de enemigos aleatoriamente
 	if (estrellas.size() < maxEstrellas) {
-		int prob = rand() % 100;  // 1% de probabilidad por frame
-		if (prob < 50) {
+		int prob = rand() % 100;  // 5% de probabilidad por frame
+		if (prob < 1) {
 			spawnEstrellasAleatorias();
 		}
 	}
@@ -290,7 +290,6 @@ void MundoColabService::animarAliado() {
 
 
 
-
 //COLISIONES
 void MundoColabService::verificarColisiones() {
 
@@ -326,6 +325,7 @@ void MundoColabService::verificarColisiones() {
 			delete enemigos[i];
 			enemigos.erase(enemigos.begin() + i);
 			i--;
+			meteoritoNave = true;
 
 			if (nave->getVidas() <= 0) nave->setNaveActiva(false); //desactivar nave
 				//mostrar el gameover
@@ -355,14 +355,18 @@ void MundoColabService::verificarColisiones() {
 			if (rectBala.IntersectsWith(rectEnemigo)) {
 				if (meteorito != nullptr) {
 
+					
+
 					meteorito->setVidasMeteorito(meteorito->getVidasMeteorito() - 1);
 
 					if (meteorito->getVidasMeteorito() <= 0) {
+															
 						meteorito->setActivo(false);
 						delete enemigos[i];
 						enemigos.erase(enemigos.begin() + i);
 						i--;
-						balas[b]->iniciarExplosion();
+						balas[b]->iniciarExplosion();		
+						colisionBala = true;//para el sonido de la explosion
 					}// destruir bala
 					else {
 						delete balas[b];
@@ -385,11 +389,14 @@ void MundoColabService::verificarColisiones() {
 			Rectangle rectEstrella = estrellas[i]->getRectangleEstrella();
 
 			if (rectNave.IntersectsWith(rectEstrella)) {
+		
+
 				nave->setVidas(nave->getVidas() + 1);		//suma la vida de la nave
 
 				delete estrellas[i];
 				estrellas.erase(estrellas.begin() + i);
 				i--;
+				estrellaNave = true;
 
 				if (nave->getVidas() > 3)nave->setVidas(3);
 				continue;
@@ -405,13 +412,14 @@ void MundoColabService::verificarColisiones() {
 					Rectangle rectBala = balas[b]->getRectangleBala();
 
 					if (rectBala.IntersectsWith(rectEstrella)) {
+						
 						// destruir bala y estrella
 						
 						delete estrellas[i];
 						estrellas.erase(estrellas.begin() + i);
 						i--;
 						balas[b]->iniciarExplosion();
-
+						colisionBala = true;
 						
 						
 						break;	

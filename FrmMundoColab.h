@@ -5,6 +5,7 @@
 #include "PreguntaDialogoServiceMundoColab.h"
 #include "FrmGameOverMundoColab.h"
 #include "FrmYouWinMundoColab.h"
+#include "SoundManager.h"
 using namespace System;
 namespace NEXUSV2 {
 
@@ -14,7 +15,7 @@ namespace NEXUSV2 {
 	using namespace System::Windows::Forms;
 	using namespace System::Data;
 	using namespace System::Drawing;
-
+	
 	/// <summary>
 	/// Summary for FrmMundoColab
 	/// </summary>
@@ -25,6 +26,10 @@ namespace NEXUSV2 {
 		{
 			this->KeyPreview = true; // Habilitar la captura de teclas en el formulario
 			InitializeComponent();
+
+
+			gestorSonido = gcnew NEXUS_V2::Service::SoundManager();
+
 			// --- OPTIMIZACIÓN: INICIALIZACIÓN DE BUFFER PERSISTENTE ---
 			// 1. Obtener el contexto de buffer.
 			bufferContext = BufferedGraphicsManager::Current;
@@ -50,8 +55,10 @@ namespace NEXUSV2 {
 			mundoColab->spawnEstrella(1); //lo mismo
 
 			teclaPresionadaNave = Direccion::Ninguno;
-		}
+			sonidoDialogoReproducido = false;
 
+		}
+		bool sonidoDialogoReproducido;
 	protected:
 
 		/// <summary>
@@ -72,7 +79,7 @@ namespace NEXUSV2 {
 			}
 			// ---------------------------------------------------
 		}
-
+	private: NEXUS_V2::Service::SoundManager^ gestorSonido;
 	private:
 		// --- MIEMBROS AÑADIDOS PARA OPTIMIZACIÓN GRÁFICA ---
 		BufferedGraphicsContext^ bufferContext;
@@ -386,7 +393,7 @@ namespace NEXUSV2 {
 
 		// 1. Verificar la condición de Victoria: Sobrevivir 500 ticks de tiempoTotal
 		if (mundoColab != nullptr && tiempoTotal >= 500) {
-
+			gestorSonido->ReproducirEfecto("SonidoGanador.wav", 1.0);
 			timer1->Enabled = false; // Detener el timer del juego
 
 			// Mostrar el formulario de Victoria
@@ -402,7 +409,7 @@ namespace NEXUSV2 {
 		if (mundoColab != nullptr && mundoColab->getVidasNave() <= 0) {
 
 			timer1->Enabled = false; // Detener el timer del juego
-
+			gestorSonido->ReproducirEfecto("SonidoPerdedor.wav", 1.0);
 			// Creamos una instancia del formulario de Game Over
 			NEXUSV2::FrmGameOverMundoColab^ gameOverForm = gcnew NEXUSV2::FrmGameOverMundoColab();
 
@@ -425,11 +432,11 @@ namespace NEXUSV2 {
 		// Lógica de mensaje de recarga
 		if (mundoColab->getNecesitaRecargar()) {
 			lblMensaje->Text = "¡SIN BALAS! Presiona R para recargar";
-			lblMensaje->ForeColor = Color::Red;
+			
 		}
 		else {
 			lblMensaje->Text = "Presiona L para disparar (R para recargar)";
-			lblMensaje->ForeColor = Color::Yellow; // O el color original que uses
+			
 		}
 
 		// Asumiendo que getRespuestasCorrectas() existe en MundoColabService
@@ -476,6 +483,17 @@ namespace NEXUSV2 {
 			}
 			mundoColab->verificarColisiones(); // ES MUY IMPORTANTE LLAMAR A COLISIONES AQUÍ
 
+			if (mundoColab->getColisionBala()) {														//SONIDOS
+				gestorSonido->ReproducirEfecto("BalaImpacta.wav", 1.0);
+			}
+			mundoColab->resetColisioBala();
+
+			if (mundoColab->getEstrella())gestorSonido->ReproducirEfecto("SonidoEstrellaoPreguntaCorrecta.wav", 1.0);
+			mundoColab->resetColisioEstrella();
+
+			if (mundoColab->getMeteorito()) gestorSonido->ReproducirEfecto("ImpactoMeteorito.wav", 1.0);
+			mundoColab->resetColisionMeteorito();
+
 			// --- VERIFICACIÓN DE FIN DE JUEGO (CORRECCIÓN) ---
 			checkGameStatus();
 			// Detenemos la ejecución de la lógica del juego si el timer está desactivado
@@ -492,17 +510,22 @@ namespace NEXUSV2 {
 			// Lógica de tiempo y diálogo
 			tiempoTotal++;
 			tiempoDialogo++;
-			if (tiempoDialogo >= 50) {
+			if (tiempoDialogo >= 50 + rand() % 50) {
 				mostrarDialogo();
 				tiempoDialogo = 0;
+				
 			}
 			if (dialogoMostrandose != nullptr) {
-
+				if (!sonidoDialogoReproducido) {
+					AudioRandomR2D2();
+					sonidoDialogoReproducido = true;
+				}
 				bool sigue = dialogoMostrandose->actualizar();
 				lblDialogo->Text = gcnew String(dialogoMostrandose->getTextoActual().c_str());
-
+			
 				if (!sigue) {
 					dialogoMostrandose = nullptr;
+					sonidoDialogoReproducido = false;
 				}
 			}
 
@@ -516,7 +539,15 @@ namespace NEXUSV2 {
 			// Actualizar el HUD
 			actualizarHUD();
 		}
+			   void FrmMundoColab::AudioRandomR2D2() {
+				   int n = rand() % 3; // 0, 1 o 2
 
+				   switch (n) {
+				   case 0: gestorSonido->ReproducirEfecto("R2D2.1..wav", 1.0);
+				   case 1:gestorSonido->ReproducirEfecto("R2D2.2..wav", 1.0);
+				   case 2: gestorSonido->ReproducirEfecto("R2D2.3..wav", 1.0);
+				   }
+			   }
 
 	private: System::Void FrmMundoColab_KeyDown(System::Object^ sender, System::Windows::Forms::KeyEventArgs^ e) {
 
@@ -539,6 +570,7 @@ namespace NEXUSV2 {
 		// Disparar
 		if (e->KeyCode == Keys::L) {
 			mundoColab->disparar();
+			gestorSonido->ReproducirEfecto("bala.wav", 1.0);
 		}
 
 		// Recargar
@@ -605,6 +637,8 @@ private: System::Void pnlJuego_Paint(System::Object^ sender, System::Windows::Fo
 
 		   // índice de respuesta correcta según tu clase Pregunta
 		   respuestaCorrectaIndex = p->getRespuestaCorrecta();
+		   if (respuestaCorrectaIndex) gestorSonido->ReproducirEfecto("SonidoEstrellaoPreguntaCorrecta.wav", 1.0);
+
 		   pnlTexto->BackColor = System::Drawing::Color::FromArgb(180, 0, 0, 0);
 		   // Mostrar panel de pregunta (asegúrate de que pnlPregunta exista en el diseñador)
 		   pnlTexto->BringToFront();
