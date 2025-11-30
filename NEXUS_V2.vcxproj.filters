@@ -1,79 +1,38 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Model">
-      <UniqueIdentifier>{9b903914-5280-43cc-a771-47c310ea5b4a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Service">
-      <UniqueIdentifier>{d945a2b3-71a2-4670-841c-049246b25e52}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="UI">
-      <UniqueIdentifier>{cf87d7d8-b0bd-4d5d-b284-ad3d13fcb457}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Resource">
-      <UniqueIdentifier>{65180669-2efb-485b-88df-bf6c3373b9ab}</UniqueIdentifier>
-    </Filter>
-  </ItemGroup>
-  <ItemGroup>
     <ClCompile Include="Principal.cpp" />
-    <ClCompile Include="Mundo.cpp">
-      <Filter>Model</Filter>
-    </ClCompile>
-    <ClCompile Include="Sprite.cpp">
-      <Filter>Model</Filter>
-    </ClCompile>
-    <ClCompile Include="Enemigo.cpp">
+    <ClCompile Include="Alerta.cpp">
       <Filter>Model</Filter>
     </ClCompile>
     <ClCompile Include="Aliado.cpp">
       <Filter>Model</Filter>
     </ClCompile>
-    <ClCompile Include="Fondo.cpp">
+    <ClCompile Include="AliadoR2D2.cpp">
+      <Filter>Model</Filter>
+    </ClCompile>
+    <ClCompile Include="BalaLaser.cpp">
       <Filter>Model</Filter>
     </ClCompile>
     <ClCompile Include="Dialogo.cpp">
       <Filter>Model</Filter>
     </ClCompile>
-    <ClCompile Include="Jugador.cpp">
-      <Filter>Model</Filter>
-    </ClCompile>
-    <ClCompile Include="Pregunta.cpp">
-      <Filter>Model</Filter>
-    </ClCompile>
-    <ClCompile Include="Recurso.cpp">
-      <Filter>Model</Filter>
-    </ClCompile>
-    <ClCompile Include="Alerta.cpp">
-      <Filter>Model</Filter>
-    </ClCompile>
-    <ClCompile Include="RobotEnemigo.cpp">
-      <Filter>Model</Filter>
-    </ClCompile>
-    <ClCompile Include="Nave.cpp">
-      <Filter>Model</Filter>
-    </ClCompile>
     <ClCompile Include="DialogoService.cpp">
       <Filter>Service</Filter>
     </ClCompile>
-    <ClCompile Include="PreguntaService.cpp">
-      <Filter>Service</Filter>
+    <ClCompile Include="Enemigo.cpp">
+      <Filter>Model</Filter>
     </ClCompile>
-    <ClCompile Include="MundoHumanoService.cpp">
-      <Filter>Service</Filter>
+    <ClCompile Include="EstrellaRecurso.cpp">
+      <Filter>Model</Filter>
     </ClCompile>
-    <ClCompile Include="Muro.cpp">
-      <Filter>Service</Filter>
+    <ClCompile Include="Fondo.cpp">
+      <Filter>Model</Filter>
     </ClCompile>
-    <ClCompile Include="MundoIAService.cpp">
-      <Filter>Service</Filter>
-    </ClCompile>
-    <ClCompile Include="MundoColabService.cpp">
-      <Filter>Service</Filter>
-    </ClCompile>
-    <ClCompile Include="FrmInicio.cpp">
+    <ClCompile Include="FrmGameOverMundoColab.cpp">
       <Filter>UI</Filter>
     </ClCompile>
-    <ClCompile Include="FrmMundoHumano.cpp">
+    <ClCompile Include="FrmInicio.cpp">
       <Filter>UI</Filter>
     </ClCompile>
     <ClCompile Include="FrmModulo1.cpp">
@@ -88,143 +47,251 @@
     <ClCompile Include="FrmModulo4.cpp">
       <Filter>UI</Filter>
     </ClCompile>
+    <ClCompile Include="FrmMundoColab.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
+    <ClCompile Include="FrmMundoHumano.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
     <ClCompile Include="FrmMundoIA.cpp">
       <Filter>UI</Filter>
     </ClCompile>
-    <ClCompile Include="FrmMundoColab.cpp">
+    <ClCompile Include="FrmYouWinMundoColab.cpp">
       <Filter>UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Jugador.cpp">
+      <Filter>Model</Filter>
+    </ClCompile>
+    <ClCompile Include="MeteoritoEnemigo.cpp">
+      <Filter>Model</Filter>
+    </ClCompile>
+    <ClCompile Include="Mundo.cpp">
+      <Filter>Model</Filter>
+    </ClCompile>
+    <ClCompile Include="MundoColabService.cpp">
+      <Filter>Service</Filter>
+    </ClCompile>
+    <ClCompile Include="MundoHumanoService.cpp">
+      <Filter>Service</Filter>
+    </ClCompile>
+    <ClCompile Include="MundoIAService.cpp">
+      <Filter>Service</Filter>
+    </ClCompile>
+    <ClCompile Include="Muro.cpp">
+      <Filter>Model</Filter>
+    </ClCompile>
+    <ClCompile Include="Nave.cpp">
+      <Filter>Model</Filter>
+    </ClCompile>
+    <ClCompile Include="Pregunta.cpp">
+      <Filter>Model</Filter>
+    </ClCompile>
+    <ClCompile Include="PreguntaDialogoServiceMundoColab.cpp">
+      <Filter>Service</Filter>
+    </ClCompile>
+    <ClCompile Include="PreguntaService.cpp">
+      <Filter>Service</Filter>
+    </ClCompile>
+    <ClCompile Include="Recurso.cpp">
+      <Filter>Model</Filter>
+    </ClCompile>
+    <ClCompile Include="RobotEnemigo.cpp">
+      <Filter>Model</Filter>
     </ClCompile>
     <ClCompile Include="SoundManager.cpp">
       <Filter>Service</Filter>
     </ClCompile>
+    <ClCompile Include="Sprite.cpp">
+      <Filter>Model</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Mundo.h">
-      <Filter>Model</Filter>
-    </ClInclude>
-    <ClInclude Include="Sprite.h">
-      <Filter>Model</Filter>
-    </ClInclude>
-    <ClInclude Include="Enemigo.h">
+    <ClInclude Include="FrmGameOverMundoColab.h" />
+    <ClInclude Include="FrmInicio.h" />
+    <ClInclude Include="FrmModulo1.h" />
+    <ClInclude Include="FrmModulo2.h" />
+    <ClInclude Include="FrmModulo3.h" />
+    <ClInclude Include="FrmModulo4.h" />
+    <ClInclude Include="FrmMundoHumano.h" />
+    <ClInclude Include="FrmMundoIA.h" />
+    <ClInclude Include="FrmMundoColab.h" />
+    <ClInclude Include="FrmYouWinMundoColab.h" />
+    <ClInclude Include="Alerta.h">
       <Filter>Model</Filter>
     </ClInclude>
     <ClInclude Include="Aliado.h">
       <Filter>Model</Filter>
     </ClInclude>
-    <ClInclude Include="Fondo.h">
+    <ClInclude Include="AliadoR2D2.h">
+      <Filter>Model</Filter>
+    </ClInclude>
+    <ClInclude Include="BalaLaser.h">
       <Filter>Model</Filter>
     </ClInclude>
     <ClInclude Include="Dialogo.h">
       <Filter>Model</Filter>
     </ClInclude>
-    <ClInclude Include="Jugador.h">
-      <Filter>Model</Filter>
-    </ClInclude>
-    <ClInclude Include="Pregunta.h">
-      <Filter>Model</Filter>
-    </ClInclude>
-    <ClInclude Include="Recurso.h">
-      <Filter>Model</Filter>
-    </ClInclude>
-    <ClInclude Include="Alerta.h">
-      <Filter>Model</Filter>
-    </ClInclude>
-    <ClInclude Include="RobotEnemigo.h">
-      <Filter>Model</Filter>
-    </ClInclude>
-    <ClInclude Include="Nave.h">
-      <Filter>Model</Filter>
-    </ClInclude>
     <ClInclude Include="DialogoService.h">
       <Filter>Service</Filter>
     </ClInclude>
-    <ClInclude Include="PreguntaService.h">
+    <ClInclude Include="Enemigo.h">
+      <Filter>Model</Filter>
+    </ClInclude>
+    <ClInclude Include="EstrellaRecurso.h">
+      <Filter>Model</Filter>
+    </ClInclude>
+    <ClInclude Include="Fondo.h">
+      <Filter>Model</Filter>
+    </ClInclude>
+    <ClInclude Include="Jugador.h">
+      <Filter>Model</Filter>
+    </ClInclude>
+    <ClInclude Include="MeteoritoEnemigo.h">
+      <Filter>Model</Filter>
+    </ClInclude>
+    <ClInclude Include="Mundo.h">
+      <Filter>Model</Filter>
+    </ClInclude>
+    <ClInclude Include="MundoColabService.h">
       <Filter>Service</Filter>
     </ClInclude>
     <ClInclude Include="MundoHumanoService.h">
       <Filter>Service</Filter>
     </ClInclude>
-    <ClInclude Include="Muro.h">
-      <Filter>Service</Filter>
-    </ClInclude>
     <ClInclude Include="MundoIAService.h">
       <Filter>Service</Filter>
     </ClInclude>
-    <ClInclude Include="MundoColabService.h">
+    <ClInclude Include="Muro.h">
+      <Filter>Model</Filter>
+    </ClInclude>
+    <ClInclude Include="Nave.h">
+      <Filter>Model</Filter>
+    </ClInclude>
+    <ClInclude Include="Pregunta.h">
+      <Filter>Model</Filter>
+    </ClInclude>
+    <ClInclude Include="PreguntaDialogoServiceMundoColab.h">
       <Filter>Service</Filter>
     </ClInclude>
-    <ClInclude Include="FrmInicio.h">
-      <Filter>UI</Filter>
+    <ClInclude Include="PreguntaService.h">
+      <Filter>Service</Filter>
     </ClInclude>
-    <ClInclude Include="FrmMundoHumano.h">
-      <Filter>UI</Filter>
+    <ClInclude Include="Recurso.h">
+      <Filter>Model</Filter>
     </ClInclude>
-    <ClInclude Include="FrmModulo1.h">
-      <Filter>UI</Filter>
-    </ClInclude>
-    <ClInclude Include="FrmModulo2.h">
-      <Filter>UI</Filter>
-    </ClInclude>
-    <ClInclude Include="FrmModulo3.h">
-      <Filter>UI</Filter>
-    </ClInclude>
-    <ClInclude Include="FrmModulo4.h">
-      <Filter>UI</Filter>
-    </ClInclude>
-    <ClInclude Include="FrmMundoIA.h">
-      <Filter>UI</Filter>
-    </ClInclude>
-    <ClInclude Include="FrmMundoColab.h">
-      <Filter>UI</Filter>
+    <ClInclude Include="RobotEnemigo.h">
+      <Filter>Model</Filter>
     </ClInclude>
     <ClInclude Include="SoundManager.h">
       <Filter>Service</Filter>
     </ClInclude>
+    <ClInclude Include="Sprite.h">
+      <Filter>Model</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Image Include="MundoHumano.png">
+    <Image Include="Alerta.png">
       <Filter>Resource</Filter>
     </Image>
     <Image Include="Astronauta.png">
       <Filter>Resource</Filter>
     </Image>
-    <Image Include="InicioJuego.png">
-      <Filter>Resource</Filter>
-    </Image>
-    <Image Include="Alerta.png">
+    <Image Include="Bala.png">
       <Filter>Resource</Filter>
     </Image>
     <Image Include="FondoMundoCOlab.png">
       <Filter>Resource</Filter>
     </Image>
-    <Image Include="SpriteNave.png">
+    <Image Include="FondoMundoIA.png">
       <Filter>Resource</Filter>
     </Image>
-    <Image Include="SpriteEstrella.png">
+    <Image Include="gameOverMundoColab.png">
       <Filter>Resource</Filter>
     </Image>
-    <Image Include="R2D2 Sprite.png">
+    <Image Include="HUD izquierda.png">
+      <Filter>Resource</Filter>
+    </Image>
+    <Image Include="HUD mitad.jpeg">
+      <Filter>Resource</Filter>
+    </Image>
+    <Image Include="InicioJuego.png">
       <Filter>Resource</Filter>
     </Image>
     <Image Include="MeteoritoSprite.png">
       <Filter>Resource</Filter>
     </Image>
-    <Image Include="FondoMundoIA.png">
+    <Image Include="MundoHumano.png">
       <Filter>Resource</Filter>
     </Image>
     <Image Include="PersonajeMundoIA.png">
       <Filter>Resource</Filter>
     </Image>
+    <Image Include="R2D2 Sprite.png">
+      <Filter>Resource</Filter>
+    </Image>
+    <Image Include="rd2.png">
+      <Filter>Resource</Filter>
+    </Image>
     <Image Include="RobotMundoIA.png">
+      <Filter>Resource</Filter>
+    </Image>
+    <Image Include="SpriteEstrella.png">
+      <Filter>Resource</Filter>
+    </Image>
+    <Image Include="SpriteNave.png">
+      <Filter>Resource</Filter>
+    </Image>
+    <Image Include="youWinMundoColab.png">
       <Filter>Resource</Filter>
     </Image>
   </ItemGroup>
   <ItemGroup>
-    <CopyFileToFolders Include="MusicaFondoInicio.wav">
+    <CopyFileToFolders Include="Bala.wav">
+      <Filter>Resource</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="BalaImpacta.wav">
       <Filter>Resource</Filter>
     </CopyFileToFolders>
     <CopyFileToFolders Include="EfectoClick.wav">
       <Filter>Resource</Filter>
     </CopyFileToFolders>
+    <CopyFileToFolders Include="ImpactoMeteorito.wav">
+      <Filter>Resource</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="MusicaFondoInicio.wav">
+      <Filter>Resource</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="SonidoEstrellaoPreguntaCorrecta.wav">
+      <Filter>Resource</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="SonidoGanador.wav">
+      <Filter>Resource</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="SonidoPerdedor.wav">
+      <Filter>Resource</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="R2D2.1..wav">
+      <Filter>Resource</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="R2D2.2..wav">
+      <Filter>Resource</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="R2D2.3..wav">
+      <Filter>Resource</Filter>
+    </CopyFileToFolders>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="UI">
+      <UniqueIdentifier>{6043e56a-b602-43d0-917f-2c243aae0df2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Model">
+      <UniqueIdentifier>{38be6a13-ce5a-4b92-9068-d9e5a8c45822}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource">
+      <UniqueIdentifier>{74e44d61-6339-43cb-8671-3bbec3df1387}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Service">
+      <UniqueIdentifier>{527938b2-4378-4b8c-a060-32c5d95e938b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
 </Project>
