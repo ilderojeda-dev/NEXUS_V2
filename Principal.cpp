@@ -4,7 +4,7 @@
 #include "FrmModulo1.h"
 #include "FrmModulo2.h"
 #include "FrmModulo3.h"	
-
+#include "FrmFinMundoIA1.h"
 #include "FrmMundoColab.h"
 
 using namespace System;

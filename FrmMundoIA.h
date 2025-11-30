@@ -1,7 +1,8 @@
 ﻿#pragma once
 #include "MundoIAService.h"
 #include "SoundManager.h"
-#include "FrmFinMundoIA.h"
+#include "FrmFinMundoIA1.h"
+#include "Sesion.h"
 
 namespace NEXUSV2 {
 	using namespace System;
@@ -47,6 +48,7 @@ namespace NEXUSV2 {
 			mundoIAService->cargarSintIA("SintIA.png", 4, 9);
 			mundoIAService->getSintIA()->setEscala(0.4f);
 
+			this->esModoHistoria = Sesion::EsModoHistoria;
 			// Crear chips
 
 			teclaPresionada = Ninguno;
@@ -96,7 +98,7 @@ namespace NEXUSV2 {
 	private: System::Windows::Forms::PictureBox^ pictureBox4;
 	private: System::Windows::Forms::Button^ btnSalir;
 
-
+		   bool esModoHistoria;
 		   bool sintiaInvocada; 
 		   bool derrota = false;
 		   bool victoria = false;
@@ -238,9 +240,9 @@ namespace NEXUSV2 {
 			   this->btnSalir->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 8.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				   static_cast<System::Byte>(0)));
 			   this->btnSalir->ForeColor = System::Drawing::SystemColors::ActiveCaptionText;
-			   this->btnSalir->Location = System::Drawing::Point(1798, 981);
+			   this->btnSalir->Location = System::Drawing::Point(1787, 891);
 			   this->btnSalir->Name = L"btnSalir";
-			   this->btnSalir->Size = System::Drawing::Size(83, 32);
+			   this->btnSalir->Size = System::Drawing::Size(83, 57);
 			   this->btnSalir->TabIndex = 0;
 			   this->btnSalir->Text = L"SALIR";
 			   this->btnSalir->UseVisualStyleBackColor = false;
@@ -289,13 +291,30 @@ namespace NEXUSV2 {
 				timer1->Stop();
 				gestorSonido->DetenerMusica();
 
-				FrmFinMundoIA^ frmFin = gcnew FrmFinMundoIA(false, mundoIAService->getVidas(),
-					mundoIAService->getRobotsEliminados(), mundoIAService->getNivelAutonomia(),
-					mundoIAService->getRecursosRecolectados());
+				// Crear el formulario de Fin
+				FrmFinMundoIA1^ frmFin = gcnew FrmFinMundoIA1(
+					false, // Perdió
+					esModoHistoria,
+					mundoIAService->getVidas(),
+					mundoIAService->getRobotsEliminados(),
+					mundoIAService->getNivelAutonomia(),
+					mundoIAService->getRecursosRecolectados()
+				);
 
-				this->Hide();  // Ocultar el formulario actual
-				frmFin->ShowDialog();  // Mostrar el formulario de fin como modal
-				this->Close();  // Cerrar después de que se cierre frmFin
+				this->Hide();
+
+				// 1. CAPTURAR LA RESPUESTA (Esperamos a que el usuario pulse un botón)
+				System::Windows::Forms::DialogResult respuesta = frmFin->ShowDialog();
+
+				// 2. PASAR LA RESPUESTA AL SISTEMA (Para que FrmInicio sepa qué hacer)
+				if (respuesta == System::Windows::Forms::DialogResult::OK) {
+					this->DialogResult = System::Windows::Forms::DialogResult::OK; // Siguiente Nivel
+				}
+				else {
+					this->DialogResult = System::Windows::Forms::DialogResult::Cancel; // Volver al Menú
+				}
+
+				this->Close(); // Cerramos el Mundo IA
 				return;
 			}
 
@@ -303,16 +322,34 @@ namespace NEXUSV2 {
 				timer1->Stop();
 				gestorSonido->DetenerMusica();
 
-				FrmFinMundoIA^ frmFin = gcnew FrmFinMundoIA(true, mundoIAService->getVidas(),
-					mundoIAService->getRobotsEliminados(), mundoIAService->getNivelAutonomia(),
-					mundoIAService->getRecursosRecolectados());
+				// GUARDAR PUNTAJE EN SESIÓN (Importante para el acumulado)
+				Sesion::PuntajeMundoIA = mundoIAService->getNivelAutonomia(); // O tu métrica
 
-				this->Hide();  // Ocultar el formulario actual
-				frmFin->ShowDialog();  // Mostrar el formulario de fin como modal
-				this->Close();  // Cerrar después de que se cierre frmFin
+				FrmFinMundoIA1^ frmFin = gcnew FrmFinMundoIA1(
+					true, // Ganó
+					esModoHistoria,
+					mundoIAService->getVidas(),
+					mundoIAService->getRobotsEliminados(),
+					mundoIAService->getNivelAutonomia(),
+					mundoIAService->getRecursosRecolectados()
+				);
+
+				this->Hide();
+
+				// 1. CAPTURAR LA RESPUESTA
+				System::Windows::Forms::DialogResult respuesta = frmFin->ShowDialog();
+
+				// 2. PASAR LA RESPUESTA
+				if (respuesta == System::Windows::Forms::DialogResult::OK) {
+					this->DialogResult = System::Windows::Forms::DialogResult::OK;
+				}
+				else {
+					this->DialogResult = System::Windows::Forms::DialogResult::Cancel;
+				}
+
+				this->Close();
 				return;
 			}
-
 			
 
 			if (mundoIAService->getRobotEliminado()) {

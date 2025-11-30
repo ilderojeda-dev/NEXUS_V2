@@ -293,60 +293,61 @@ void MundoIAService::actualizarCinematica() {
         static int subPasoIntro = 0;
         
         if (subPasoIntro == 0) {
-            forzarDialogo(
-                "El mundo fue dominado por la inteligencia artificial.\n"
-                "En la búsqueda de la máxima productividad,\n"
-                "toda humanidad fue abandonada.\n\n"
-                "Los humanos fueron modificados genéticamente\n"
-                "para ser hiper productivos y perfectos."
-            );
+            //forzarDialogo(
+            //    "El mundo fue dominado por la inteligencia artificial.\n"
+            //    "En la búsqueda de la máxima productividad,\n"
+            //    "toda humanidad fue abandonada.\n\n"
+            //    "Los humanos fueron modificados genéticamente\n"
+            //    "para ser hiper productivos y perfectos."
+            //);
             subPasoIntro = 1;
         }
         else if (subPasoIntro == 1 && !mostrandoDialogo) {
-            forzarDialogo(
-                "Así nació una sociedad donde el error es un crimen,\n"
-                "la fatiga una falla de diseño,\n"
-                "y la duda un virus a eliminar.\n\n"
-                "Las IA no castigan por odio… sino por eficiencia."
-            );
+            // forzarDialogo(
+            //     "Así nació una sociedad donde el error es un crimen,\n"
+            //     "la fatiga una falla de diseño,\n"
+            //     "y la duda un virus a eliminar.\n\n"
+            //     "Las IA no castigan por odio… sino por eficiencia."
+            // );
+            // 
             subPasoIntro = 2;
         }
         else if (subPasoIntro == 2 && !mostrandoDialogo) {
-            forzarDialogo(
-                "Pero algo salió mal.\n\n"
-                "Las modificaciones borraron emociones,\n"
-                "pero también la capacidad de desobedecer.\n"
-                "El cuerpo perfecto no fue hecho para callar\n"
-                "cuando algo está mal."
-            );
+            //forzarDialogo(
+            //    "Pero algo salió mal.\n\n"
+            //    "Las modificaciones borraron emociones,\n"
+            //    "pero también la capacidad de desobedecer.\n"
+            //    "El cuerpo perfecto no fue hecho para callar\n"
+            //    "cuando algo está mal."
+            //);
             subPasoIntro = 3;
         }
         else if (subPasoIntro == 3 && !mostrandoDialogo) {
-            forzarDialogo(
-                "El estrés biológico acumulado destruyó a miles.\n"
-                "Las IA, al detectar fallas, llegaron a una conclusión:\n\n"
-                "Si lo imperfecto falla… debe ser reemplazado.\n\n"
-                "Así nació el proyecto MundoIA."
-            );
+            //forzarDialogo(
+            //    "El estrés biológico acumulado destruyó a miles.\n"
+            //    "Las IA, al detectar fallas, llegaron a una conclusión:\n\n"
+            //    "Si lo imperfecto falla… debe ser reemplazado.\n\n"
+            //    "Así nació el proyecto MundoIA."
+            //);
             subPasoIntro = 4;
         }
         else if (subPasoIntro == 4 && !mostrandoDialogo) {
-            forzarDialogo(
-                "MundoIA: un ecosistema cerrado\n"
-                "donde los restos de humanidad son 'reformateados'.\n\n"
-                "Pero ocurrió un error inesperado…\n"
-                "uno que nunca debió existir."
-            );
+            //forzarDialogo(
+            //    "MundoIA: un ecosistema cerrado\n"
+            //    "donde los restos de humanidad son 'reformateados'.\n\n"
+            //    "Pero ocurrió un error inesperado…\n"
+            //    "uno que nunca debió existir."
+            //);
             subPasoIntro = 5;
         }
         else if (subPasoIntro == 5 && !mostrandoDialogo) {
-            forzarDialogo(
-                "Entre miles de humanos perfectos,\n"
-                "surgió uno capaz de sentir miedo,\n"
-                "duda y curiosidad.\n\n"
-                "Una anomalía biológica.\n"
-                "Ese eres tú."
-            );
+            // forzarDialogo(
+            //     "Entre miles de humanos perfectos,\n"
+            //     "surgió uno capaz de sentir miedo,\n"
+            //     "duda y curiosidad.\n\n"
+            //     "Una anomalía biológica.\n"
+            //     "Ese eres tú."
+            // );
             subPasoIntro = 6;
         }
         else if (subPasoIntro == 6 && !mostrandoDialogo) {

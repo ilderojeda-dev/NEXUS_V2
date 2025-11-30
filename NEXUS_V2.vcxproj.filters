@@ -61,9 +61,6 @@
     <ClCompile Include="FrmModulo3.cpp">
       <Filter>UI</Filter>
     </ClCompile>
-    <ClCompile Include="FrmModulo4.cpp">
-      <Filter>UI</Filter>
-    </ClCompile>
     <ClCompile Include="FrmMundoColab.cpp">
       <Filter>UI</Filter>
     </ClCompile>
@@ -124,8 +121,6 @@
     <ClCompile Include="FinalBossMundoIA.cpp">
       <Filter>Model</Filter>
     </ClCompile>
-    <ClCompile Include="FrmMundoIA.cpp">
-      <Filter>UI</Filter>
     <ClCompile Include="ChipRecurso.cpp">
       <Filter>Model</Filter>
     </ClCompile>
@@ -134,9 +129,6 @@
     </ClCompile>
     <ClCompile Include="SintIA.cpp">
       <Filter>Model</Filter>
-    </ClCompile>
-    <ClCompile Include="FrmFinMundoIA.cpp">
-      <Filter>UI</Filter>
     </ClCompile>
     <ClCompile Include="Sprite.cpp">
       <Filter>Model</Filter>
@@ -159,19 +151,41 @@
     <ClCompile Include="ArchivoService.cpp">
       <Filter>Service</Filter>
     </ClCompile>
+    <ClCompile Include="FrmFinMundoIA1.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Sprite.h">
-    <ClInclude Include="FrmGameOverMundoColab.h" />
-    <ClInclude Include="FrmInicio.h" />
-    <ClInclude Include="FrmModulo1.h" />
-    <ClInclude Include="FrmModulo2.h" />
-    <ClInclude Include="FrmModulo3.h" />
-    <ClInclude Include="FrmModulo4.h" />
-    <ClInclude Include="FrmMundoHumano.h" />
-    <ClInclude Include="FrmMundoIA.h" />
-    <ClInclude Include="FrmMundoColab.h" />
-    <ClInclude Include="FrmYouWinMundoColab.h" />
+      <Filter>Model</Filter>
+    </ClInclude>
+    <ClInclude Include="FrmGameOverMundoColab.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="FrmInicio.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="FrmModulo1.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="FrmModulo2.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="FrmModulo3.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="FrmMundoHumano.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="FrmMundoIA.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="FrmMundoColab.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="FrmYouWinMundoColab.h">
+      <Filter>UI</Filter>
+    </ClInclude>
     <ClInclude Include="Alerta.h">
       <Filter>Model</Filter>
     </ClInclude>
@@ -250,27 +264,16 @@
     <ClInclude Include="ChipRecurso.h">
       <Filter>Model</Filter>
     </ClInclude>
-    <ClInclude Include="FrmMundoIA.h">
-      <Filter>UI</Filter>
     <ClInclude Include="Bala.h">
       <Filter>Model</Filter>
     </ClInclude>
     <ClInclude Include="SintIA.h">
       <Filter>Model</Filter>
     </ClInclude>
-    <ClInclude Include="FrmFinMundoIA.h">
-      <Filter>UI</Filter>
-    </ClInclude>
-    <ClInclude Include="Sprite.h">
-      <Filter>Model</Filter>
-    </ClInclude>
     <ClInclude Include="PapelSeñal.h">
       <Filter>Model</Filter>
     </ClInclude>
     <ClInclude Include="CortoCircuito.h">
-      <Filter>Model</Filter>
-    </ClInclude>
-    <ClInclude Include="Mundo.h">
       <Filter>Model</Filter>
     </ClInclude>
     <ClInclude Include="GasToxico.h">
@@ -282,7 +285,9 @@
     <ClInclude Include="FrmFinMundoHumano.h">
       <Filter>UI</Filter>
     </ClInclude>
-    <ClInclude Include="resource.h" />
+    <ClInclude Include="resource.h">
+      <Filter>Resource</Filter>
+    </ClInclude>
     <ClInclude Include="ArchivoService.h">
       <Filter>Service</Filter>
     </ClInclude>
@@ -292,12 +297,17 @@
     <ClInclude Include="RegistroScore.h">
       <Filter>Service</Filter>
     </ClInclude>
+    <ClInclude Include="FrmFinMundoIA1.h">
+      <Filter>UI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="Alerta.png">
       <Filter>Resource</Filter>
     </Image>
     <Image Include="InicioJuego.png">
+      <Filter>Resource</Filter>
+    </Image>
     <Image Include="Astronauta.png">
       <Filter>Resource</Filter>
     </Image>
@@ -317,9 +327,6 @@
       <Filter>Resource</Filter>
     </Image>
     <Image Include="HUD mitad.jpeg">
-      <Filter>Resource</Filter>
-    </Image>
-    <Image Include="InicioJuego.png">
       <Filter>Resource</Filter>
     </Image>
     <Image Include="MeteoritoSprite.png">
@@ -349,9 +356,6 @@
     <Image Include="PapelSeñal.png">
       <Filter>Resource</Filter>
     </Image>
-    <Image Include="Astronauta.png">
-      <Filter>Resource</Filter>
-    </Image>
     <Image Include="TrajeAntiGasToxico.png">
       <Filter>Resource</Filter>
     </Image>
@@ -370,7 +374,9 @@
     <Image Include="VidaFull.png">
       <Filter>Resource</Filter>
     </Image>
-    <Image Include="FondoMundoIANoche.png" />
+    <Image Include="FondoMundoIANoche.png">
+      <Filter>Resource</Filter>
+    </Image>
     <Image Include="FinalBossMundoIA.png">
       <Filter>Resource</Filter>
     </Image>
@@ -396,6 +402,8 @@
       <Filter>Resource</Filter>
     </Image>
     <Image Include="FinMundoIA.png">
+      <Filter>Resource</Filter>
+    </Image>
     <Image Include="SpriteEstrella.png">
       <Filter>Resource</Filter>
     </Image>
@@ -416,7 +424,7 @@
     <CopyFileToFolders Include="EfectoClick.wav">
       <Filter>Resource</Filter>
     </CopyFileToFolders>
-<CopyFileToFolders Include="MusicaFondoMundoIA.wav">
+    <CopyFileToFolders Include="MusicaFondoMundoIA.wav">
       <Filter>Resource</Filter>
     </CopyFileToFolders>
     <CopyFileToFolders Include="EfectoSonidoBala.wav">
@@ -425,7 +433,6 @@
     <CopyFileToFolders Include="EfectoSonidoExplosion.wav">
       <Filter>Resource</Filter>
     </CopyFileToFolders>
-
     <CopyFileToFolders Include="ImpactoMeteorito.wav">
       <Filter>Resource</Filter>
     </CopyFileToFolders>
@@ -479,7 +486,9 @@
     </CopyFileToFolders>
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="NEXUS_V2.rc" />
+    <ResourceCompile Include="NEXUS_V2.rc">
+      <Filter>Resource</Filter>
+    </ResourceCompile>
   </ItemGroup>
   <ItemGroup>
     <Text Include="Files\PARAMETERS.txt">
@@ -490,20 +499,5 @@
     <None Include="Files\SCORES.bin">
       <Filter>Files</Filter>
     </None>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Filter Include="UI">
-      <UniqueIdentifier>{6043e56a-b602-43d0-917f-2c243aae0df2}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Model">
-      <UniqueIdentifier>{38be6a13-ce5a-4b92-9068-d9e5a8c45822}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Resource">
-      <UniqueIdentifier>{74e44d61-6339-43cb-8671-3bbec3df1387}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Service">
-      <UniqueIdentifier>{527938b2-4378-4b8c-a060-32c5d95e938b}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
 </Project>

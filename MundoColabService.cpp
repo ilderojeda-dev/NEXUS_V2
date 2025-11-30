@@ -116,21 +116,19 @@ void MundoColabService::spawnMeteoritosAleatorios() {
 	int velocidadRandom = 10 + rand() % 30;
 		
 	//tamaño aleatorio
-	double tamaño = 0.5 + (rand() % 200) / 100.0 ;
+	double tamanio = 0.5 + (rand() % 200) / 100.0 ;
 
 
 	MeteoritoEnemigo* meteoritoEnemigo = new MeteoritoEnemigo(anchoPanel - 50, yRandom, velocidadRandom);
 	meteoritoEnemigo->cargarImagen(rutaMeteorito, 1, 4);
 	meteoritoEnemigo->setActivo(true);
 
-	meteoritoEnemigo->setTamaño(tamaño);
+	meteoritoEnemigo->setTamanio(tamanio);
 
 	enemigos.push_back(meteoritoEnemigo);
 
 }
 
-//ESTRELLA - RECURSOS
-//---------------------------------------------------------------------------------//
 
 void MundoColabService::spawnEstrella(int cantidadEstrella) {
 	char rutaEstrella[] = "SpriteEstrella.png";

@@ -28,7 +28,7 @@ private:
 	Dialogo* dialogoActual;
 	vector<Alerta*> alertas;
 	vector<Enemigo*> enemigos;
-	vector<PapelSe�al*> papelSe�al;
+	vector<PapelSeñal*> papelSeñal;
 	VozTerrestre* vozTerrestre;
 	vector<Muro> muros;
 
@@ -94,12 +94,12 @@ public:
 	void generarAlertas();
 
 	// 7. RECURSOS Y ALIADOS
-	void moverAliadoPapelSe�al();
-	bool hayColisionPapelSe�al(Rectangle rectJugador);
-	vector<PapelSe�al*> getPapelSe�al() { return papelSe�al; } // Getter simple inline
+	void moverAliadoPapelSeñal();
+	bool hayColisionPapelSeñal(Rectangle rectJugador);
+	vector<PapelSeñal*> getPapelSeñal() { return papelSeñal; } // Getter simple inline
 
 	// Funci�n de generaci�n (Respaldo/Hardcode)
-	void generarPapelSe�al();
+	void generarPapelSeñal();
 
 	// 8. VOZ TERRESTRE (ALIADO)
 	void generarVozTerrestre();

@@ -18,7 +18,7 @@ public:
     void iniciarExplosion();
 
     bool BalaLaser::estaExplotando() { return explotando; }
-	Rectangle getRectangle() override { return getRectangleBala(); } //usar hitbox del recurso
+	Rectangle getRectangle(){ return getRectangleBala(); } //usar hitbox del recurso
 	Rectangle getRectangleBala();
 
 };

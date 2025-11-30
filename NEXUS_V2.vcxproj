@@ -130,10 +130,10 @@
     <ClCompile Include="FinalBossMundoIA.cpp" />
     <ClCompile Include="Fondo.cpp" />
     <ClCompile Include="FrmFinMundoHumano.cpp" />
-    <ClCompile Include="FrmFinMundoIA.cpp" />
     <ClCompile Include="AliadoR2D2.cpp" />
     <ClCompile Include="BalaLaser.cpp" />
     <ClCompile Include="EstrellaRecurso.cpp" />
+    <ClCompile Include="FrmFinMundoIA1.cpp" />
     <ClCompile Include="FrmGameOverMundoColab.cpp" />
     <ClCompile Include="FrmInicio.cpp" />
     <ClCompile Include="FrmModulo1.cpp" />
@@ -180,10 +180,12 @@
     <ClInclude Include="FrmFinMundoHumano.h">
       <FileType>CppForm</FileType>
     </ClInclude>
-    <ClInclude Include="FrmFinMundoIA.h">
     <ClInclude Include="AliadoR2D2.h" />
     <ClInclude Include="BalaLaser.h" />
     <ClInclude Include="EstrellaRecurso.h" />
+    <ClInclude Include="FrmFinMundoIA1.h">
+      <FileType>CppForm</FileType>
+    </ClInclude>
     <ClInclude Include="FrmGameOverMundoColab.h">
       <FileType>CppForm</FileType>
     </ClInclude>
@@ -247,8 +249,9 @@
     <EmbeddedResource Include="FrmFinMundoHumano.resx">
       <DependentUpon>FrmFinMundoHumano.h</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FrmFinMundoIA.resx">
-      <DependentUpon>FrmFinMundoIA.h</DependentUpon>
+    <EmbeddedResource Include="FrmFinMundoIA1.resx">
+      <DependentUpon>FrmFinMundoIA1.h</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FrmGameOverMundoColab.resx">
       <DependentUpon>FrmGameOverMundoColab.h</DependentUpon>
     </EmbeddedResource>
@@ -288,7 +291,6 @@
     <Image Include="IconoTrajeAntiElectricidad.png" />
     <Image Include="FondoMundoIANoche.png" />
     <Image Include="Bala.png" />
-    <Image Include="FondoMundoIA.png" />
     <Image Include="gameOverMundoColab.png" />
     <Image Include="HUD izquierda.png" />
     <Image Include="HUD mitad.jpeg" />
@@ -388,6 +390,9 @@
   </ItemGroup>
   <ItemGroup>
     <CopyFileToFolders Include="MusicaFondoMundoIA.wav">
+      <FileType>Document</FileType>
+      <DestinationFolders Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(OutDir)Resource\</DestinationFolders>
+    </CopyFileToFolders>
     <CopyFileToFolders Include="Bala.wav">
       <FileType>Document</FileType>
       <DestinationFolders Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(OutDir)Resource\</DestinationFolders>
@@ -420,6 +425,9 @@
       <DestinationFolders Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(OutDir)Resource\</DestinationFolders>
     </CopyFileToFolders>
     <CopyFileToFolders Include="EfectoSonidoExplosion.wav">
+      <FileType>Document</FileType>
+      <DestinationFolders Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(OutDir)Resource\</DestinationFolders>
+    </CopyFileToFolders>
     <CopyFileToFolders Include="R2D2.1..wav">
       <FileType>Document</FileType>
       <DestinationFolders Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(OutDir)Resource\</DestinationFolders>

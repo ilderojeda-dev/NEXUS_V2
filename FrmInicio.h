@@ -54,65 +54,25 @@ namespace NEXUSV2 {
 			}
 		}
 	private: System::Windows::Forms::Panel^ pnlFondo;
+	private: System::Windows::Forms::Panel^ pnlNiveles;
 	private: System::Windows::Forms::Button^ btnNiveles;
 	private: System::Windows::Forms::Button^ btnIniciarJuego;
 	private: System::Windows::Forms::Button^ btnSalir;
 	private: System::Windows::Forms::Button^ btnCreditos;
 	private: System::Windows::Forms::Button^ btnScores;
-
-
-
-
 	private: System::Windows::Forms::Button^ btnVolver;
-
-
 	private: System::Windows::Forms::Button^ btnNivel3;
 	private: System::Windows::Forms::Button^ btnNivel2;
-		   // Variable para controlar el sonido en este formulario
 	private: NEXUS_V2::Service::SoundManager^ gestorSonido;
-
-
-
-
-
 	protected:
-
 	private: System::Windows::Forms::Button^ brnMundoIA;
 	protected:
 
 	protected:
-	private: System::Windows::Forms::Button^ button2;
-	private: System::Windows::Forms::Button^ button3;
-	private: System::Windows::Forms::Panel^ pnlFondo;
-	private: System::Windows::Forms::Button^ btnVolver;
 
 	private: System::Windows::Forms::Button^ btnNivel1;
 	private: System::Windows::Forms::PictureBox^ pictureBox1;
-	private: System::Windows::Forms::Button^ btnCreditos;
 	private: System::Windows::Forms::Button^ btnHistoria;
-	private: System::Windows::Forms::Button^ btnNiveles;
-	private: System::Windows::Forms::Button^ btnIniciarJuego;
-	private: System::Windows::Forms::Button^ btnSalir;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -124,8 +84,6 @@ namespace NEXUSV2 {
 
 
 
-	private: System::Windows::Forms::Panel^ pnlNiveles;
-	private: System::Windows::Forms::Button^ btnNivel1;
 	private: System::Windows::Forms::Panel^ pnlMenuPrincipal;
 	private: System::Windows::Forms::TextBox^ txtNombreJugador;
 	private: System::Windows::Forms::Label^ lblPromptNombre;
@@ -139,9 +97,12 @@ namespace NEXUSV2 {
 		{
 			System::ComponentModel::ComponentResourceManager^ resources = (gcnew System::ComponentModel::ComponentResourceManager(FrmInicio::typeid));
 			this->brnMundoIA = (gcnew System::Windows::Forms::Button());
-			this->button2 = (gcnew System::Windows::Forms::Button());
-			this->button3 = (gcnew System::Windows::Forms::Button());
 			this->pnlFondo = (gcnew System::Windows::Forms::Panel());
+			this->pnlNiveles = (gcnew System::Windows::Forms::Panel());
+			this->btnNivel3 = (gcnew System::Windows::Forms::Button());
+			this->btnVolver = (gcnew System::Windows::Forms::Button());
+			this->btnNivel1 = (gcnew System::Windows::Forms::Button());
+			this->btnNivel2 = (gcnew System::Windows::Forms::Button());
 			this->pnlMenuPrincipal = (gcnew System::Windows::Forms::Panel());
 			this->txtNombreJugador = (gcnew System::Windows::Forms::TextBox());
 			this->lblPromptNombre = (gcnew System::Windows::Forms::Label());
@@ -150,17 +111,9 @@ namespace NEXUSV2 {
 			this->btnSalir = (gcnew System::Windows::Forms::Button());
 			this->btnCreditos = (gcnew System::Windows::Forms::Button());
 			this->btnScores = (gcnew System::Windows::Forms::Button());
-			this->pnlNiveles = (gcnew System::Windows::Forms::Panel());
-			this->btnNivel3 = (gcnew System::Windows::Forms::Button());
-			this->btnVolver = (gcnew System::Windows::Forms::Button());
-			this->btnNivel1 = (gcnew System::Windows::Forms::Button());
-			this->btnNivel2 = (gcnew System::Windows::Forms::Button());
-			this->brnMundoIA = (gcnew System::Windows::Forms::Button());
-			this->button2 = (gcnew System::Windows::Forms::Button());
-			this->button3 = (gcnew System::Windows::Forms::Button());
 			this->pnlFondo->SuspendLayout();
-			this->pnlMenuPrincipal->SuspendLayout();
 			this->pnlNiveles->SuspendLayout();
+			this->pnlMenuPrincipal->SuspendLayout();
 			this->SuspendLayout();
 			// 
 			// brnMundoIA
@@ -172,24 +125,6 @@ namespace NEXUSV2 {
 			this->brnMundoIA->Text = L"MUNDO IA";
 			this->brnMundoIA->UseVisualStyleBackColor = true;
 			// 
-			// button2
-			// 
-			this->button2->Location = System::Drawing::Point(544, 360);
-			this->button2->Name = L"button2";
-			this->button2->Size = System::Drawing::Size(75, 23);
-			this->button2->TabIndex = 1;
-			this->button2->Text = L"button2";
-			this->button2->UseVisualStyleBackColor = true;
-			// 
-			// button3
-			// 
-			this->button3->Location = System::Drawing::Point(701, 360);
-			this->button3->Name = L"button3";
-			this->button3->Size = System::Drawing::Size(75, 23);
-			this->button3->TabIndex = 2;
-			this->button3->Text = L"button3";
-			this->button3->UseVisualStyleBackColor = true;
-			// 
 			// pnlFondo
 			// 
 			this->pnlFondo->BackColor = System::Drawing::Color::White;
@@ -200,6 +135,80 @@ namespace NEXUSV2 {
 			this->pnlFondo->Name = L"pnlFondo";
 			this->pnlFondo->Size = System::Drawing::Size(1922, 1086);
 			this->pnlFondo->TabIndex = 3;
+			// 
+			// pnlNiveles
+			// 
+			this->pnlNiveles->BackgroundImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pnlNiveles.BackgroundImage")));
+			this->pnlNiveles->BackgroundImageLayout = System::Windows::Forms::ImageLayout::None;
+			this->pnlNiveles->Controls->Add(this->btnNivel3);
+			this->pnlNiveles->Controls->Add(this->btnVolver);
+			this->pnlNiveles->Controls->Add(this->btnNivel1);
+			this->pnlNiveles->Controls->Add(this->btnNivel2);
+			this->pnlNiveles->ImeMode = System::Windows::Forms::ImeMode::NoControl;
+			this->pnlNiveles->Location = System::Drawing::Point(200, 46);
+			this->pnlNiveles->Name = L"pnlNiveles";
+			this->pnlNiveles->Size = System::Drawing::Size(1536, 988);
+			this->pnlNiveles->TabIndex = 11;
+			this->pnlNiveles->Visible = false;
+			// 
+			// btnNivel3
+			// 
+			this->btnNivel3->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(0)), static_cast<System::Int32>(static_cast<System::Byte>(65)),
+				static_cast<System::Int32>(static_cast<System::Byte>(118)));
+			this->btnNivel3->BackgroundImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"btnNivel3.BackgroundImage")));
+			this->btnNivel3->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Stretch;
+			this->btnNivel3->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
+			this->btnNivel3->Location = System::Drawing::Point(988, 332);
+			this->btnNivel3->Name = L"btnNivel3";
+			this->btnNivel3->Size = System::Drawing::Size(368, 460);
+			this->btnNivel3->TabIndex = 8;
+			this->btnNivel3->UseVisualStyleBackColor = false;
+			this->btnNivel3->Click += gcnew System::EventHandler(this, &FrmInicio::btnNivel3_Click);
+			// 
+			// btnVolver
+			// 
+			this->btnVolver->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(0)), static_cast<System::Int32>(static_cast<System::Byte>(65)),
+				static_cast<System::Int32>(static_cast<System::Byte>(118)));
+			this->btnVolver->FlatStyle = System::Windows::Forms::FlatStyle::Popup;
+			this->btnVolver->Font = (gcnew System::Drawing::Font(L"Perpetua Titling MT", 24, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->btnVolver->ForeColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(128)), static_cast<System::Int32>(static_cast<System::Byte>(255)),
+				static_cast<System::Int32>(static_cast<System::Byte>(255)));
+			this->btnVolver->Location = System::Drawing::Point(586, 866);
+			this->btnVolver->Name = L"btnVolver";
+			this->btnVolver->Size = System::Drawing::Size(349, 45);
+			this->btnVolver->TabIndex = 9;
+			this->btnVolver->Text = L"Volver";
+			this->btnVolver->UseVisualStyleBackColor = false;
+			this->btnVolver->Click += gcnew System::EventHandler(this, &FrmInicio::btnVolver_Click);
+			// 
+			// btnNivel1
+			// 
+			this->btnNivel1->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(0)), static_cast<System::Int32>(static_cast<System::Byte>(65)),
+				static_cast<System::Int32>(static_cast<System::Byte>(118)));
+			this->btnNivel1->BackgroundImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"btnNivel1.BackgroundImage")));
+			this->btnNivel1->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Stretch;
+			this->btnNivel1->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
+			this->btnNivel1->Location = System::Drawing::Point(144, 332);
+			this->btnNivel1->Name = L"btnNivel1";
+			this->btnNivel1->Size = System::Drawing::Size(364, 460);
+			this->btnNivel1->TabIndex = 10;
+			this->btnNivel1->UseVisualStyleBackColor = false;
+			this->btnNivel1->Click += gcnew System::EventHandler(this, &FrmInicio::btnNivel1_Click_1);
+			// 
+			// btnNivel2
+			// 
+			this->btnNivel2->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(0)), static_cast<System::Int32>(static_cast<System::Byte>(65)),
+				static_cast<System::Int32>(static_cast<System::Byte>(118)));
+			this->btnNivel2->BackgroundImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"btnNivel2.BackgroundImage")));
+			this->btnNivel2->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Stretch;
+			this->btnNivel2->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
+			this->btnNivel2->Location = System::Drawing::Point(578, 332);
+			this->btnNivel2->Name = L"btnNivel2";
+			this->btnNivel2->Size = System::Drawing::Size(350, 460);
+			this->btnNivel2->TabIndex = 7;
+			this->btnNivel2->UseVisualStyleBackColor = false;
+			this->btnNivel2->Click += gcnew System::EventHandler(this, &FrmInicio::btnNivel2_Click);
 			// 
 			// pnlMenuPrincipal
 			// 
@@ -314,114 +323,12 @@ namespace NEXUSV2 {
 			this->btnScores->UseVisualStyleBackColor = false;
 			this->btnScores->Click += gcnew System::EventHandler(this, &FrmInicio::btnHistoria_Click_1);
 			// 
-			// pnlNiveles
-			// 
-			this->pnlNiveles->BackgroundImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pnlNiveles.BackgroundImage")));
-			this->pnlNiveles->BackgroundImageLayout = System::Windows::Forms::ImageLayout::None;
-			this->pnlNiveles->Controls->Add(this->btnNivel3);
-			this->pnlNiveles->Controls->Add(this->btnVolver);
-			this->pnlNiveles->Controls->Add(this->btnNivel1);
-			this->pnlNiveles->Controls->Add(this->btnNivel2);
-			this->pnlNiveles->ImeMode = System::Windows::Forms::ImeMode::NoControl;
-			this->pnlNiveles->Location = System::Drawing::Point(200, 46);
-			this->pnlNiveles->Name = L"pnlNiveles";
-			this->pnlNiveles->Size = System::Drawing::Size(1536, 988);
-			this->pnlNiveles->TabIndex = 11;
-			this->pnlNiveles->Visible = false;
-			// 
-			// btnNivel3
-			// 
-			this->btnNivel3->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(0)), static_cast<System::Int32>(static_cast<System::Byte>(65)),
-				static_cast<System::Int32>(static_cast<System::Byte>(118)));
-			this->btnNivel3->BackgroundImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"btnNivel3.BackgroundImage")));
-			this->btnNivel3->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Stretch;
-			this->btnNivel3->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
-			this->btnNivel3->Location = System::Drawing::Point(988, 332);
-			this->btnNivel3->Name = L"btnNivel3";
-			this->btnNivel3->Size = System::Drawing::Size(368, 460);
-			this->btnNivel3->TabIndex = 8;
-			this->btnNivel3->UseVisualStyleBackColor = false;
-			this->btnNivel3->Click += gcnew System::EventHandler(this, &FrmInicio::btnNivel3_Click);
-			// 
-			// btnVolver
-			// 
-			this->btnVolver->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(0)), static_cast<System::Int32>(static_cast<System::Byte>(65)),
-				static_cast<System::Int32>(static_cast<System::Byte>(118)));
-			this->btnVolver->FlatStyle = System::Windows::Forms::FlatStyle::Popup;
-			this->btnVolver->Font = (gcnew System::Drawing::Font(L"Perpetua Titling MT", 24, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
-				static_cast<System::Byte>(0)));
-			this->btnVolver->ForeColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(128)), static_cast<System::Int32>(static_cast<System::Byte>(255)),
-				static_cast<System::Int32>(static_cast<System::Byte>(255)));
-			this->btnVolver->Location = System::Drawing::Point(586, 866);
-			this->btnVolver->Name = L"btnVolver";
-			this->btnVolver->Size = System::Drawing::Size(349, 45);
-			this->btnVolver->TabIndex = 9;
-			this->btnVolver->Text = L"Volver";
-			this->btnVolver->UseVisualStyleBackColor = false;
-			this->btnVolver->Click += gcnew System::EventHandler(this, &FrmInicio::btnVolver_Click);
-			// 
-			// btnNivel1
-			// 
-			this->btnNivel1->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(0)), static_cast<System::Int32>(static_cast<System::Byte>(65)),
-				static_cast<System::Int32>(static_cast<System::Byte>(118)));
-			this->btnNivel1->BackgroundImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"btnNivel1.BackgroundImage")));
-			this->btnNivel1->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Stretch;
-			this->btnNivel1->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
-			this->btnNivel1->Location = System::Drawing::Point(144, 332);
-			this->btnNivel1->Name = L"btnNivel1";
-			this->btnNivel1->Size = System::Drawing::Size(364, 460);
-			this->btnNivel1->TabIndex = 10;
-			this->btnNivel1->UseVisualStyleBackColor = false;
-			// 
-			// btnNivel2
-			// 
-			this->btnNivel2->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(0)), static_cast<System::Int32>(static_cast<System::Byte>(65)),
-				static_cast<System::Int32>(static_cast<System::Byte>(118)));
-			this->btnNivel2->BackgroundImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"btnNivel2.BackgroundImage")));
-			this->btnNivel2->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Stretch;
-			this->btnNivel2->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
-			this->btnNivel2->Location = System::Drawing::Point(578, 332);
-			this->btnNivel2->Name = L"btnNivel2";
-			this->btnNivel2->Size = System::Drawing::Size(350, 460);
-			this->btnNivel2->TabIndex = 7;
-			this->btnNivel2->UseVisualStyleBackColor = false;
-			this->btnNivel2->Click += gcnew System::EventHandler(this, &FrmInicio::btnNivel2_Click);
-			// 
-			// brnMundoIA
-			// 
-			this->brnMundoIA->Location = System::Drawing::Point(389, 360);
-			this->brnMundoIA->Name = L"brnMundoIA";
-			this->brnMundoIA->Size = System::Drawing::Size(75, 23);
-			this->brnMundoIA->TabIndex = 0;
-			this->brnMundoIA->Text = L"MUNDO IA";
-			this->brnMundoIA->UseVisualStyleBackColor = true;
-			// 
-			// button2
-			// 
-			this->button2->Location = System::Drawing::Point(544, 360);
-			this->button2->Name = L"button2";
-			this->button2->Size = System::Drawing::Size(75, 23);
-			this->button2->TabIndex = 1;
-			this->button2->Text = L"button2";
-			this->button2->UseVisualStyleBackColor = true;
-			// 
-			// button3
-			// 
-			this->button3->Location = System::Drawing::Point(701, 360);
-			this->button3->Name = L"button3";
-			this->button3->Size = System::Drawing::Size(75, 23);
-			this->button3->TabIndex = 2;
-			this->button3->Text = L"button3";
-			this->button3->UseVisualStyleBackColor = true;
-			// 
 			// FrmInicio
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->ClientSize = System::Drawing::Size(1920, 1080);
 			this->Controls->Add(this->pnlFondo);
-			this->Controls->Add(this->button3);
-			this->Controls->Add(this->button2);
 			this->Controls->Add(this->brnMundoIA);
 			this->FormBorderStyle = System::Windows::Forms::FormBorderStyle::None;
 			this->Name = L"FrmInicio";
@@ -429,9 +336,9 @@ namespace NEXUSV2 {
 			this->WindowState = System::Windows::Forms::FormWindowState::Maximized;
 			this->Load += gcnew System::EventHandler(this, &FrmInicio::FrmInicio_Load);
 			this->pnlFondo->ResumeLayout(false);
+			this->pnlNiveles->ResumeLayout(false);
 			this->pnlMenuPrincipal->ResumeLayout(false);
 			this->pnlMenuPrincipal->PerformLayout();
-			this->pnlNiveles->ResumeLayout(false);
 			this->ResumeLayout(false);
 
 		}
@@ -559,24 +466,36 @@ namespace NEXUSV2 {
 
 	}
 
-	private: System::Void AlCerrarMundoHumano(System::Object^ sender, FormClosedEventArgs^ e) {
-		FrmMundoHumano^ mundoCerrado = (FrmMundoHumano^)sender;
+		   
+	private: System::Void AlCerrarMundo(System::Object^ sender, System::Windows::Forms::FormClosedEventArgs^ e) {
+		this->Show(); 
+		gestorSonido->ReproducirMusica("MusicaFondoInicio.wav", 0.2); 
+	}
 
-		// CASO 1: GANÓ EL NIVEL
-		if (mundoCerrado->DialogResult == System::Windows::Forms::DialogResult::OK) {
+	private: System::Void AlCerrarMundoIA(System::Object^ sender, FormClosedEventArgs^ e) {
+		FrmMundoIA^ mundo = (FrmMundoIA^)sender;
 
-
+		if (mundo->DialogResult == System::Windows::Forms::DialogResult::OK && Sesion::EsModoHistoria) {
+			FrmMundoHumano^ mundo2 = gcnew FrmMundoHumano();
+			mundo2->FormClosed += gcnew FormClosedEventHandler(this, &FrmInicio::AlCerrarMundoHumano);
+			mundo2->Show();
 		}
-		// CASO 2: PERDIÓ O SALIÓ
 		else {
-			// En cualquier modo, si pierdes o sales, vuelves al menú
 			this->Show();
 			gestorSonido->ReproducirMusica("MusicaFondoInicio.wav", 0.2);
 		}
 	}
-	private: System::Void AlCerrarMundo(System::Object^ sender, System::Windows::Forms::FormClosedEventArgs^ e) {
-		this->Show();
-		gestorSonido->ReproducirMusica("MusicaFondoInicio.wav", 0.2);
+	private: System::Void AlCerrarMundoHumano(System::Object^ sender, FormClosedEventArgs^ e) {
+		FrmMundoHumano^ mundo = (FrmMundoHumano^)sender;
+		if (mundo->DialogResult == System::Windows::Forms::DialogResult::OK && Sesion::EsModoHistoria) {
+			FrmMundoColab^ mundo3 = gcnew FrmMundoColab();
+			mundo3->FormClosed += gcnew FormClosedEventHandler(this, &FrmInicio::AlCerrarMundo);
+			mundo3->Show();
+		}
+		else {
+			this->Show();
+			gestorSonido->ReproducirMusica("MusicaFondoInicio.wav", 0.2);
+		}
 	}
 	private: System::Void btnNiveles_Click(System::Object^ sender, System::EventArgs^ e) {
 		if (txtNombreJugador->Text->Trim() == "") {
@@ -601,29 +520,47 @@ namespace NEXUSV2 {
 			txtNombreJugador->Focus();
 			return;
 		}
-	
-		// 2. SONIDO
 		gestorSonido->ReproducirEfecto("EfectoClick.wav", 1.0);
 		gestorSonido->DetenerMusica();
-	
-		// 2. GUARDAR EN LA SESIÓN GLOBAL (¡Aquí está la clave!)
-		Sesion::Reiniciar(); // Limpiamos datos viejos
-		Sesion::NombreJugador = txtNombreJugador->Text; // Guardamos el nombre
-		Sesion::EsModoHistoria = true;
 
-		// 3. Arrancar el primer mundo (IA)
-		FrmMundoIA^ mundo1 = gcnew FrmMundoIA(); // Sin parámetros, ya están en Sesion
+		// 1. Configurar Sesión MODO HISTORIA
+		Sesion::Reiniciar();
+		Sesion::NombreJugador = txtNombreJugador->Text;
+		Sesion::EsModoHistoria = true; // <--- TRUE
+
+		// 2. Abrir PRIMER MUNDO (IA)
+		FrmMundoIA^ mundo1 = gcnew FrmMundoIA();
+
+		// 3. Conectar al evento inteligente (que abrirá el Nivel 2 al ganar)
+		mundo1->FormClosed += gcnew FormClosedEventHandler(this, &FrmInicio::AlCerrarMundoIA);
+
 		mundo1->Show();
 		this->Hide();
 	}
-	
 
-	private: System::Void btnVolver_Click(System::Object^ sender, System::EventArgs^ e) {
-		
+	private: System::Void btnNivel1_Click_1(System::Object^ sender, System::EventArgs^ e) {
+		gestorSonido->ReproducirEfecto("EfectoClick.wav", 1.0);
+		gestorSonido->DetenerMusica();
 
-		pnlNiveles->Visible = false;       // Oculta niveles
-		pnlMenuPrincipal->Visible = true;  // Muestra menú principal
+		// 1. Configurar Sesión
+		Sesion::Reiniciar();
+		Sesion::NombreJugador = txtNombreJugador->Text;
+		Sesion::EsModoHistoria = false; // <--- Solo nivel suelto
+		pnlNiveles->Visible = false;
+		pnlMenuPrincipal->Visible = true;
+		// 2. Abrir Mundo
+		FrmMundoIA^ frmMundoIA = gcnew FrmMundoIA();
+
+		// 3. ¡ESTA ES LA LÍNEA QUE TE FALTABA! (Conectar el regreso)
+		frmMundoIA->FormClosed += gcnew FormClosedEventHandler(this, &FrmInicio::AlCerrarMundo);
+
+		frmMundoIA->Show();
+		this->Hide();
+
+
 	}
+
+	
 	private: System::Void btnNivel2_Click(System::Object^ sender, System::EventArgs^ e) {
 		gestorSonido->ReproducirEfecto("EfectoClick.wav", 1.0);
 		gestorSonido->DetenerMusica();
@@ -637,18 +574,23 @@ namespace NEXUSV2 {
 		mundo->Show();
 		this->Hide();
 	}
-	private: System::Void btnNivel1_Click(System::Object^ sender, System::EventArgs^ e) {
-			gestorSonido->ReproducirEfecto("EfectoClick.wav", 1.0);
-		
-			FrmMundoIA^ frmMundoIA = gcnew FrmMundoIA();
-			frmMundoIA->Show();
-		
-			this->Hide();
-	
-		}
+
 	private: System::Void btnNivel3_Click(System::Object^ sender, System::EventArgs^ e) {
 		gestorSonido->ReproducirEfecto("EfectoClick.wav", 1.0);
+		gestorSonido->DetenerMusica();
+
+		// 1. Configurar Sesión
+		Sesion::Reiniciar();
+		Sesion::NombreJugador = txtNombreJugador->Text;
+		Sesion::EsModoHistoria = false;
+		pnlNiveles->Visible = false;
+		pnlMenuPrincipal->Visible = true;
+		// 2. Abrir Mundo
 		FrmMundoColab^ frmMundoColab = gcnew FrmMundoColab();
+
+		// 3. Conectar regreso
+		frmMundoColab->FormClosed += gcnew FormClosedEventHandler(this, &FrmInicio::AlCerrarMundo);
+
 		frmMundoColab->Show();
 		this->Hide();
 	}
@@ -658,12 +600,15 @@ namespace NEXUSV2 {
 	}
 		   
 	
-private: System::Void btnHistoria_Click_1(System::Object^ sender, System::EventArgs^ e) {
-	gestorSonido->ReproducirEfecto("EfectoClick.wav", 1.0);
-	//Agregar formulario de historia
-}
-private: System::Void panel1_Paint(System::Object^ sender, System::Windows::Forms::PaintEventArgs^ e) {
-}
+	private: System::Void btnHistoria_Click_1(System::Object^ sender, System::EventArgs^ e) {
+		gestorSonido->ReproducirEfecto("EfectoClick.wav", 1.0);
+		//Agregar formulario de historia
+	}
+	private: System::Void btnVolver_Click(System::Object^ sender, System::EventArgs^ e) {
+		pnlNiveles->Visible = false;       // Oculta niveles
+		pnlMenuPrincipal->Visible = true;  // Muestra menú principal
+	}
+
 };
 	
 }

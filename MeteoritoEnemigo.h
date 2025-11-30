@@ -7,7 +7,7 @@ class MeteoritoEnemigo : public Enemigo
 private:
 	int tiempo; 
 
-	double tamaño = 1.0;
+	double tamanio = 1.0;
 	int vidasMeteorito;
  
 public:		
@@ -21,12 +21,12 @@ public:
 
 	  void aplicarEfectoAlJugador(Jugador& jugador) override;
 
-	  void setTamaño(double tamaño) { tamaño = tamaño; }
+	  void setTamanio(double valor) { tamanio = valor; }
 
 
 	  int getVidasMeteorito() { return vidasMeteorito; }
 	  void setVidasMeteorito(int vidasM) { vidasMeteorito = vidasM; }
-	  Rectangle getRectangle() override { return getRectangleMeteorito();  } //para usar el hitbox personalizado
+	  Rectangle getRectangle() { return getRectangleMeteorito();  } //para usar el hitbox personalizado
 	  Rectangle getRectangleMeteorito();
 };
 

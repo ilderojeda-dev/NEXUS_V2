@@ -40,7 +40,7 @@ void MeteoritoEnemigo::dibujar(Graphics^ canvas) {
 	Rectangle cuadroOrigen = Rectangle(indiceX * ancho, indiceY * alto, ancho, alto);
 
 	//rectangulo en el panel donde se pegará el otro rectangulo 
-	Rectangle cuadroDestino = Rectangle(x, y, ancho * tamaño, alto * tamaño); //se usa el tamaño del private
+	Rectangle cuadroDestino = Rectangle(x, y, ancho * tamanio, alto * tamanio); //se usa el tamaño del private
 
 	canvas->DrawImage(bitmap, cuadroDestino, cuadroOrigen, GraphicsUnit::Pixel);
 	delete bitmap;

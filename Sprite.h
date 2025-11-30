@@ -46,7 +46,6 @@ public:
         return indiceY;
     }
 
-    //virtual Rectangle getRectangle(); //cambio a virtual
 
 };
 
