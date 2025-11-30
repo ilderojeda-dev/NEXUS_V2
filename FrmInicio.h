@@ -4,8 +4,8 @@
 #include "FrmMundoIA.h"
 #include "SoundManager.h"
 #include "FrmMundoColab.h"
+#include "Sesion.h"
 
-using namespace std;
 namespace NEXUSV2 {
 
 	using namespace System;
@@ -374,156 +374,116 @@ namespace NEXUSV2 {
 
 		}
 #pragma endregion
-	private: System::Void AlCerrarMundoHumano(System::Object^ sender, FormClosedEventArgs^ e) {
-		FrmMundoHumano^ mundoCerrado = (FrmMundoHumano^)sender;
-
-		// CASO 1: GANÓ EL NIVEL
-		if (mundoCerrado->DialogResult == System::Windows::Forms::DialogResult::OK) {
-
-			
-		}
-		// CASO 2: PERDIÓ O SALIÓ
-		else {
-			// En cualquier modo, si pierdes o sales, vuelves al menú
-			this->Show();
-			gestorSonido->ReproducirMusica("MusicaFondoInicio.wav", 0.2);
-		}
-	}
-
-		   private:
-			   // Función auxiliar para estilizar botones repetitivos
-			   void EstilizarBotonMenu(Button^ btn, System::Drawing::Color colorTexto, System::Drawing::Color colorBorde) {
-				   btn->FlatStyle = FlatStyle::Flat;
-				   btn->BackColor = System::Drawing::Color::FromArgb(200, 10, 20, 30); // Azul oscuro semitransparente
-				   btn->ForeColor = colorTexto;
-				   btn->FlatAppearance->BorderColor = colorBorde;
-				   btn->FlatAppearance->BorderSize = 2;
-				   btn->FlatAppearance->MouseOverBackColor = System::Drawing::Color::FromArgb(255, 0, 100, 150); // Brillo al pasar mouse
-				   btn->Font = gcnew System::Drawing::Font("Consolas", 12, FontStyle::Bold);
-				   btn->Cursor = Cursors::Hand;
-				   btn->Size = System::Drawing::Size(220, 60); // Tamaño uniforme
-			   }
-
-			   void ConfigurarMenuPrincipal() {
-				   // --- 1. COLORES Y FUENTES ---
-				   System::Drawing::Color colorNeon = System::Drawing::Color::FromArgb(0, 255, 255); // Cian brillante
-				   System::Drawing::Color colorRojo = System::Drawing::Color::FromArgb(255, 70, 70);   // Rojo suave para salir
-				   System::Drawing::Font^ fuenteLabel = gcnew System::Drawing::Font("Consolas", 14, FontStyle::Bold);
-
-				   // Obtener el centro de la pantalla (o del panel si usas uno)
-				   int centerX = pnlMenuPrincipal->Width / 2;
-				   int startY = 150;
-				   
-
-
-				   // --- 2. CAJA DE TEXTO (NOMBRE) ---
-				   // Hacemos que parezca una terminal: Fondo negro, letra cian, sin borde 3D
-				   txtNombreJugador->BackColor = System::Drawing::Color::FromArgb(10, 10, 20); // Casi negro
-				   txtNombreJugador->ForeColor = colorNeon;
-				   txtNombreJugador->BorderStyle = System::Windows::Forms::BorderStyle::FixedSingle;
-				   txtNombreJugador->Font = gcnew System::Drawing::Font("Consolas", 16, FontStyle::Bold);
-				   txtNombreJugador->TextAlign = HorizontalAlignment::Center;
-				   txtNombreJugador->Size = System::Drawing::Size(410, 30);
-
-				   // Centrar TextBox
-				   txtNombreJugador->Location = Point(centerX - (txtNombreJugador->Width / 2), startY);
-
-				   // Label "Ingresa tu nombre"
-				   lblPromptNombre->Parent = pnlMenuPrincipal;
-				   lblPromptNombre->BackColor = System::Drawing::Color::Transparent;
-				   lblPromptNombre->ForeColor = System::Drawing::Color::Yellow; // O Blanco
-				   lblPromptNombre->Font = fuenteLabel;
-				   // Centrar Label justo arriba del TextBox
-				   lblPromptNombre->Location = Point(centerX - (lblPromptNombre->Width / 2), startY - 30);
-
-
-				   // --- 3. BOTONES (GRILLA 2x2) ---
-				   int btnW = 220;
-				   int btnH = 60;
-				   int gap = 20; // Espacio entre botones
-				   int botonesY = startY + 60; // Debajo del nombre
-
-				   // Fila 1: INICIAR y NIVELES
-				   EstilizarBotonMenu(btnIniciarJuego, colorNeon, colorNeon);
-				   btnIniciarJuego->Location = Point(centerX - btnW - (gap / 2), botonesY);
-
-				   EstilizarBotonMenu(btnNiveles, colorNeon, colorNeon);
-				   btnNiveles->Location = Point(centerX + (gap / 2), botonesY);
-
-				   // Fila 2: SCORES y CREDITOS
-				   int fila2Y = botonesY + btnH + gap;
-
-				   EstilizarBotonMenu(btnScores, colorNeon, colorNeon); // Asumiendo que se llama btnScores
-				   btnScores->Location = Point(centerX - btnW - (gap / 2), fila2Y);
-
-				   EstilizarBotonMenu(btnCreditos, colorNeon, colorNeon); // Asumiendo btnCreditos
-				   btnCreditos->Location = Point(centerX + (gap / 2), fila2Y);
-
-				   // BOTÓN SALIR (Centrado abajo y rojo)
-				   EstilizarBotonMenu(btnSalir, colorRojo, colorRojo);
-				   btnSalir->Width = 200; // Un poco más chico
-				   btnSalir->Location = Point(centerX - (btnSalir->Width / 2), fila2Y + btnH + 30);
-			   }
-			   void ConfigurarPanelNiveles() {
-				   // 1. ASEGURAR QUE EL PANEL ESTÉ AL FRENTE
-				   pnlNiveles->BringToFront();
-
-				   // 2. VINCULAR BOTONES AL PANEL (OBLIGATORIO)
-				   // Esto hace que los botones sean "hijos" del panel para que se vean encima de él.
-				   // Al cambiar el Parent, a veces se mueven, así que guardamos su posición visual actual
-				   // y la restauramos inmediatamente para que NO SE MUEVAN.
-
-				   Point pos1 = btnNivel1->Location; // Guardar posición actual
-				   btnNivel1->Parent = pnlNiveles;   // Vincular
-				   btnNivel1->Location = pos1;       // Restaurar posición
-
-				   Point pos2 = btnNivel2->Location;
-				   btnNivel2->Parent = pnlNiveles;
-				   btnNivel2->Location = pos2;
-
-				   Point pos3 = btnNivel3->Location;
-				   btnNivel3->Parent = pnlNiveles;
-				   btnNivel3->Location = pos3;
-
-				   Point posVolver = btnVolver->Location;
-				   btnVolver->Parent = pnlNiveles;
-				   btnVolver->Location = posVolver;
-
-				   // 3. ESTILO TRANSPARENTE PARA LOS MUNDOS (IA, Humano, Colab)
-				   // Quitamos el fondo gris para que se vean solo tus imágenes bonitas
-
-				   // IA
-				   btnNivel1->BackColor = System::Drawing::Color::Transparent;
-				   btnNivel1->FlatStyle = FlatStyle::Flat;
-				   btnNivel1->FlatAppearance->BorderSize = 0;
-				   btnNivel1->Cursor = Cursors::Hand;
-				   btnNivel1->FlatAppearance->MouseOverBackColor = System::Drawing::Color::FromArgb(0, 65, 118);
-
-				   // Humano
-				   btnNivel2->BackColor = System::Drawing::Color::Transparent;
-				   btnNivel2->FlatStyle = FlatStyle::Flat;
-				   btnNivel2->FlatAppearance->BorderSize = 0;
-				   btnNivel2->Cursor = Cursors::Hand;
-				   btnNivel2->FlatAppearance->MouseOverBackColor = System::Drawing::Color::FromArgb(0, 65, 118);
-
-				   // Colaborativo
-				   btnNivel3->BackColor = System::Drawing::Color::Transparent;
-				   btnNivel3->FlatStyle = FlatStyle::Flat;
-				   btnNivel3->FlatAppearance->BorderSize = 0;
-				   btnNivel3->Cursor = Cursors::Hand;
-				   btnNivel3->FlatAppearance->MouseOverBackColor = System::Drawing::Color::FromArgb(0, 65, 118);
-
-				   // 4. ESTILO "SCI-FI ROJO" PARA EL BOTÓN VOLVER
-				   btnVolver->BackColor = System::Drawing::Color::FromArgb(200, 200, 40, 40); // Rojo semitransparente
-				   btnVolver->ForeColor = System::Drawing::Color::White;
-				   btnVolver->FlatStyle = FlatStyle::Flat;
-				   btnVolver->FlatAppearance->BorderColor = System::Drawing::Color::Red;
-				   btnVolver->FlatAppearance->BorderSize = 2;
-				   btnVolver->FlatAppearance->MouseOverBackColor = System::Drawing::Color::FromArgb(255, 139, 0, 0); // Rojo oscuro al pasar mouse
-				   btnVolver->Font = gcnew System::Drawing::Font("Consolas", 12, FontStyle::Bold);
-				   btnVolver->Cursor = Cursors::Hand;
-				   btnVolver->Text = "VOLVER";
-			   }
+	 private:
+	   // Función auxiliar para estilizar botones repetitivos
+	   void EstilizarBotonMenu(Button^ btn, System::Drawing::Color colorTexto, System::Drawing::Color colorBorde) {
+		   btn->FlatStyle = FlatStyle::Flat;
+		   btn->BackColor = System::Drawing::Color::FromArgb(200, 10, 20, 30); // Azul oscuro semitransparente
+		   btn->ForeColor = colorTexto;
+		   btn->FlatAppearance->BorderColor = colorBorde;
+		   btn->FlatAppearance->BorderSize = 2;
+		   btn->FlatAppearance->MouseOverBackColor = System::Drawing::Color::FromArgb(255, 0, 100, 150); // Brillo al pasar mouse
+		   btn->Font = gcnew System::Drawing::Font("Consolas", 12, FontStyle::Bold);
+		   btn->Cursor = Cursors::Hand;
+		   btn->Size = System::Drawing::Size(220, 60); // Tamaño uniforme
+	   }
+	   void ConfigurarMenuPrincipal() {
+		   // --- 1. COLORES Y FUENTES ---
+		   System::Drawing::Color colorNeon = System::Drawing::Color::FromArgb(0, 255, 255); // Cian brillante
+		   System::Drawing::Color colorRojo = System::Drawing::Color::FromArgb(255, 70, 70);   // Rojo suave para salir
+		   System::Drawing::Font^ fuenteLabel = gcnew System::Drawing::Font("Consolas", 14, FontStyle::Bold);
+		   // Obtener el centro de la pantalla (o del panel si usas uno)
+		   int centerX = pnlMenuPrincipal->Width / 2;
+		   int startY = 150;
+		   
+		   // --- 2. CAJA DE TEXTO (NOMBRE) ---
+		   // Hacemos que parezca una terminal: Fondo negro, letra cian, sin borde 3D
+		   txtNombreJugador->BackColor = System::Drawing::Color::FromArgb(10, 10, 20); // Casi negro
+		   txtNombreJugador->ForeColor = colorNeon;
+		   txtNombreJugador->BorderStyle = System::Windows::Forms::BorderStyle::FixedSingle;
+		   txtNombreJugador->Font = gcnew System::Drawing::Font("Consolas", 16, FontStyle::Bold);
+		   txtNombreJugador->TextAlign = HorizontalAlignment::Center;
+		   txtNombreJugador->Size = System::Drawing::Size(410, 30);
+		   // Centrar TextBox
+		   txtNombreJugador->Location = Point(centerX - (txtNombreJugador->Width / 2), startY);
+		   // Label "Ingresa tu nombre"
+		   lblPromptNombre->Parent = pnlMenuPrincipal;
+		   lblPromptNombre->BackColor = System::Drawing::Color::Transparent;
+		   lblPromptNombre->ForeColor = System::Drawing::Color::Yellow; // O Blanco
+		   lblPromptNombre->Font = fuenteLabel;
+		   // Centrar Label justo arriba del TextBox
+		   lblPromptNombre->Location = Point(centerX - (lblPromptNombre->Width / 2), startY - 30);
+		   // --- 3. BOTONES (GRILLA 2x2) ---
+		   int btnW = 220;
+		   int btnH = 60;
+		   int gap = 20; // Espacio entre botones
+		   int botonesY = startY + 60; // Debajo del nombre
+		   // Fila 1: INICIAR y NIVELES
+		   EstilizarBotonMenu(btnIniciarJuego, colorNeon, colorNeon);
+		   btnIniciarJuego->Location = Point(centerX - btnW - (gap / 2), botonesY);
+		   EstilizarBotonMenu(btnNiveles, colorNeon, colorNeon);
+		   btnNiveles->Location = Point(centerX + (gap / 2), botonesY);
+		   // Fila 2: SCORES y CREDITOS
+		   int fila2Y = botonesY + btnH + gap;
+		   EstilizarBotonMenu(btnScores, colorNeon, colorNeon); // Asumiendo que se llama btnScores
+		   btnScores->Location = Point(centerX - btnW - (gap / 2), fila2Y);
+		   EstilizarBotonMenu(btnCreditos, colorNeon, colorNeon); // Asumiendo btnCreditos
+		   btnCreditos->Location = Point(centerX + (gap / 2), fila2Y);
+		   // BOTÓN SALIR (Centrado abajo y rojo)
+		   EstilizarBotonMenu(btnSalir, colorRojo, colorRojo);
+		   btnSalir->Width = 200; // Un poco más chico
+		   btnSalir->Location = Point(centerX - (btnSalir->Width / 2), fila2Y + btnH + 30);
+	   }
+	   void ConfigurarPanelNiveles() {
+		   // 1. ASEGURAR QUE EL PANEL ESTÉ AL FRENTE
+		   pnlNiveles->BringToFront();
+		   // 2. VINCULAR BOTONES AL PANEL (OBLIGATORIO)
+		   // Esto hace que los botones sean "hijos" del panel para que se vean encima de él.
+		   // Al cambiar el Parent, a veces se mueven, así que guardamos su posición visual actual
+		   // y la restauramos inmediatamente para que NO SE MUEVAN.
+		   Point pos1 = btnNivel1->Location; // Guardar posición actual
+		   btnNivel1->Parent = pnlNiveles;   // Vincular
+		   btnNivel1->Location = pos1;       // Restaurar posición
+		   Point pos2 = btnNivel2->Location;
+		   btnNivel2->Parent = pnlNiveles;
+		   btnNivel2->Location = pos2;
+		   Point pos3 = btnNivel3->Location;
+		   btnNivel3->Parent = pnlNiveles;
+		   btnNivel3->Location = pos3;
+		   Point posVolver = btnVolver->Location;
+		   btnVolver->Parent = pnlNiveles;
+		   btnVolver->Location = posVolver;
+		   // 3. ESTILO TRANSPARENTE PARA LOS MUNDOS (IA, Humano, Colab)
+		   // Quitamos el fondo gris para que se vean solo tus imágenes bonitas
+		   // IA
+		   btnNivel1->BackColor = System::Drawing::Color::Transparent;
+		   btnNivel1->FlatStyle = FlatStyle::Flat;
+		   btnNivel1->FlatAppearance->BorderSize = 0;
+		   btnNivel1->Cursor = Cursors::Hand;
+		   btnNivel1->FlatAppearance->MouseOverBackColor = System::Drawing::Color::FromArgb(0, 65, 118);
+		   // Humano
+		   btnNivel2->BackColor = System::Drawing::Color::Transparent;
+		   btnNivel2->FlatStyle = FlatStyle::Flat;
+		   btnNivel2->FlatAppearance->BorderSize = 0;
+		   btnNivel2->Cursor = Cursors::Hand;
+		   btnNivel2->FlatAppearance->MouseOverBackColor = System::Drawing::Color::FromArgb(0, 65, 118);
+		   // Colaborativo
+		   btnNivel3->BackColor = System::Drawing::Color::Transparent;
+		   btnNivel3->FlatStyle = FlatStyle::Flat;
+		   btnNivel3->FlatAppearance->BorderSize = 0;
+		   btnNivel3->Cursor = Cursors::Hand;
+		   btnNivel3->FlatAppearance->MouseOverBackColor = System::Drawing::Color::FromArgb(0, 65, 118);
+		   // 4. ESTILO "SCI-FI ROJO" PARA EL BOTÓN VOLVER
+		   btnVolver->BackColor = System::Drawing::Color::FromArgb(200, 200, 40, 40); // Rojo semitransparente
+		   btnVolver->ForeColor = System::Drawing::Color::White;
+		   btnVolver->FlatStyle = FlatStyle::Flat;
+		   btnVolver->FlatAppearance->BorderColor = System::Drawing::Color::Red;
+		   btnVolver->FlatAppearance->BorderSize = 2;
+		   btnVolver->FlatAppearance->MouseOverBackColor = System::Drawing::Color::FromArgb(255, 139, 0, 0); // Rojo oscuro al pasar mouse
+		   btnVolver->Font = gcnew System::Drawing::Font("Consolas", 12, FontStyle::Bold);
+		   btnVolver->Cursor = Cursors::Hand;
+		   btnVolver->Text = "VOLVER";
+	   }
 	private: System::Void FrmInicio_Load(System::Object^ sender, System::EventArgs^ e) {
 	}
 	private: System::Void pnlFondo_Paint(System::Object^ sender, System::Windows::Forms::PaintEventArgs^ e) {
@@ -536,35 +496,26 @@ namespace NEXUSV2 {
 			   
 
 	}
-		   // Esta función se ejecutará automáticamente cuando se cierre el Nivel
+
+	private: System::Void AlCerrarMundoHumano(System::Object^ sender, FormClosedEventArgs^ e) {
+		FrmMundoHumano^ mundoCerrado = (FrmMundoHumano^)sender;
+
+		// CASO 1: GANÓ EL NIVEL
+		if (mundoCerrado->DialogResult == System::Windows::Forms::DialogResult::OK) {
+
+
+		}
+		// CASO 2: PERDIÓ O SALIÓ
+		else {
+			// En cualquier modo, si pierdes o sales, vuelves al menú
+			this->Show();
+			gestorSonido->ReproducirMusica("MusicaFondoInicio.wav", 0.2);
+		}
+	}
 	private: System::Void AlCerrarMundo(System::Object^ sender, System::Windows::Forms::FormClosedEventArgs^ e) {
-		// 1. Vuelve a mostrar el menú
 		this->Show();
-
-		// 2. Vuelve a poner la música del menú
 		gestorSonido->ReproducirMusica("MusicaFondoInicio.wav", 0.2);
-
 	}
-private: System::Void btnIniciarJuego_Click(System::Object^ sender, System::EventArgs^ e) {
-	// 1. VALIDACIÓN
-	if (txtNombreJugador->Text->Trim() == "") {
-		MessageBox::Show("Acceso denegado.\nIngrese su identificacion de cadete.", "Seguridad NEXUS", MessageBoxButtons::OK, MessageBoxIcon::Warning);
-		txtNombreJugador->Focus();
-		return;
-	}
-
-	// 2. SONIDO
-	gestorSonido->ReproducirEfecto("EfectoClick.wav", 1.0);
-	gestorSonido->DetenerMusica();
-
-
-	// LLAMAMOS AL CONSTRUCTOR NUEVO
-	FrmMundoHumano^ mundo = gcnew FrmMundoHumano(false);
-
-	mundo->FormClosed += gcnew FormClosedEventHandler(this, &FrmInicio::AlCerrarMundoHumano);
-	mundo->Show();
-	this->Hide();
-}
 	private: System::Void btnNiveles_Click(System::Object^ sender, System::EventArgs^ e) {
 		if (txtNombreJugador->Text->Trim() == "") {
 			MessageBox::Show(
@@ -578,9 +529,32 @@ private: System::Void btnIniciarJuego_Click(System::Object^ sender, System::Even
 			return;
 		}
 		gestorSonido->ReproducirEfecto("EfectoClick.wav", 1.0);
-		pnlMenuPrincipal->Visible = false; 
-		pnlNiveles->Visible = true;       
+		pnlMenuPrincipal->Visible = false;
+		pnlNiveles->Visible = true;
 	}
+	private: System::Void btnIniciarJuego_Click(System::Object^ sender, System::EventArgs^ e) {
+		// 1. VALIDACIÓN
+		if (txtNombreJugador->Text->Trim() == "") {
+			MessageBox::Show("Acceso denegado.\nIngrese su identificacion de cadete.", "Seguridad NEXUS", MessageBoxButtons::OK, MessageBoxIcon::Warning);
+			txtNombreJugador->Focus();
+			return;
+		}
+	
+		// 2. SONIDO
+		gestorSonido->ReproducirEfecto("EfectoClick.wav", 1.0);
+		gestorSonido->DetenerMusica();
+	
+		// 2. GUARDAR EN LA SESIÓN GLOBAL (¡Aquí está la clave!)
+		Sesion::Reiniciar(); // Limpiamos datos viejos
+		Sesion::NombreJugador = txtNombreJugador->Text; // Guardamos el nombre
+		Sesion::EsModoHistoria = true;
+
+		// 3. Arrancar el primer mundo (IA)
+		FrmMundoIA^ mundo1 = gcnew FrmMundoIA(); // Sin parámetros, ya están en Sesion
+		mundo1->Show();
+		this->Hide();
+	}
+	
 
 	private: System::Void btnVolver_Click(System::Object^ sender, System::EventArgs^ e) {
 		
@@ -591,34 +565,37 @@ private: System::Void btnIniciarJuego_Click(System::Object^ sender, System::Even
 	private: System::Void btnNivel2_Click(System::Object^ sender, System::EventArgs^ e) {
 		gestorSonido->ReproducirEfecto("EfectoClick.wav", 1.0);
 		gestorSonido->DetenerMusica();
-
-		FrmMundoHumano^ mundo = gcnew FrmMundoHumano(false);
-
+		Sesion::Reiniciar(); // Limpiamos datos viejos
+		Sesion::NombreJugador = txtNombreJugador->Text; // Guardamos el nombre
+		Sesion::EsModoHistoria = false;
+		FrmMundoHumano^ mundo = gcnew FrmMundoHumano();
+		pnlNiveles->Visible = false;
+		pnlMenuPrincipal->Visible = true;
 		mundo->FormClosed += gcnew FormClosedEventHandler(this, &FrmInicio::AlCerrarMundoHumano);
 		mundo->Show();
 		this->Hide();
 	}
-
-	private: System::Void btnCreditos_Click(System::Object^ sender, System::EventArgs^ e) {
-		gestorSonido->ReproducirEfecto("EfectoClick.wav", 1.0);
-		//Agregar formulario de creditos
-	}
-		   
 	private: System::Void btnNivel1_Click(System::Object^ sender, System::EventArgs^ e) {
-		gestorSonido->ReproducirEfecto("EfectoClick.wav", 1.0);
+			gestorSonido->ReproducirEfecto("EfectoClick.wav", 1.0);
 		
-		FrmMundoIA^ frmMundoIA = gcnew FrmMundoIA();
-		frmMundoIA->Show();
+			FrmMundoIA^ frmMundoIA = gcnew FrmMundoIA();
+			frmMundoIA->Show();
 		
-		this->Hide();
+			this->Hide();
 	
-	}
+		}
 	private: System::Void btnNivel3_Click(System::Object^ sender, System::EventArgs^ e) {
 		gestorSonido->ReproducirEfecto("EfectoClick.wav", 1.0);
 		FrmMundoColab^ frmMundoColab = gcnew FrmMundoColab();
 		frmMundoColab->Show();
 		this->Hide();	
 	}
+	private: System::Void btnCreditos_Click(System::Object^ sender, System::EventArgs^ e) {
+		gestorSonido->ReproducirEfecto("EfectoClick.wav", 1.0);
+		//Agregar formulario de creditos
+	}
+		   
+	
 private: System::Void btnHistoria_Click_1(System::Object^ sender, System::EventArgs^ e) {
 	gestorSonido->ReproducirEfecto("EfectoClick.wav", 1.0);
 	//Agregar formulario de historia

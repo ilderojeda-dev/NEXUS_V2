@@ -10,6 +10,7 @@
 #include "GasToxico.h"
 #include "CortoCircuito.h"
 #include <string>
+#include "Sesion.h"
 
 
 namespace NEXUSV2 {
@@ -27,15 +28,15 @@ namespace NEXUSV2 {
 	public ref class FrmMundoHumano : public System::Windows::Forms::Form
 	{
 	public:
-		FrmMundoHumano(bool modoHistoria)
+		FrmMundoHumano(void)
 		{
 			InitializeComponent();
 			//
 			//TODO: Add the constructor code here
 			//
 		// 1. Guardar los datos en variables locales
-			
-			this->esModoHistoria = modoHistoria;
+			lblNombreJugador->Text = Sesion::NombreJugador;
+			this->esModoHistoria = Sesion::EsModoHistoria;
 			
 			// 1. Configuración de Sonido
 			gestorSonido = gcnew NEXUS_V2::Service::SoundManager();
@@ -979,7 +980,7 @@ namespace NEXUSV2 {
 		lblNombreJugador->BackColor = System::Drawing::Color::Transparent;
 		lblNombreJugador->ForeColor = colorNeon;
 		lblNombreJugador->Font = fuenteDatos;
-		lblNombreJugador->Text = "Nombre: ";
+		lblNombreJugador->Text = "Nombre: " + Sesion::NombreJugador;
 		lblNombreJugador->Location = Point(220, 60);
 
 		

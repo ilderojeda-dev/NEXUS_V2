@@ -196,8 +196,10 @@
     <ClInclude Include="Pregunta.h" />
     <ClInclude Include="PreguntaService.h" />
     <ClInclude Include="Recurso.h" />
+    <ClInclude Include="RegistroScore.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="RobotEnemigo.h" />
+    <ClInclude Include="Sesion.h" />
     <ClInclude Include="SoundManager.h" />
     <ClInclude Include="Sprite.h" />
     <ClInclude Include="VozTerrestre.h" />
@@ -324,6 +326,9 @@
       <FileType>Document</FileType>
       <DestinationFolders Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(OutDir)Resource\</DestinationFolders>
     </CopyFileToFolders>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Files\SCORES.bin" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

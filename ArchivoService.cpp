@@ -1,8 +1,12 @@
 #include "ArchivoService.h"
 #include <fstream>
+#include <ctime>   // Para la fecha y hora
+#include <cstring> // Para manejar char[] (strcpy_s, memset)
 
+// --- LIBRERÍA IMPORTANTE PARA CONVERTIR TEXTO ---
+#include <msclr/marshal_cppstd.h>
 using namespace std;
-
+using namespace System;
 // ===== CONSTRUCTOR =====
 
 ArchivoService::ArchivoService() {
@@ -48,37 +52,6 @@ bool ArchivoService::archivoExiste(string nombreArchivo) {
 }
 
 
-// =========================================================
-// MANEJO DE SCORES BINARIOS (Estructuras)
-// =========================================================
-
-//void ArchivoService::guardarScoreBinario(ScoreData data) {
-//    // Usamos la ruta fija que pide la rúbrica
-//    ofstream archivo("Files/SCORES.bin", ios::binary | ios::app);
-//
-//    if (archivo.is_open()) {
-//        // Escribimos la memoria exacta de la estructura
-//        archivo.write((char*)&data, sizeof(ScoreData));
-//        archivo.close();
-//    }
-//}
-//
-//vector<ScoreData> ArchivoService::leerScoresBinario() {
-//    vector<ScoreData> lista;
-//    ifstream archivo("Files/SCORES.bin", ios::binary);
-//
-//    if (archivo.is_open()) {
-//        ScoreData dataTemp;
-//
-//        // Leemos bloque por bloque del tamaño de ScoreData
-//        while (archivo.read((char*)&dataTemp, sizeof(ScoreData))) {
-//            lista.push_back(dataTemp);
-//        }
-//        archivo.close();
-//    }
-//    return lista;
-//}
-
 
 // ===== MANEJO DE ARCHIVOS BINARIOS SIMPLE =====
 
@@ -103,4 +76,35 @@ string ArchivoService::leerTextoDelBinario(string nombreArchivo) {
     }
 
     return contenido;
+}
+
+
+void ArchivoService::GuardarPartida(String^ nombreNet, bool esHistoria, int p1, int p2, int p3, int total) {
+    // 1. Crear estructura vacía
+    RegistroScore fila;
+    memset(&fila, 0, sizeof(RegistroScore));
+
+    // 2. Convertir Nombre (String^ -> char array)
+    std::string nombreStd = msclr::interop::marshal_as<std::string>(nombreNet);
+    strncpy_s(fila.nombre, nombreStd.c_str(), 49);
+
+    // 3. Llenar Datos
+    fila.esModoHistoria = esHistoria;
+    fila.ptjAutonomia = p1;
+    fila.ptjCriterio = p2;
+    fila.ptjConfianza = p3;
+    fila.puntajeTotal = total;
+
+    // 4. Fecha
+    time_t ahora = time(0);
+    tm tiempoLocal;
+    localtime_s(&tiempoLocal, &ahora);
+    strftime(fila.fecha, 30, "%d/%m/%Y %H:%M", &tiempoLocal);
+
+    // 5. Guardar en Binario
+    ofstream archivo("Files/SCORES.bin", ios::binary | ios::app);
+    if (archivo.is_open()) {
+        archivo.write((char*)&fila, sizeof(RegistroScore));
+        archivo.close();
+    }
 }

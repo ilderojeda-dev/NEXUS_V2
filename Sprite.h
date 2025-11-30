@@ -1,7 +1,7 @@
 #pragma once
 using namespace System::Drawing;
 
-enum Direccion { Arriba, Abajo, Derecha, Izquierda, Ninguno };
+enum Direccion { Arriba, Abajo, Derecha, Izquierda, Ninguno, espacio };
 
 class Sprite {
 protected:
