@@ -13,6 +13,9 @@
     <Filter Include="Resource">
       <UniqueIdentifier>{65180669-2efb-485b-88df-bf6c3373b9ab}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Model\MundoColab">
+      <UniqueIdentifier>{ed9fc7ee-e12f-40d3-a8a9-1cb8ca794c2f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Principal.cpp" />
@@ -46,12 +49,6 @@
     <ClCompile Include="Alerta.cpp">
       <Filter>Model</Filter>
     </ClCompile>
-    <ClCompile Include="RobotEnemigo.cpp">
-      <Filter>Model</Filter>
-    </ClCompile>
-    <ClCompile Include="Nave.cpp">
-      <Filter>Model</Filter>
-    </ClCompile>
     <ClCompile Include="DialogoService.cpp">
       <Filter>Service</Filter>
     </ClCompile>
@@ -73,10 +70,31 @@
     <ClCompile Include="MundoColabService.cpp">
       <Filter>Service</Filter>
     </ClCompile>
-    <ClCompile Include="FrmInicio.cpp">
+    <ClCompile Include="EstrellaRecurso.cpp">
+      <Filter>Model\MundoColab</Filter>
+    </ClCompile>
+    <ClCompile Include="MeteoritoEnemigo.cpp">
+      <Filter>Model\MundoColab</Filter>
+    </ClCompile>
+    <ClCompile Include="Nave.cpp">
+      <Filter>Model\MundoColab</Filter>
+    </ClCompile>
+    <ClCompile Include="RobotEnemigo.cpp">
+      <Filter>Model\MundoColab</Filter>
+    </ClCompile>
+    <ClCompile Include="AliadoR2D2.cpp">
+      <Filter>Model\MundoColab</Filter>
+    </ClCompile>
+    <ClCompile Include="BalaLaser.cpp">
+      <Filter>Model\MundoColab</Filter>
+    </ClCompile>
+    <ClCompile Include="PreguntaDialogoServiceMundoColab.cpp">
+      <Filter>Service</Filter>
+    </ClCompile>
+    <ClCompile Include="FrmGameOverMundoColab.cpp">
       <Filter>UI</Filter>
     </ClCompile>
-    <ClCompile Include="FrmMundoHumano.cpp">
+    <ClCompile Include="FrmInicio.cpp">
       <Filter>UI</Filter>
     </ClCompile>
     <ClCompile Include="FrmModulo1.cpp">
@@ -91,17 +109,17 @@
     <ClCompile Include="FrmModulo4.cpp">
       <Filter>UI</Filter>
     </ClCompile>
-    <ClCompile Include="FrmMundoIA.cpp">
-      <Filter>UI</Filter>
-    </ClCompile>
     <ClCompile Include="FrmMundoColab.cpp">
       <Filter>UI</Filter>
     </ClCompile>
-    <ClCompile Include="MeteoritoEnemigo.cpp">
-      <Filter>Model</Filter>
+    <ClCompile Include="FrmMundoHumano.cpp">
+      <Filter>UI</Filter>
     </ClCompile>
-    <ClCompile Include="EstrellaRecurso.cpp">
-      <Filter>Model</Filter>
+    <ClCompile Include="FrmMundoIA.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
+    <ClCompile Include="FrmYouWinMundoColab.cpp">
+      <Filter>UI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -133,12 +151,6 @@
       <Filter>Model</Filter>
     </ClInclude>
     <ClInclude Include="Alerta.h">
-      <Filter>Model</Filter>
-    </ClInclude>
-    <ClInclude Include="RobotEnemigo.h">
-      <Filter>Model</Filter>
-    </ClInclude>
-    <ClInclude Include="Nave.h">
       <Filter>Model</Filter>
     </ClInclude>
     <ClInclude Include="DialogoService.h">
@@ -186,11 +198,30 @@
     <ClInclude Include="FrmMundoColab.h">
       <Filter>UI</Filter>
     </ClInclude>
-    <ClInclude Include="MeteoritoEnemigo.h">
-      <Filter>Model</Filter>
-    </ClInclude>
     <ClInclude Include="EstrellaRecurso.h">
-      <Filter>Model</Filter>
+      <Filter>Model\MundoColab</Filter>
+    </ClInclude>
+    <ClInclude Include="MeteoritoEnemigo.h">
+      <Filter>Model\MundoColab</Filter>
+    </ClInclude>
+    <ClInclude Include="Nave.h">
+      <Filter>Model\MundoColab</Filter>
+    </ClInclude>
+    <ClInclude Include="RobotEnemigo.h">
+      <Filter>Model\MundoColab</Filter>
+    </ClInclude>
+    <ClInclude Include="AliadoR2D2.h">
+      <Filter>Model\MundoColab</Filter>
+    </ClInclude>
+    <ClInclude Include="BalaLaser.h">
+      <Filter>Model\MundoColab</Filter>
+    </ClInclude>
+    <ClInclude Include="PreguntaDialogoServiceMundoColab.h">
+      <Filter>Service</Filter>
+    </ClInclude>
+    <ClInclude Include="FrmGameOverMundoColab.h" />
+    <ClInclude Include="FrmYouWinMundoColab.h">
+      <Filter>UI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -215,9 +246,6 @@
     <Image Include="SpriteEstrella.png">
       <Filter>Resource</Filter>
     </Image>
-    <Image Include="R2D2 Sprite.png">
-      <Filter>Resource</Filter>
-    </Image>
     <Image Include="MeteoritoSprite.png">
       <Filter>Resource</Filter>
     </Image>
@@ -228,6 +256,27 @@
       <Filter>Resource</Filter>
     </Image>
     <Image Include="RobotMundoIA.png">
+      <Filter>Resource</Filter>
+    </Image>
+    <Image Include="Bala.png">
+      <Filter>Resource</Filter>
+    </Image>
+    <Image Include="R2D2 Sprite.png">
+      <Filter>Resource</Filter>
+    </Image>
+    <Image Include="rd2.png">
+      <Filter>Resource</Filter>
+    </Image>
+    <Image Include="HUD mitad.jpeg">
+      <Filter>Resource</Filter>
+    </Image>
+    <Image Include="HUD izquierda.png">
+      <Filter>Resource</Filter>
+    </Image>
+    <Image Include="gameOverMundoColab.png">
+      <Filter>Resource</Filter>
+    </Image>
+    <Image Include="youWinMundoColab.png">
       <Filter>Resource</Filter>
     </Image>
   </ItemGroup>

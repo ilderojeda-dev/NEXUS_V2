@@ -7,6 +7,8 @@
 MeteoritoEnemigo::MeteoritoEnemigo() :Enemigo() {
 }
 MeteoritoEnemigo::MeteoritoEnemigo(int x, int y, int velocidad) :Enemigo(x, y, velocidad, -1) {
+	vidasMeteorito = 1 + rand() % 3; //meteorito puede tener entre 1 y 3 vidas
+
 	tiempo = 0;
 	dx = -1; 
 	dy = 0;

@@ -17,6 +17,10 @@ void Dialogo::iniciar(string texto) {
     indice = 0;
     contador = 0;
     enProgreso = true;
+	
+}
+Dialogo::Dialogo(string texto) { //nuevo
+    iniciar(texto);
 }
 
 bool Dialogo::actualizar() {

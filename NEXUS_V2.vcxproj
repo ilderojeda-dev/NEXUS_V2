@@ -115,17 +115,21 @@
   <ItemGroup>
     <ClCompile Include="Alerta.cpp" />
     <ClCompile Include="Aliado.cpp" />
+    <ClCompile Include="AliadoR2D2.cpp" />
+    <ClCompile Include="BalaLaser.cpp" />
     <ClCompile Include="Dialogo.cpp" />
     <ClCompile Include="DialogoService.cpp" />
     <ClCompile Include="Enemigo.cpp" />
     <ClCompile Include="EstrellaRecurso.cpp" />
     <ClCompile Include="Fondo.cpp" />
+    <ClCompile Include="FrmGameOverMundoColab.cpp" />
     <ClCompile Include="FrmInicio.cpp" />
     <ClCompile Include="FrmModulo1.cpp" />
     <ClCompile Include="FrmModulo2.cpp" />
     <ClCompile Include="FrmModulo3.cpp" />
     <ClCompile Include="FrmModulo4.cpp" />
     <ClCompile Include="FrmMundoHumano.cpp" />
+    <ClCompile Include="FrmYouWinMundoColab.cpp" />
     <ClCompile Include="Jugador.cpp" />
     <ClCompile Include="MeteoritoEnemigo.cpp" />
     <ClCompile Include="Mundo.cpp" />
@@ -139,6 +143,7 @@
     <ClCompile Include="Playlist.cpp" />
     <ClCompile Include="Pregunta.cpp" />
     <ClCompile Include="PreguntaService.cpp" />
+    <ClCompile Include="PreguntaDialogoServiceMundoColab.cpp" />
     <ClCompile Include="Principal.cpp" />
     <ClCompile Include="Recurso.cpp" />
     <ClCompile Include="RobotEnemigo.cpp" />
@@ -147,11 +152,16 @@
   <ItemGroup>
     <ClInclude Include="Alerta.h" />
     <ClInclude Include="Aliado.h" />
+    <ClInclude Include="AliadoR2D2.h" />
+    <ClInclude Include="BalaLaser.h" />
     <ClInclude Include="Dialogo.h" />
     <ClInclude Include="DialogoService.h" />
     <ClInclude Include="Enemigo.h" />
     <ClInclude Include="EstrellaRecurso.h" />
     <ClInclude Include="Fondo.h" />
+    <ClInclude Include="FrmGameOverMundoColab.h">
+      <FileType>CppForm</FileType>
+    </ClInclude>
     <ClInclude Include="FrmInicio.h">
       <FileType>CppForm</FileType>
     </ClInclude>
@@ -176,6 +186,9 @@
     <ClInclude Include="FrmMundoColab.h">
       <FileType>CppForm</FileType>
     </ClInclude>
+    <ClInclude Include="FrmYouWinMundoColab.h">
+      <FileType>CppForm</FileType>
+    </ClInclude>
     <ClInclude Include="Jugador.h" />
     <ClInclude Include="MeteoritoEnemigo.h" />
     <ClInclude Include="Mundo.h" />
@@ -187,6 +200,7 @@
     <ClInclude Include="Playlist.h" />
     <ClInclude Include="Pregunta.h" />
     <ClInclude Include="PreguntaService.h" />
+    <ClInclude Include="PreguntaDialogoServiceMundoColab.h" />
     <ClInclude Include="Recurso.h" />
     <ClInclude Include="RobotEnemigo.h" />
     <ClInclude Include="Sprite.h" />
@@ -199,6 +213,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="FrmGameOverMundoColab.resx">
+      <DependentUpon>FrmGameOverMundoColab.h</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FrmInicio.resx">
       <DependentUpon>FrmInicio.h</DependentUpon>
     </EmbeddedResource>
@@ -217,16 +234,24 @@
     <EmbeddedResource Include="FrmMundoHumano.resx">
       <DependentUpon>FrmMundoHumano.h</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="FrmYouWinMundoColab.resx">
+      <DependentUpon>FrmYouWinMundoColab.h</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <Image Include="Alerta.png" />
     <Image Include="Astronauta.png" />
+    <Image Include="Bala.png" />
     <Image Include="FondoMundoIA.png" />
+    <Image Include="gameOverMundoColab.png" />
+    <Image Include="HUD izquierda.png" />
+    <Image Include="HUD mitad.jpeg" />
     <Image Include="InicioJuego.png" />
     <Image Include="MundoHumano.png" />
     <EmbeddedResource Include="FrmMundoIA.resx">
       <DependentUpon>FrmMundoIA.h</DependentUpon>
     </EmbeddedResource>
+    <Image Include="youWinMundoColab.png" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="FrmMundoColab.resx">
@@ -238,6 +263,7 @@
     <Image Include="MeteoritoSprite.png" />
     <Image Include="PersonajeMundoIA.png" />
     <Image Include="R2D2 Sprite.png" />
+    <Image Include="rd2.png" />
     <Image Include="RobotMundoIA.png" />
     <Image Include="SpriteEstrella.png" />
     <Image Include="SpriteNave.png" />

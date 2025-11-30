@@ -8,7 +8,7 @@ private:
 	int tiempo; 
 
 	double tamaño = 1.0;
-
+	int vidasMeteorito;
  
 public:		
 	
@@ -23,6 +23,9 @@ public:
 
 	  void setTamaño(double tamaño) { tamaño = tamaño; }
 
+
+	  int getVidasMeteorito() { return vidasMeteorito; }
+	  void setVidasMeteorito(int vidasM) { vidasMeteorito = vidasM; }
 	  Rectangle getRectangle() override { return getRectangleMeteorito();  } //para usar el hitbox personalizado
 	  Rectangle getRectangleMeteorito();
 };

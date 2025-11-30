@@ -8,8 +8,11 @@ MundoColabService::MundoColabService(int ancho, int alto, int vidasIniciales)
 : Mundo(ancho, alto, vidasIniciales) {
 nave = new Nave(50, 50);
 
+necesitaRecargar = false;
 srand(time(NULL)); // Inicializar la semilla para números aleatorios
-
+mostrandoPregunta = false;
+respuestaSeleccionada = -1;
+respuestaCorrecta = -1;
 
 
 }
@@ -22,8 +25,16 @@ MundoColabService::~MundoColabService() {
 	for (EstrellaRecurso* estrella : estrellas) {
 		delete estrella;
 	}
+	estrellas.clear();
 	delete nave;
-	
+
+	if (aliadoR2D2 != nullptr) {
+		delete aliadoR2D2;
+	}
+	for (BalaLaser* bala : balas) {
+		delete bala;
+	}
+	balas.clear();
 }
 //NAVE
 //---------------------------------------------------------------------------------//
@@ -152,7 +163,7 @@ void MundoColabService::moverEstrella() {
 	}
 }
 void MundoColabService::spawnEstrellasAleatorias() {
-	if (enemigos.size() > maxEstrellas) return;
+	if (estrellas.size() > maxEstrellas) return;
 	char rutaEstrella[] = "SpriteEstrella.png";
 
 	int yRandom = rand() % altoPanel; 
@@ -173,12 +184,104 @@ void MundoColabService::spawnEstrellasAleatorias() {
 
 }
 
+//BALAS LASER
+void MundoColabService::disparar() {
+
+	// Si estás mostrando una pregunta, no puedes disparar
+	if (mostrandoPregunta) return;
+
+	// Si NO hay balas ? activar recarga y bloquear disparo
+	if (balasDisponibles <= 0) {
+		necesitaRecargar = true;
+		return;
+	}
+
+	// Si hay balas ? disparas normalmente
+	if (nave == nullptr) return;
+
+	int salidaX = nave->getX() + nave->getAncho() - 30;
+	int salidaY = nave->getY() + nave->getAlto() / 2 - 20;
+
+	BalaLaser* b = new BalaLaser(salidaX, salidaY, 15);
+	b->cargarImagen("Bala.png", 2, 4);
+	b->setActivo(true);
+
+	balasDisponibles--;
+	balas.push_back(b);
+
+	// Si se agotan las balas justo con este disparo
+	if (balasDisponibles <= 0)
+		necesitaRecargar = true;
+}
+
+void MundoColabService::moverBalas() {
+
+	for (int i = 0; i < balas.size(); i++) {
+		balas[i]->mover(Direccion::Derecha, this->anchoPanel, this->altoPanel);
+
+		if (!balas[i]->getActivo() || balas[i]->getX() < -balas[i]->getAncho()){
+			delete balas[i];
+			balas.erase(balas.begin() + i);
+			i--;
+		}
+	}
+}
+
+
+void MundoColabService::procesarRecargaPorRespuesta(bool correcta) {
+
+	mostrandoPregunta = false; // <- SE TERMINÓ LA PREGUNTA
+
+	if (!necesitaRecargar) return;
+
+	if (correcta) {
+		respuestasCorrectas++;
+
+		int base = 1;
+		int bono = (int)(respuestasCorrectas * 1.2);
+		int extra = rand() % 4;
+
+		int total = base + bono + extra;
+		if (total > balasMaximas) total = balasMaximas;
+
+		balasDisponibles = total;
+	}
+
+	necesitaRecargar = false;
+}
 
 
 
 
 
 
+
+
+
+
+
+
+//----------------------------------------------------------------//
+//ALIADO
+void MundoColabService::cargarR2D2(char* ruta, int filas, int columnas) {
+	if (aliadoR2D2 != nullptr) return;
+
+	aliadoR2D2 = new AliadoR2D2(90, -90);	//posicion de sprite
+	aliadoR2D2->cargarImagen(ruta, 1, 4);
+	aliadoR2D2->setActivo(true);
+}
+
+//aparte pq va en otro panel
+void MundoColabService::dibujarAliadoR2D2(Graphics^ canvas) {
+	if (aliadoR2D2 != nullptr && aliadoR2D2->getActivo()) {
+		aliadoR2D2->dibujar(canvas);
+	}
+}
+void MundoColabService::animarAliado() {
+	if (aliadoR2D2 != nullptr && aliadoR2D2->getActivo()) {
+		aliadoR2D2->animar();
+	}
+}
 
 
 
@@ -190,18 +293,23 @@ void MundoColabService::spawnEstrellasAleatorias() {
 
 //COLISIONES
 void MundoColabService::verificarColisiones() {
+
 	Rectangle rectNave = nave->getRectangleNave();
 
+	
+
+
+		//NAVE Y ENEMIGOS
 	for (int i = 0; i < enemigos.size(); i++) {
 		if (!enemigos[i]->getActivo()) continue;
 
 		Rectangle rectEnemigo;
 
 
-		//uso del hitbox del meteorito (creo que podria usarlo para los recursos tambien)
+		//uso del hitbox del meteorito 
 		MeteoritoEnemigo* meteorito = dynamic_cast<MeteoritoEnemigo*>(enemigos[i]);
 		if (meteorito != nullptr) {
-		
+
 			rectEnemigo = meteorito->getRectangleMeteorito();
 		}
 		else {
@@ -219,31 +327,99 @@ void MundoColabService::verificarColisiones() {
 			enemigos.erase(enemigos.begin() + i);
 			i--;
 
-			if (nave->getVidas() <= 0) {
-				nave->setNaveActiva(false); //desactivar nave
+			if (nave->getVidas() <= 0) nave->setNaveActiva(false); //desactivar nave
 				//mostrar el gameover
-			}
+			
 		}
-
 	}
 
-	//estrellas
-	for (int i = 0; i < estrellas.size(); i++) {
-		if (!estrellas[i]->getActivo()) continue;
-		Rectangle rectEstrella = estrellas[i]->getRectangleEstrella();
+		// ENEMIGOS Y BALAS
+		for (int b = 0; b < balas.size(); b++) {
+			if (balas[b]->estaExplotando()) continue; // si la bala explota ya no colisiona
 
-		if (rectNave.IntersectsWith(rectEstrella)) {
-			nave->setVidas(nave->getVidas() + 1);		//suma la vida de la nave
+			if (!balas[b]->getActivo()) continue;
+			Rectangle rectBala = balas[b]->getRectangleBala();
+
+			for (int i = 0; i < enemigos.size(); i++) {
+				if (!enemigos[i]->getActivo()) continue;
+
+				Rectangle rectEnemigo;
+				MeteoritoEnemigo* meteorito = dynamic_cast<MeteoritoEnemigo*>(enemigos[i]);
+				if (meteorito != nullptr) {
+
+					rectEnemigo = meteorito->getRectangleMeteorito();
+				}
+				else
+					rectEnemigo = enemigos[i]->getRectangle();
+
+			if (rectBala.IntersectsWith(rectEnemigo)) {
+				if (meteorito != nullptr) {
+
+					meteorito->setVidasMeteorito(meteorito->getVidasMeteorito() - 1);
+
+					if (meteorito->getVidasMeteorito() <= 0) {
+						meteorito->setActivo(false);
+						delete enemigos[i];
+						enemigos.erase(enemigos.begin() + i);
+						i--;
+						balas[b]->iniciarExplosion();
+					}// destruir bala
+					else {
+						delete balas[b];
+						balas.erase(balas.begin() + b);
+						b--;
+
+					}
+				}
 				
-			estrellas[i]->setActivo(false); //desactivar estrella
 
-			delete estrellas[i];
-			estrellas.erase(estrellas.begin() + i);
-			i--;
+				break;
+			}
 
 		}
-		if (nave->getVidas() > 3)nave->setVidas(3); 
 	}
+
+		// NAVE, BALAS Y ESTRELLA
+		for (int i = 0; i < estrellas.size(); i++) {
+			if (!estrellas[i]->getActivo()) continue;
+			Rectangle rectEstrella = estrellas[i]->getRectangleEstrella();
+
+			if (rectNave.IntersectsWith(rectEstrella)) {
+				nave->setVidas(nave->getVidas() + 1);		//suma la vida de la nave
+
+				delete estrellas[i];
+				estrellas.erase(estrellas.begin() + i);
+				i--;
+
+				if (nave->getVidas() > 3)nave->setVidas(3);
+				continue;
+			}
+		
+
+					// BALAS Y ESTRELLA
+				for (int b = 0; b < balas.size(); b++) {
+
+					if (balas[b]->estaExplotando()) continue;
+
+					if (!balas[b]->getActivo()) continue;
+					Rectangle rectBala = balas[b]->getRectangleBala();
+
+					if (rectBala.IntersectsWith(rectEstrella)) {
+						// destruir bala y estrella
+						
+						delete estrellas[i];
+						estrellas.erase(estrellas.begin() + i);
+						i--;
+						balas[b]->iniciarExplosion();
+
+						
+						
+						break;	
+					}
+				}
+
+		}
+		
 }
 
 
@@ -277,38 +453,11 @@ void MundoColabService::dibujarTodo(Graphics^ canvas) {
 			estrellas[i]->dibujar(canvas);
 
 
-		/*String^ texto = "Meteoritos: " + enemigos.size().ToString();
-		Font^ f = gcnew Font("Arial", 12);
-		SolidBrush^ b = gcnew SolidBrush(Color::White);
-		canvas->DrawString(texto, f, b, 10, 10);
-		delete f;
-		delete b;
-		*/
-
-		String^ texto = "Estrellas: " + estrellas.size().ToString();
-		Font^ f = gcnew Font("Arial", 12);
-		SolidBrush^ b = gcnew SolidBrush(Color::White);
-		canvas->DrawString(texto, f, b, 10, 10);
-		delete f;
-		delete b;
-
-
-		Pen^ lapizHitbox = gcnew Pen(Color::LimeGreen, 2);
-		canvas->DrawRectangle(lapizHitbox, nave->getRectangleNave());
-		delete lapizHitbox;
-		for (int i = 0; i < enemigos.size(); i++)
-		{
-			Pen^ lapizHitboxEnemigo = gcnew Pen(Color::Red, 1);
-			canvas->DrawRectangle(lapizHitboxEnemigo, enemigos[i]->getRectangle());
-			delete lapizHitboxEnemigo;
-		}
-		
-		for (int i = 0; i < estrellas.size(); i++)
-		{
-			Pen^ lapizHitboxRecurso = gcnew Pen(Color::Blue, 3);
-			canvas->DrawRectangle(lapizHitboxRecurso, estrellas[i]->getRectangleEstrella());
-			delete lapizHitboxRecurso;
-		}
-
 	}
+	// Dibujar las balas
+	for (int i = 0; i < balas.size(); i++) {
+		if (balas[i]->getActivo())
+			balas[i]->dibujar(canvas);
+	}
+
 }
