@@ -5,6 +5,7 @@
 #include <sstream>
 
 using namespace std;
+using namespace System::Drawing;
 
 MundoHumanoService::MundoHumanoService(int ancho, int alto, int vidasIniciales) : Mundo(ancho, alto, vidasIniciales) {
 	srand(time(NULL));

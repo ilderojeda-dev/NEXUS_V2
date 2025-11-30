@@ -11,8 +11,6 @@
 #include "CortoCircuito.h"
 #include <string>
 
-using namespace std;
-
 
 namespace NEXUSV2 {
 
@@ -35,13 +33,17 @@ namespace NEXUSV2 {
 			//
 			//TODO: Add the constructor code here
 			//
+		// 1. Guardar los datos en variables locales
+			
+			this->esModoHistoria = modoHistoria;
+			
 			// 1. Configuración de Sonido
 			gestorSonido = gcnew NEXUS_V2::Service::SoundManager();
 			gestorSonido->ReproducirMusica("MusicaFondoMundoHumano.wav", 0.5);
 
 			// 2. Inicializar el Servicio
 			service = new MundoHumanoService(pnlMundo->Width, pnlMundo->Height, 3);
-			this->esModoHistoria = modoHistoria;
+			
 			// 3. Cargar Fondo
 			char rutaFondo[] = "MundoHumano.png";
 			service->cargarFondo(rutaFondo);
@@ -104,8 +106,8 @@ namespace NEXUSV2 {
 		MundoHumanoService* service;
 		Direccion teclaPresionada;
 		DialogoService* gestorDialogo;
-
 		bool esModoHistoria;
+		
 
 		bool mensajePapelMostrado = false;
 		bool mensajeTerrestreMostrado = false;
@@ -621,7 +623,7 @@ namespace NEXUSV2 {
 	}
 		   // A. VERIFICAR COLISIONES (Enemigos y Puzzles)
 		   void VerificarColisiones() {
-			   Rectangle rectJugador = service->getJugador()->getRectangle();
+			   System::Drawing::Rectangle rectJugador = service->getJugador()->getRectangle();
 
 			   // 1. COLISIÓN CON ENEMIGOS 
 			   if (service->hayColisionEnemigos(rectJugador)) {
@@ -752,13 +754,13 @@ namespace NEXUSV2 {
 
 			   FrmFinMundoHumano^ fin = gcnew FrmFinMundoHumano(
 				   finPendienteGano,
-				   this->esModoHistoria,
+				   esModoHistoria,
 				   service->getVidas(),
 				   service->getEstabilidadNave(),
 				   service->getIndiceCriterio(),
 				   service->getProgresoMision()
 			   );
-			   this->Hide();
+			   this->Hide();//oculta este firnukario
 			   // 2. Mostramos las estadísticas y ESPERAMOS la respuesta (OK o Cancel)
 			   System::Windows::Forms::DialogResult respuesta = fin->ShowDialog();
 
@@ -801,7 +803,7 @@ namespace NEXUSV2 {
 			   }
 
 			   // 2. Recoger Trajes
-			   Rectangle rectJugador = service->getJugador()->getRectangle();
+			   System::Drawing::Rectangle rectJugador = service->getJugador()->getRectangle();
 
 			   if (!service->getTieneTrajeAntiElectricidad() && pbTrajeElecMapa->Visible) {
 				   if (rectJugador.IntersectsWith(pbTrajeElecMapa->Bounds)) {

@@ -13,9 +13,8 @@
 #include <string>
 #include <sstream>
 
-using namespace System::Drawing;
 using namespace std;
-
+using namespace System::Drawing;
 enum class TipoTraje {
 	Normal = 0,
 	AntiElectricidad = 1,
@@ -39,9 +38,9 @@ private:
 	TipoTraje trajeActivo = TipoTraje::Normal;
 
 	// --- ESTADO DE LA MISIÓN ---
-	int estabilidadNave = 70;  
-	int indiceCriterio = 100;   
-	int progresoMision = 0;     
+	int estabilidadNave = 70;
+	int indiceCriterio = 100;
+	int progresoMision = 0;
 
 	bool modulosCompletados[3] = { false, false, false };
 

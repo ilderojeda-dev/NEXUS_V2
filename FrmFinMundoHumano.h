@@ -115,7 +115,7 @@ namespace NEXUSV2 {
                 static_cast<System::Int32>(static_cast<System::Byte>(67)));
             this->lblResumen->Font = (gcnew System::Drawing::Font(L"Arial", 16, System::Drawing::FontStyle::Bold));
             this->lblResumen->ForeColor = System::Drawing::Color::Yellow;
-            this->lblResumen->Location = System::Drawing::Point(418, 302);
+            this->lblResumen->Location = System::Drawing::Point(366, 292);
             this->lblResumen->Margin = System::Windows::Forms::Padding(2, 0, 2, 0);
             this->lblResumen->Name = L"lblResumen";
             this->lblResumen->Padding = System::Windows::Forms::Padding(8);
@@ -129,7 +129,7 @@ namespace NEXUSV2 {
                 static_cast<System::Int32>(static_cast<System::Byte>(67)));
             this->lblStats->Font = (gcnew System::Drawing::Font(L"Arial", 16, System::Drawing::FontStyle::Bold));
             this->lblStats->ForeColor = System::Drawing::Color::Yellow;
-            this->lblStats->Location = System::Drawing::Point(704, 630);
+            this->lblStats->Location = System::Drawing::Point(640, 625);
             this->lblStats->Margin = System::Windows::Forms::Padding(2, 0, 2, 0);
             this->lblStats->Name = L"lblStats";
             this->lblStats->Padding = System::Windows::Forms::Padding(8);

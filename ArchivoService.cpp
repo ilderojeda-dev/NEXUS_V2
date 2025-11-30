@@ -1,4 +1,3 @@
-
 #include "ArchivoService.h"
 #include <fstream>
 
@@ -47,6 +46,39 @@ bool ArchivoService::archivoExiste(string nombreArchivo) {
     ifstream archivo(nombreArchivo);
     return archivo.good();
 }
+
+
+// =========================================================
+// MANEJO DE SCORES BINARIOS (Estructuras)
+// =========================================================
+
+//void ArchivoService::guardarScoreBinario(ScoreData data) {
+//    // Usamos la ruta fija que pide la rúbrica
+//    ofstream archivo("Files/SCORES.bin", ios::binary | ios::app);
+//
+//    if (archivo.is_open()) {
+//        // Escribimos la memoria exacta de la estructura
+//        archivo.write((char*)&data, sizeof(ScoreData));
+//        archivo.close();
+//    }
+//}
+//
+//vector<ScoreData> ArchivoService::leerScoresBinario() {
+//    vector<ScoreData> lista;
+//    ifstream archivo("Files/SCORES.bin", ios::binary);
+//
+//    if (archivo.is_open()) {
+//        ScoreData dataTemp;
+//
+//        // Leemos bloque por bloque del tamaño de ScoreData
+//        while (archivo.read((char*)&dataTemp, sizeof(ScoreData))) {
+//            lista.push_back(dataTemp);
+//        }
+//        archivo.close();
+//    }
+//    return lista;
+//}
+
 
 // ===== MANEJO DE ARCHIVOS BINARIOS SIMPLE =====
 

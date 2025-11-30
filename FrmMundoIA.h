@@ -80,6 +80,9 @@ namespace NEXUSV2 {
 			// pnlMundoIA
 			// 
 			this->pnlMundoIA->BackColor = System::Drawing::SystemColors::ActiveBorder;
+			this->pnlMundoIA->Cursor = System::Windows::Forms::Cursors::IBeam;
+			this->pnlMundoIA->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 8.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
 			this->pnlMundoIA->Location = System::Drawing::Point(0, 0);
 			this->pnlMundoIA->Name = L"pnlMundoIA";
 			this->pnlMundoIA->Size = System::Drawing::Size(1509, 925);
