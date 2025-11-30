@@ -37,7 +37,7 @@ namespace NEXUSV2 {
 			//
 			// 1. Configuración de Sonido
 			gestorSonido = gcnew NEXUS_V2::Service::SoundManager();
-			gestorSonido->ReproducirMusica("MusicaFondoMundoHumano.wav", 0.8);
+			gestorSonido->ReproducirMusica("MusicaFondoMundoHumano.wav", 0.5);
 
 			// 2. Inicializar el Servicio
 			service = new MundoHumanoService(pnlMundo->Width, pnlMundo->Height, 3);
@@ -634,11 +634,13 @@ namespace NEXUSV2 {
 				   }
 
 				   if (enemigoColisionado != nullptr) {
+
 					   GasToxico* gas = dynamic_cast<GasToxico*>(enemigoColisionado);
 					   CortoCircuito* corto = dynamic_cast<CortoCircuito*>(enemigoColisionado);
 					   TipoTraje traje = service->getTrajeActivo();
-
+					   
 					   if (gas != nullptr && traje != TipoTraje::AntiGas) {
+						   gestorSonido->ReproducirEfecto("EfectoPerderVida.wav", 0.5);
 						   AplicarDaño(
 							   "Has inhalado gas toxico. Pierdes 1 vida.",
 							   "Entrar a zonas con fugas sin la proteccion adecuada no es solo un error: "
@@ -646,6 +648,7 @@ namespace NEXUSV2 {
 						   );
 					   }
 					   else if (corto != nullptr && traje != TipoTraje::AntiElectricidad) {
+						   gestorSonido->ReproducirEfecto("EfectoPerderVida.wav", 0.5);
 						   AplicarDaño(
 							   "Has recibido una descarga electrica. Pierdes 1 vida.",
 							   "Acercarte a sistemas inestables sin el equipo correcto tiene consecuencias. "
@@ -709,6 +712,7 @@ namespace NEXUSV2 {
 				   teclaPresionada = Direccion::Ninguno;
 				   gestorSonido->DetenerSonidoBucle();
 				   gestorSonido->DetenerMusica();
+				   gestorSonido->ReproducirEfecto("EfectoGameOver.wav", 0.8);
 
 				   string textoDerrota =
 					   "Mision fallida...\n\n"
@@ -776,6 +780,7 @@ namespace NEXUSV2 {
 			   // 1. Mensaje del Papel
 			   if (!mensajePapelActivo && !mensajePapelMostrado) {
 				   if (service->hayColisionPapelSeñal(service->getJugador()->getRectangle())) {
+					   gestorSonido->ReproducirEfecto("EfectoColisionRecurso.wav", 0.5);
 					   mensajePapelActivo = true;
 					   mensajePapelMostrado = true;
 					   teclaPresionada = Direccion::Ninguno;
@@ -800,6 +805,7 @@ namespace NEXUSV2 {
 
 			   if (!service->getTieneTrajeAntiElectricidad() && pbTrajeElecMapa->Visible) {
 				   if (rectJugador.IntersectsWith(pbTrajeElecMapa->Bounds)) {
+					   gestorSonido->ReproducirEfecto("EfectoColisionRecurso.wav", 0.5);
 					   pbTrajeElecMapa->Visible = false;
 					   service->setTieneTrajeAntiElectricidad(true);
 					   pbPrototipoA->Visible = false;
@@ -822,6 +828,7 @@ namespace NEXUSV2 {
 			   }
 			   if (!service->getTieneTrajeAntiGas() && pbTrajeGasMapa->Visible) {
 				   if (rectJugador.IntersectsWith(pbTrajeGasMapa->Bounds)) {
+					   gestorSonido->ReproducirEfecto("EfectoColisionRecurso.wav", 0.5);
 					   pbTrajeGasMapa->Visible = false;
 					   service->setTieneTrajeAntiGas(true);
 					   pbPrototivoB->Visible = false;
@@ -1162,6 +1169,7 @@ namespace NEXUSV2 {
 	private: System::Void pbTrajeElecMapa_Click(System::Object^ sender, System::EventArgs^ e) {
 	}
 	private: System::Void btnUsarTrajeElec_Click(System::Object^ sender, System::EventArgs^ e) {
+		gestorSonido->ReproducirEfecto("EfectoCambioSking.wav", 0.4);
 		if (service->getTieneTrajeAntiElectricidad()) {
 			service->cambiarTraje(TipoTraje::AntiElectricidad);
 			btnUsarTrajeElec->Enabled = false;
@@ -1171,6 +1179,7 @@ namespace NEXUSV2 {
 		}
 	}
 	private: System::Void btnUsarTrajeGas_Click(System::Object^ sender, System::EventArgs^ e) {
+		gestorSonido->ReproducirEfecto("EfectoCambioSking.wav", 0.4);
 		if (service->getTieneTrajeAntiGas()) {
 			service->cambiarTraje(TipoTraje::AntiGas);
 			btnUsarTrajeGas->Enabled = false;
@@ -1180,6 +1189,7 @@ namespace NEXUSV2 {
 		}
 	}
 	private: System::Void btnUsarTrajeNormal_Click(System::Object^ sender, System::EventArgs^ e) {
+		gestorSonido->ReproducirEfecto("EfectoCambioSking.wav", 0.4);
 		service->cambiarTraje(TipoTraje::Normal);
 		btnUsarTrajeNormal->Enabled = false;
 		if (service->getTieneTrajeAntiElectricidad())

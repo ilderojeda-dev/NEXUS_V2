@@ -288,16 +288,42 @@
     </CopyFileToFolders>
   </ItemGroup>
   <ItemGroup>
-    <CopyFileToFolders Include="PasosJuga.wav">
+    <ResourceCompile Include="NEXUS_V2.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="Files\PARAMETERS.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <CopyFileToFolders Include="EfectoBotonM2.wav">
+      <FileType>Document</FileType>
+      <DestinationFolders Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(OutDir)Resource\</DestinationFolders>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="EfectoColisionRecurso.wav">
+      <FileType>Document</FileType>
+      <DestinationFolders Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(OutDir)Resource\</DestinationFolders>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="EfectoGameOver.wav">
+      <FileType>Document</FileType>
+      <DestinationFolders Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(OutDir)Resource\</DestinationFolders>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="EfectoRespuestaIncorrecta.wav">
       <FileType>Document</FileType>
       <DestinationFolders Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(OutDir)Resource\</DestinationFolders>
     </CopyFileToFolders>
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="NEXUS_V2.rc" />
-  </ItemGroup>
-  <ItemGroup>
-    <Text Include="Files\PARAMETERS.txt" />
+    <CopyFileToFolders Include="EfectoCambioSking.wav">
+      <FileType>Document</FileType>
+      <DestinationFolders Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(OutDir)Resource\</DestinationFolders>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="EfectoPerderVida.wav">
+      <FileType>Document</FileType>
+      <DestinationFolders Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(OutDir)Resource\</DestinationFolders>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="EfectoRespuestaCorrecta.wav">
+      <FileType>Document</FileType>
+      <DestinationFolders Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(OutDir)Resource\</DestinationFolders>
+    </CopyFileToFolders>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

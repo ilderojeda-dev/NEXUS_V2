@@ -1,7 +1,7 @@
 #pragma once
 #include "MundoHumanoService.h"
 #include <vector>
-
+#include "SoundManager.h"
 namespace NEXUSV2 {
 
 	using namespace System;
@@ -25,6 +25,7 @@ namespace NEXUSV2 {
 			//
 			service = serviceRef;
 			generarNumerosAleatoreos();
+			gestorSonido = gcnew NEXUS_V2::Service::SoundManager();
 			
 
 			
@@ -47,7 +48,7 @@ namespace NEXUSV2 {
 	private: System::Windows::Forms::Button^ btnSur;
 	private: System::Windows::Forms::Button^ btnEste;
 	private: System::Windows::Forms::Button^ btnNorte;
-
+	private: NEXUS_V2::Service::SoundManager^ gestorSonido;
 	private: System::Windows::Forms::PictureBox^ picRadar;
 	private: System::Windows::Forms::ProgressBar^ prgSeñal;
 		   int btnNorteValue = 0;
@@ -221,13 +222,14 @@ namespace NEXUSV2 {
 		if (prgSeñal->Value == 100) {
 			prgSeñal->Value = 99;
 			//MOSTRAR UN MENSAJES QUE DIGA Q SE LOGRO RESTABLECER LA SEÑAL CON LA TIERRA. y QUE EL MODULO SE COMPLETO. 
-			
+			gestorSonido->ReproducirEfecto("EfectoRespuestaCorrecta.wav", 0.7);
 			MessageBox::Show("¡Se logró restablecer la señal con la Tierra!\nMódulo completado.", "Confirmación", MessageBoxButtons::OK, MessageBoxIcon::Information);
 			service->aplicarResultadoModulo(2, true);
 			this->Close();
 		}
 		else {
 			//si no es 100, mostrar un mensaje que diga que la señal no se restablecio y que intente con otra direccion
+			gestorSonido->ReproducirEfecto("EfectoRespuestaIncorrecta.wav", 0.7);
 			MessageBox::Show("La señal no se restableció.\nIntenta con otra dirección.", "Error de señal", MessageBoxButtons::OK, MessageBoxIcon::Error);
 			service->aplicarResultadoModulo(2, false);
 		}
@@ -238,12 +240,14 @@ namespace NEXUSV2 {
 		prgSeñal->Value = btnEsteValue;
 		if (prgSeñal->Value == 100) {
 			prgSeñal->Value = 99;
+			gestorSonido->ReproducirEfecto("EfectoRespuestaCorrecta.wav", 0.7);
 			MessageBox::Show("¡Se logró restablecer la señal con la Tierra!\nMódulo completado.", "Confirmación", MessageBoxButtons::OK, MessageBoxIcon::Information);
 			service->aplicarResultadoModulo(2, true);
 			this->Close();
 		}
 		else {
 			//si no es 100, mostrar un mensaje que diga que la señal no se restablecio y que intente con otra direccion
+			gestorSonido->ReproducirEfecto("EfectoRespuestaIncorrecta.wav", 0.7);
 			MessageBox::Show("La señal no se restableció.\nIntenta con otra dirección.", "Error de señal", MessageBoxButtons::OK, MessageBoxIcon::Error);
 			service->aplicarResultadoModulo(2, false);
 		}
@@ -253,12 +257,14 @@ namespace NEXUSV2 {
 		prgSeñal->Value = btnSurValue;
 		if (prgSeñal->Value == 100) {
 			prgSeñal->Value = 99;
+			gestorSonido->ReproducirEfecto("EfectoRespuestaCorrecta.wav", 0.7);
 			service->aplicarResultadoModulo(2, true);
 			MessageBox::Show("¡Se logró restablecer la señal con la Tierra!\nMódulo completado.", "Confirmación", MessageBoxButtons::OK, MessageBoxIcon::Information);
 			this->Close();
 		}
 		else {
 			//si no es 100, mostrar un mensaje que diga que la señal no se restablecio y que intente con otra direccion
+			gestorSonido->ReproducirEfecto("EfectoRespuestaIncorrecta.wav", 0.7);
 			MessageBox::Show("La señal no se restableció.\nIntenta con otra dirección.", "Error de señal", MessageBoxButtons::OK, MessageBoxIcon::Error);
 			service->aplicarResultadoModulo(2, false);
 		}
@@ -268,12 +274,14 @@ namespace NEXUSV2 {
 		prgSeñal->Value = btnOesteValue;
 		if (prgSeñal->Value == 100) {
 			prgSeñal->Value = 99;
+			gestorSonido->ReproducirEfecto("EfectoRespuestaCorrecta.wav", 0.7);
 			service->aplicarResultadoModulo(2, true);
 			MessageBox::Show("¡Se logró restablecer la señal con la Tierra!\nMódulo completado.", "Confirmación", MessageBoxButtons::OK, MessageBoxIcon::Information);
 			this->Close();
 		}
 		else {
 			//si no es 100, mostrar un mensaje que diga que la señal no se restablecio y que intente con otra direccion
+			gestorSonido->ReproducirEfecto("EfectoRespuestaIncorrecta.wav", 0.7);
 			MessageBox::Show("La señal no se restableció.\nIntenta con otra dirección.", "Error de señal", MessageBoxButtons::OK, MessageBoxIcon::Error);
 			service->aplicarResultadoModulo(2, false);
 		}

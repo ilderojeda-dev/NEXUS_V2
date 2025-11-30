@@ -178,7 +178,7 @@ void MundoHumanoService::dibujarTodo(Graphics^ canvas) {
 		vozTerrestre->dibujar(canvas);
 
 	if (jugador) jugador->dibujar(canvas);
-	//Solo para validar
+	/*//Solo para validar
 	//dibuajr el rectangle del jugador para pruebas
 	Pen^ p = gcnew Pen(Color::Blue, 2);
 	Rectangle rJugador = jugador->getRectangle();
@@ -199,7 +199,7 @@ void MundoHumanoService::dibujarTodo(Graphics^ canvas) {
 	for (int i = 0; i < papelSeñal.size(); i++) {
 		Rectangle rAliado = papelSeñal[i]->getRectangle();
 		canvas->DrawRectangle(p, rAliado);
-	}
+	}*/
 
 }
 
@@ -223,7 +223,7 @@ bool MundoHumanoService::hayColisionMuros(Rectangle rectJugador) {
 
 void MundoHumanoService::aplicarResultadoModulo(int idModulo, bool respuestaCorrecta) {
 	if (!respuestaCorrecta) {
-		estabilidadNave -= 20;
+		estabilidadNave -= 15;
 		indiceCriterio -= 10;
 	}
 	else {

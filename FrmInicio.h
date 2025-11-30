@@ -30,7 +30,7 @@ namespace NEXUSV2 {
 
 			// Reproduce la música. Asegúrate de que "MusicaFondoInicio.wav"
 			// esté en tu carpeta Resource y configurado para "Copiar siempre".
-			gestorSonido->ReproducirMusica("MusicaFondoInicio.wav", 0.3); // 0.3 es volumen bajito (30%)
+			gestorSonido->ReproducirMusica("MusicaFondoInicio.wav", 0.2); // 0.3 es volumen bajito (30%)
 
 			
 
@@ -345,14 +345,14 @@ namespace NEXUSV2 {
 				// --- MODO NIVELES: VOLVER AL MENÚ ---
 				// Solo quería jugar este nivel, así que regresamos.
 				this->Show();
-				gestorSonido->ReproducirMusica("MusicaFondoInicio.wav", 0.5);
+				gestorSonido->ReproducirMusica("MusicaFondoInicio.wav", 0.2);
 			}
 		}
 		// CASO 2: PERDIÓ O SALIÓ
 		else {
 			// En cualquier modo, si pierdes o sales, vuelves al menú
 			this->Show();
-			gestorSonido->ReproducirMusica("MusicaFondoInicio.wav", 0.5);
+			gestorSonido->ReproducirMusica("MusicaFondoInicio.wav", 0.2);
 		}
 	}
 
@@ -383,7 +383,7 @@ namespace NEXUSV2 {
 		this->Show();
 
 		// 2. Vuelve a poner la música del menú
-		gestorSonido->ReproducirMusica("MusicaFondoInicio.wav", 0.5);
+		gestorSonido->ReproducirMusica("MusicaFondoInicio.wav", 0.2);
 
 	}
 

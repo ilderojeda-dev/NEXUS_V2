@@ -1,6 +1,6 @@
 #pragma once
 #include "MundoHumanoService.h"
-
+#include "SoundManager.h"
 namespace NEXUSV2 {
 
 	using namespace System;
@@ -23,6 +23,7 @@ namespace NEXUSV2 {
 			//TODO: Add the constructor code here
 			//
 			service = serviceRef;
+			gestorSonido = gcnew NEXUS_V2::Service::SoundManager();
 		}
 
 	protected:
@@ -43,7 +44,7 @@ namespace NEXUSV2 {
 	private: System::Windows::Forms::Button^ btnOpcion2;
 	private: System::Windows::Forms::Button^ btnOpcion1;
 	private: System::Windows::Forms::Label^ label1;
-
+	private: NEXUS_V2::Service::SoundManager^ gestorSonido;
 
 	protected:
 
@@ -83,6 +84,7 @@ namespace NEXUSV2 {
 			this->pnlModulo2->Name = L"pnlModulo2";
 			this->pnlModulo2->Size = System::Drawing::Size(1245, 832);
 			this->pnlModulo2->TabIndex = 0;
+			this->pnlModulo2->Paint += gcnew System::Windows::Forms::PaintEventHandler(this, &FrmModulo2::pnlModulo2_Paint);
 			// 
 			// btnOpcion4
 			// 
@@ -167,23 +169,29 @@ namespace NEXUSV2 {
 	}
 private: System::Void btnOpcion1_Click(System::Object^ sender, System::EventArgs^ e) {
 	service->aplicarResultadoModulo(1, false);	
+	gestorSonido->ReproducirEfecto("EfectoRespuestaIncorrecta.wav", 0.7);
 	MessageBox::Show("Mala elección.\nLa llave inglesa está oxidada y no sirve para reparar el sistema de flujo.\nIntenta nuevamente.", "Error de herramienta", MessageBoxButtons::OK, MessageBoxIcon::Error);
 
 }
 private: System::Void btnOpcion2_Click(System::Object^ sender, System::EventArgs^ e) {
 	service->aplicarResultadoModulo(1, false);
+	gestorSonido->ReproducirEfecto("EfectoRespuestaIncorrecta.wav", 0.7);
 	MessageBox::Show("Mala elección.\nLa cinta metálica no soporta la presión del sistema de oxígeno.\nIntenta nuevamente.", "Error de herramienta", MessageBoxButtons::OK, MessageBoxIcon::Error);
 }
 
 private: System::Void btnOpcion3_Click(System::Object^ sender, System::EventArgs^ e) {
 	service->aplicarResultadoModulo(1, true);
+	gestorSonido->ReproducirEfecto("EfectoRespuestaCorrecta.wav", 0.7);
 	MessageBox::Show("¡Excelente elección!\nEl nuevo fijador de flujo de turbina es la mejor opción para restaurar el sistema de oxígeno.\nEl módulo comienza a estabilizarse.", "Reparación exitosa", MessageBoxButtons::OK, MessageBoxIcon::Information);
 	this->Close();
 }
 private: System::Void btnOpcion4_Click(System::Object^ sender, System::EventArgs^ e) {
 	service->aplicarResultadoModulo(1, false);
+	gestorSonido->ReproducirEfecto("EfectoRespuestaIncorrecta.wav", 0.7);
 	MessageBox::Show("Mala elección.\nLa batería auxiliar no está conectada al sistema de ventilación.\nIntenta nuevamente.", "Error de herramienta", MessageBoxButtons::OK, MessageBoxIcon::Error);
 
+}
+private: System::Void pnlModulo2_Paint(System::Object^ sender, System::Windows::Forms::PaintEventArgs^ e) {
 }
 };
 }

@@ -290,10 +290,28 @@
     <CopyFileToFolders Include="MusicaFondoMundoHumano.wav">
       <Filter>Resource</Filter>
     </CopyFileToFolders>
-    <CopyFileToFolders Include="PasosJuga.wav">
+    <CopyFileToFolders Include="PasosJugador.wav">
       <Filter>Resource</Filter>
     </CopyFileToFolders>
-    <CopyFileToFolders Include="PasosJugador.wav">
+    <CopyFileToFolders Include="EfectoBotonM2.wav">
+      <Filter>Resource</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="EfectoColisionRecurso.wav">
+      <Filter>Resource</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="EfectoGameOver.wav">
+      <Filter>Resource</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="EfectoRespuestaIncorrecta.wav">
+      <Filter>Resource</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="EfectoCambioSking.wav">
+      <Filter>Resource</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="EfectoPerderVida.wav">
+      <Filter>Resource</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="EfectoRespuestaCorrecta.wav">
       <Filter>Resource</Filter>
     </CopyFileToFolders>
   </ItemGroup>

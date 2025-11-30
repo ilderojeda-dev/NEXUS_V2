@@ -1,5 +1,6 @@
 ﻿#pragma once
 #include "MundoHumanoService.h"  
+#include "SoundManager.h"
 namespace NEXUSV2 {
 
 	using namespace System;
@@ -20,6 +21,7 @@ namespace NEXUSV2 {
 		FrmModulo1(MundoHumanoService* serviceRef) {
 			InitializeComponent();
 			service = serviceRef;
+			gestorSonido = gcnew NEXUS_V2::Service::SoundManager();
 		}
 
 	protected:
@@ -36,9 +38,8 @@ namespace NEXUSV2 {
 	private: System::Windows::Forms::Panel^ pnlModulo;
 	private: System::Windows::Forms::Button^ btnOpcion3;
 	private: System::Windows::Forms::Button^ btnOpcion2;
-
-
 	private: System::Windows::Forms::Button^ btnOpcion1;
+	private: NEXUS_V2::Service::SoundManager^ gestorSonido;
 
 	protected:
 
@@ -80,6 +81,7 @@ namespace NEXUSV2 {
 			this->pnlModulo->Name = L"pnlModulo";
 			this->pnlModulo->Size = System::Drawing::Size(1241, 831);
 			this->pnlModulo->TabIndex = 0;
+			this->pnlModulo->Paint += gcnew System::Windows::Forms::PaintEventHandler(this, &FrmModulo1::pnlModulo_Paint);
 			// 
 			// btnOpcion3
 			// 
@@ -151,18 +153,23 @@ namespace NEXUSV2 {
 	}
 private: System::Void btnOpcion1_Click(System::Object^ sender, System::EventArgs^ e) {
 	service->aplicarResultadoModulo(0, true);
+	gestorSonido->ReproducirEfecto("EfectoRespuestaCorrecta.wav", 0.7);
 	MessageBox::Show("Conexión completa.\nEl módulo de energía se está estabilizando.", "Estado del sistema", MessageBoxButtons::OK, MessageBoxIcon::Information);
 	this->Close();
 }
 private: System::Void btnOpcion2_Click(System::Object^ sender, System::EventArgs^ e) {
+	gestorSonido->ReproducirEfecto("EfectoRespuestaIncorrecta.wav", 0.7);
 	service->aplicarResultadoModulo(0, false);
 	MessageBox::Show("Error: conexión incorrecta.\n¡El módulo está a punto de explotar!\nIntenta nuevamente.", "¡Advertencia crítica!", MessageBoxButtons::OK, MessageBoxIcon::Error);
 	
 }
 private: System::Void btnOpcion3_Click(System::Object^ sender, System::EventArgs^ e) {
+	gestorSonido->ReproducirEfecto("EfectoRespuestaIncorrecta.wav", 0.7);
 	service->aplicarResultadoModulo(0, false);
 	MessageBox::Show("Error: conexión incorrecta.\n¡El módulo está a punto de explotar!\nIntenta nuevamente.", "¡Advertencia crítica!", MessageBoxButtons::OK, MessageBoxIcon::Error);
 
+}
+private: System::Void pnlModulo_Paint(System::Object^ sender, System::Windows::Forms::PaintEventArgs^ e) {
 }
 };
 }
