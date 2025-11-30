@@ -1,5 +1,5 @@
 #include "FrmGameOverMundoColab.h"
-#include "FrmInicio.h"             
+/*#include "FrmInicio.h"             
 
 using namespace NEXUSV2;
 using namespace System;
@@ -19,4 +19,4 @@ System::Void FrmGameOverMundoColab::btnSalir_Click(System::Object^ sender, Syste
 
 	// 3. Cerrar el formulario actual de Game Over
 	this->Close();
-}
+}*/

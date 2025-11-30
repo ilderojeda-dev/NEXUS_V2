@@ -1,8 +1,5 @@
 #pragma once
 
-// Declaración anticipada (forward declaration) de FrmInicio para evitar la dependencia circular
-namespace NEXUSV2 { ref class FrmInicio; }
-
 namespace NEXUSV2 {
 
 	using namespace System;
@@ -13,7 +10,7 @@ namespace NEXUSV2 {
 	using namespace System::Drawing;
 
 	/// <summary>
-	/// Summary for FrmYouWinMundoColab
+	/// Resumen para FrmYouWinMundoColab
 	/// </summary>
 	public ref class FrmYouWinMundoColab : public System::Windows::Forms::Form
 	{
@@ -22,13 +19,13 @@ namespace NEXUSV2 {
 		{
 			InitializeComponent();
 			//
-			//TODO: Add the constructor code here
+			// TODO: Agregar código del constructor aquí
 			//
 		}
 
 	protected:
 		/// <summary>
-		/// Clean up any resources being used.
+		/// Limpiar los recursos que se estén utilizando.
 		/// </summary>
 		~FrmYouWinMundoColab()
 		{
@@ -37,85 +34,100 @@ namespace NEXUSV2 {
 				delete components;
 			}
 		}
-	private: System::Windows::Forms::Panel^ pnlYouWin;
-	protected:
-	private: System::Windows::Forms::Label^ lblTextoWin;
-	private: System::Windows::Forms::Button^ btnSalir;
+
+	private: System::Windows::Forms::Button^ btnContinue;
+	private: System::Windows::Forms::Panel^ pnlImagen;
+	private: System::Windows::Forms::Label^ lblTexto;
 
 	private:
 		/// <summary>
-		/// Required designer variable.
+		/// Variable de diseñador requerida.
 		/// </summary>
 		System::ComponentModel::Container^ components;
 
-#pragma region Windows Form Designer generated code
+#pragma region Código generado por el Diseñador de Windows Forms
 		/// <summary>
-		/// Required method for Designer support - do not modify
-		/// the contents of this method with the code editor.
+		/// Método necesario para admitir el Diseñador. No se puede
+		/// modificar el contenido de este método con el editor de código.
 		/// </summary>
 		void InitializeComponent(void)
 		{
 			System::ComponentModel::ComponentResourceManager^ resources = (gcnew System::ComponentModel::ComponentResourceManager(FrmYouWinMundoColab::typeid));
-			this->pnlYouWin = (gcnew System::Windows::Forms::Panel());
-			this->lblTextoWin = (gcnew System::Windows::Forms::Label());
-			this->btnSalir = (gcnew System::Windows::Forms::Button());
-			this->pnlYouWin->SuspendLayout();
+			this->btnContinue = (gcnew System::Windows::Forms::Button());
+			this->pnlImagen = (gcnew System::Windows::Forms::Panel());
+			this->lblTexto = (gcnew System::Windows::Forms::Label());
+			this->pnlImagen->SuspendLayout();
 			this->SuspendLayout();
-			// 
-			// pnlYouWin
-			// 
-			this->pnlYouWin->BackgroundImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pnlYouWin.BackgroundImage")));
-			this->pnlYouWin->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Stretch;
-			this->pnlYouWin->Controls->Add(this->btnSalir);
-			this->pnlYouWin->Controls->Add(this->lblTextoWin);
-			this->pnlYouWin->Dock = System::Windows::Forms::DockStyle::Fill;
-			this->pnlYouWin->Location = System::Drawing::Point(0, 0);
-			this->pnlYouWin->Name = L"pnlYouWin";
-			this->pnlYouWin->Size = System::Drawing::Size(1904, 1041);
-			this->pnlYouWin->TabIndex = 0;
-			// 
-			// lblTextoWin
-			// 
-			// *** CAMBIO CLAVE AQUÍ: Se establece el color de fondo como transparente. ***
-			this->lblTextoWin->BackColor = System::Drawing::Color::Transparent;
-			this->lblTextoWin->BorderStyle = System::Windows::Forms::BorderStyle::FixedSingle;
-			this->lblTextoWin->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 36, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+			// 
+			// btnContinue
+			// 
+			this->btnContinue->BackColor = System::Drawing::Color::Teal;
+			this->btnContinue->BackgroundImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"btnContinue.BackgroundImage")));
+			this->btnContinue->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Stretch;
+			this->btnContinue->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
+			this->btnContinue->Font = (gcnew System::Drawing::Font(L"Consolas", 24, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
-			this->lblTextoWin->ForeColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(0)), static_cast<System::Int32>(static_cast<System::Byte>(64)),
-				static_cast<System::Int32>(static_cast<System::Byte>(0)));
-			this->lblTextoWin->Location = System::Drawing::Point(0, 281);
-			this->lblTextoWin->Name = L"lblTextoWin";
-			this->lblTextoWin->Size = System::Drawing::Size(562, 468);
-			this->lblTextoWin->TabIndex = 0;
-			this->lblTextoWin->Text = L"Bien hecho! lograste sobrevivir a esa estampida de meteoritos! Gracias al trabajo"
-				L" colaborativo entre tu y R2D2 salieron ilesos! bien hecho piloto, puedes descans"
-				L"ar. ";
-			// 
-			// btnSalir
-			// 
-			this->btnSalir->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 48, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
-				static_cast<System::Byte>(0)));
-			this->btnSalir->Location = System::Drawing::Point(1571, 876);
-			this->btnSalir->Name = L"btnSalir";
-			this->btnSalir->Size = System::Drawing::Size(310, 136);
-			this->btnSalir->TabIndex = 1;
-			this->btnSalir->Text = L"Salir";
-			this->btnSalir->UseVisualStyleBackColor = true;
-			this->btnSalir->Click += gcnew System::EventHandler(this, &FrmYouWinMundoColab::btnSalir_Click);
-			// 
+			this->btnContinue->ForeColor = System::Drawing::Color::White;
+			this->btnContinue->Location = System::Drawing::Point(1631, 859);
+			this->btnContinue->Name = L"btnContinue";
+			this->btnContinue->Size = System::Drawing::Size(273, 182);
+			this->btnContinue->TabIndex = 1;
+			this->btnContinue->Text = L"CONTINUAR / MENÚ";
+			this->btnContinue->UseVisualStyleBackColor = false;
+			this->btnContinue->Click += gcnew System::EventHandler(this, &FrmYouWinMundoColab::btnContinue_Click);
+			// 
+			// pnlImagen
+			// 
+			this->pnlImagen->BackColor = System::Drawing::Color::White;
+			this->pnlImagen->BackgroundImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pnlImagen.BackgroundImage")));
+			this->pnlImagen->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Stretch;
+			this->pnlImagen->Controls->Add(this->lblTexto);
+			this->pnlImagen->Controls->Add(this->btnContinue);
+			this->pnlImagen->Dock = System::Windows::Forms::DockStyle::Fill;
+			this->pnlImagen->Location = System::Drawing::Point(0, 0);
+			this->pnlImagen->Name = L"pnlImagen";
+			this->pnlImagen->Size = System::Drawing::Size(1904, 1041);
+			this->pnlImagen->TabIndex = 2;
+			// 
+			// lblTexto
+			// 
+			this->lblTexto->Font = (gcnew System::Drawing::Font(L"Consolas", 14, System::Drawing::FontStyle::Bold));
+			this->lblTexto->ForeColor = System::Drawing::SystemColors::ButtonFace;
+			this->lblTexto->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"lblTexto.Image")));
+			this->lblTexto->Location = System::Drawing::Point(807, 354);
+			this->lblTexto->Name = L"lblTexto";
+			this->lblTexto->RightToLeft = System::Windows::Forms::RightToLeft::No;
+			this->lblTexto->Size = System::Drawing::Size(295, 191);
+			this->lblTexto->TabIndex = 2;
+			this->lblTexto->Text = L"Felicidades piloto! haz logrado sobrevivir a esta aventura, claro que no lo podri"
+				L"an haber hecho uno sin el otro... me refiero a R2D2 y a ti. Gran trabajo en equi"
+				L"po! eso si es una colaboracion.";
+			this->lblTexto->TextAlign = System::Drawing::ContentAlignment::MiddleCenter;
+			// 
 			// FrmYouWinMundoColab
-			// 
+			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
+			this->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(0)), static_cast<System::Int32>(static_cast<System::Byte>(64)),
+				static_cast<System::Int32>(static_cast<System::Byte>(64)));
 			this->ClientSize = System::Drawing::Size(1904, 1041);
-			this->Controls->Add(this->pnlYouWin);
+			this->Controls->Add(this->pnlImagen);
+			this->FormBorderStyle = System::Windows::Forms::FormBorderStyle::FixedDialog;
+			this->MaximizeBox = false;
+			this->MinimizeBox = false;
 			this->Name = L"FrmYouWinMundoColab";
-			this->Text = L"FrmYouWinMundoColab";
-			this->pnlYouWin->ResumeLayout(false);
+			this->StartPosition = System::Windows::Forms::FormStartPosition::CenterScreen;
+			this->Text = L"Victoria";
+			this->pnlImagen->ResumeLayout(false);
 			this->ResumeLayout(false);
 
 		}
 #pragma endregion
-	private: System::Void btnSalir_Click(System::Object^ sender, System::EventArgs^ e); 
+	private: System::Void btnContinue_Click(System::Object^ sender, System::EventArgs^ e) {
+		// 1. Establecer el resultado del diálogo a OK (indica Victoria/Éxito)
+		this->DialogResult = System::Windows::Forms::DialogResult::OK;
+		// 2. Cerrar el formulario.
+		this->Close();
+	}
 	};
 }

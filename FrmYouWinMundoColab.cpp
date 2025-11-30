@@ -1,5 +1,5 @@
 #include "FrmYouWinMundoColab.h" // Incluimos su propio encabezado
-#include "FrmInicio.h"             // Incluimos FrmInicio aquí, donde realmente lo necesitamos
+/*#include "FrmInicio.h"             // Incluimos FrmInicio aquí, donde realmente lo necesitamos
 
 using namespace NEXUSV2;
 using namespace System;
@@ -18,4 +18,4 @@ System::Void FrmYouWinMundoColab::btnSalir_Click(System::Object^ sender, System:
 
 	// 3. Cerrar el formulario de victoria
 	this->Close();
-}
+}*/

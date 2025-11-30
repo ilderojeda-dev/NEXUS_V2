@@ -1,12 +1,6 @@
 #pragma once
 
-// Usamos una declaración anticipada (forward declaration) en lugar de incluir el header
-// para evitar dependencias circulares.
-namespace NEXUSV2 { ref class FrmInicio; }
-
-
 namespace NEXUSV2 {
-
 
 	using namespace System;
 	using namespace System::ComponentModel;
@@ -16,7 +10,7 @@ namespace NEXUSV2 {
 	using namespace System::Drawing;
 
 	/// <summary>
-	/// Summary for FrmGameOverMundoColab
+	/// Resumen para FrmGameOverMundoColab
 	/// </summary>
 	public ref class FrmGameOverMundoColab : public System::Windows::Forms::Form
 	{
@@ -25,13 +19,13 @@ namespace NEXUSV2 {
 		{
 			InitializeComponent();
 			//
-			//TODO: Add the constructor code here
+			// TODO: Agregar código del constructor aquí
 			//
 		}
 
 	protected:
 		/// <summary>
-		/// Clean up any resources being used.
+		/// Limpiar los recursos que se estén utilizando.
 		/// </summary>
 		~FrmGameOverMundoColab()
 		{
@@ -40,79 +34,100 @@ namespace NEXUSV2 {
 				delete components;
 			}
 		}
-	private: System::Windows::Forms::Panel^ pnlFondo;
-	protected:
-	private: System::Windows::Forms::Button^ btnSalir;
-	private: System::Windows::Forms::Label^ lblTextoGameOver;
+
+	private: System::Windows::Forms::Button^ btnReturnToMenu;
+	private: System::Windows::Forms::Panel^ panel1;
+	private: System::Windows::Forms::Button^ btnTexto;
 
 
 	private:
 		/// <summary>
-		/// Required designer variable.
+		/// Variable de diseñador requerida.
 		/// </summary>
 		System::ComponentModel::Container^ components;
 
-#pragma region Windows Form Designer generated code
+#pragma region Código generado por el Diseñador de Windows Forms
 		/// <summary>
-		/// Required method for Designer support - do not modify
-		/// the contents of this method with the code editor.
+		/// Método necesario para admitir el Diseñador. No se puede
+		/// modificar el contenido de este método con el editor de código.
 		/// </summary>
 		void InitializeComponent(void)
 		{
 			System::ComponentModel::ComponentResourceManager^ resources = (gcnew System::ComponentModel::ComponentResourceManager(FrmGameOverMundoColab::typeid));
-			this->pnlFondo = (gcnew System::Windows::Forms::Panel());
-			this->btnSalir = (gcnew System::Windows::Forms::Button());
-			this->lblTextoGameOver = (gcnew System::Windows::Forms::Label());
-			this->pnlFondo->SuspendLayout();
+			this->btnReturnToMenu = (gcnew System::Windows::Forms::Button());
+			this->panel1 = (gcnew System::Windows::Forms::Panel());
+			this->btnTexto = (gcnew System::Windows::Forms::Button());
+			this->panel1->SuspendLayout();
 			this->SuspendLayout();
-			this->pnlFondo->BackgroundImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pnlFondo.BackgroundImage")));
-			this->pnlFondo->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Stretch;
-			this->pnlFondo->Controls->Add(this->lblTextoGameOver);
-			this->pnlFondo->Controls->Add(this->btnSalir);
-			this->pnlFondo->Dock = System::Windows::Forms::DockStyle::Fill;
-			this->pnlFondo->Location = System::Drawing::Point(0, 0);
-			this->pnlFondo->Name = L"pnlFondo";
-			this->pnlFondo->Size = System::Drawing::Size(1904, 1041);
-			this->pnlFondo->TabIndex = 0;
-			this->btnSalir->BackColor = System::Drawing::SystemColors::ActiveCaption;
-			this->btnSalir->Font = (gcnew System::Drawing::Font(L"Microsoft YaHei", 48, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+			// 
+			// btnReturnToMenu
+			// 
+			this->btnReturnToMenu->BackColor = System::Drawing::Color::DarkRed;
+			this->btnReturnToMenu->BackgroundImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"btnReturnToMenu.BackgroundImage")));
+			this->btnReturnToMenu->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Stretch;
+			this->btnReturnToMenu->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
+			this->btnReturnToMenu->Font = (gcnew System::Drawing::Font(L"Consolas", 24, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
-			this->btnSalir->Location = System::Drawing::Point(746, 656);
-			this->btnSalir->Name = L"btnSalir";
-			this->btnSalir->Size = System::Drawing::Size(425, 235);
-			this->btnSalir->TabIndex = 0;
-			this->btnSalir->Text = L"Salir";
-			this->btnSalir->UseVisualStyleBackColor = false;
-			this->btnSalir->Click += gcnew System::EventHandler(this, &FrmGameOverMundoColab::btnSalir_Click);
-			this->lblTextoGameOver->BackColor = System::Drawing::SystemColors::ActiveCaptionText;
-			this->lblTextoGameOver->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 36, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
-				static_cast<System::Byte>(0)));
-			this->lblTextoGameOver->ForeColor = System::Drawing::SystemColors::ButtonFace;
-			this->lblTextoGameOver->Location = System::Drawing::Point(387, 2);
-			this->lblTextoGameOver->Name = L"lblTextoGameOver";
-			this->lblTextoGameOver->Size = System::Drawing::Size(1248, 226);
-			this->lblTextoGameOver->TabIndex = 2;
-			this->lblTextoGameOver->Text = L"Buen intento... para la proxima tal vez necesites un poco mas de ayuda de R2D2..."
-				L" lamentablemente esta vez no lograste sobrevivir. Sin embargo, nunca es tarde pa"
-				L"ra volver a intentar!";
+			this->btnReturnToMenu->ForeColor = System::Drawing::Color::White;
+			this->btnReturnToMenu->Location = System::Drawing::Point(1567, 884);
+			this->btnReturnToMenu->Name = L"btnReturnToMenu";
+			this->btnReturnToMenu->Size = System::Drawing::Size(337, 157);
+			this->btnReturnToMenu->TabIndex = 1;
+			this->btnReturnToMenu->Text = L"VOLVER AL MENÚ";
+			this->btnReturnToMenu->UseVisualStyleBackColor = false;
+			this->btnReturnToMenu->Click += gcnew System::EventHandler(this, &FrmGameOverMundoColab::btnReturnToMenu_Click);
+			// 
+			// panel1
+			// 
+			this->panel1->BackColor = System::Drawing::Color::White;
+			this->panel1->BackgroundImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"panel1.BackgroundImage")));
+			this->panel1->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Stretch;
+			this->panel1->Controls->Add(this->btnTexto);
+			this->panel1->Controls->Add(this->btnReturnToMenu);
+			this->panel1->Dock = System::Windows::Forms::DockStyle::Fill;
+			this->panel1->Location = System::Drawing::Point(0, 0);
+			this->panel1->Name = L"panel1";
+			this->panel1->Size = System::Drawing::Size(1904, 1041);
+			this->panel1->TabIndex = 2;
+			// 
+			// btnTexto
+			// 
+			this->btnTexto->BackColor = System::Drawing::Color::DarkRed;
+			this->btnTexto->BackgroundImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"btnTexto.BackgroundImage")));
+			this->btnTexto->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Stretch;
+			this->btnTexto->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
+			this->btnTexto->Font = (gcnew System::Drawing::Font(L"Consolas", 20, System::Drawing::FontStyle::Bold));
+			this->btnTexto->ForeColor = System::Drawing::Color::White;
+			this->btnTexto->Location = System::Drawing::Point(711, 624);
+			this->btnTexto->Name = L"btnTexto";
+			this->btnTexto->Size = System::Drawing::Size(505, 271);
+			this->btnTexto->TabIndex = 2;
+			this->btnTexto->Text = resources->GetString(L"btnTexto.Text");
+			this->btnTexto->UseVisualStyleBackColor = false;
+			// 
+			// FrmGameOverMundoColab
+			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
+			this->BackColor = System::Drawing::Color::Black;
 			this->ClientSize = System::Drawing::Size(1904, 1041);
-			this->Controls->Add(this->pnlFondo);
-			this->Cursor = System::Windows::Forms::Cursors::Default;
+			this->Controls->Add(this->panel1);
+			this->FormBorderStyle = System::Windows::Forms::FormBorderStyle::FixedDialog;
+			this->MaximizeBox = false;
+			this->MinimizeBox = false;
 			this->Name = L"FrmGameOverMundoColab";
-			this->Text = L"FrmGameOverMundoColab";
-			this->WindowState = System::Windows::Forms::FormWindowState::Maximized;
-			this->Load += gcnew System::EventHandler(this, &FrmGameOverMundoColab::FrmGameOverMundoColab_Load);
-			this->pnlFondo->ResumeLayout(false);
+			this->StartPosition = System::Windows::Forms::FormStartPosition::CenterScreen;
+			this->Text = L"Fin del Juego";
+			this->panel1->ResumeLayout(false);
 			this->ResumeLayout(false);
 
 		}
 #pragma endregion
-	private: System::Void FrmGameOverMundoColab_Load(System::Object^ sender, System::EventArgs^ e) {
+	private: System::Void btnReturnToMenu_Click(System::Object^ sender, System::EventArgs^ e) {
+		// 1. Establecer el resultado del diálogo a Abort (indica Derrota/Fallo)
+		this->DialogResult = System::Windows::Forms::DialogResult::Abort;
+		// 2. Cerrar el formulario.
+		this->Close();
 	}
-	private: System::Void btnSalir_Click(System::Object^ sender, System::EventArgs^ e);
-	
-	
-};
+	};
 }
