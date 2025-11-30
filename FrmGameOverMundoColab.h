@@ -15,7 +15,7 @@ namespace NEXUSV2 {
 	public ref class FrmGameOverMundoColab : public System::Windows::Forms::Form
 	{
 	public:
-		FrmGameOverMundoColab(void)
+		FrmGameOverMundoColab()
 		{
 			InitializeComponent();
 			//
@@ -84,11 +84,13 @@ namespace NEXUSV2 {
 			this->panel1->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Stretch;
 			this->panel1->Controls->Add(this->btnTexto);
 			this->panel1->Controls->Add(this->btnReturnToMenu);
+			this->panel1->Cursor = System::Windows::Forms::Cursors::Default;
 			this->panel1->Dock = System::Windows::Forms::DockStyle::Fill;
 			this->panel1->Location = System::Drawing::Point(0, 0);
 			this->panel1->Name = L"panel1";
 			this->panel1->Size = System::Drawing::Size(1904, 1041);
 			this->panel1->TabIndex = 2;
+			this->panel1->Paint += gcnew System::Windows::Forms::PaintEventHandler(this, &FrmGameOverMundoColab::panel1_Paint);
 			// 
 			// btnTexto
 			// 
@@ -118,6 +120,7 @@ namespace NEXUSV2 {
 			this->Name = L"FrmGameOverMundoColab";
 			this->StartPosition = System::Windows::Forms::FormStartPosition::CenterScreen;
 			this->Text = L"Fin del Juego";
+			this->Load += gcnew System::EventHandler(this, &FrmGameOverMundoColab::FrmGameOverMundoColab_Load);
 			this->panel1->ResumeLayout(false);
 			this->ResumeLayout(false);
 
@@ -129,5 +132,9 @@ namespace NEXUSV2 {
 		// 2. Cerrar el formulario.
 		this->Close();
 	}
-	};
+	private: System::Void panel1_Paint(System::Object^ sender, System::Windows::Forms::PaintEventArgs^ e) {
+	}
+private: System::Void FrmGameOverMundoColab_Load(System::Object^ sender, System::EventArgs^ e) {
+}
+};
 }

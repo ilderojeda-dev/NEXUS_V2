@@ -1,4 +1,6 @@
 #include "MundoColabService.h"
+#include <string>
+#include <sstream>
 
 #include <cstdlib>
 #include <ctime>
@@ -9,7 +11,8 @@ using namespace System::Drawing;
 MundoColabService::MundoColabService(int ancho, int alto, int vidasIniciales)
 : Mundo(ancho, alto, vidasIniciales) {
 nave = new Nave(50, 50);
-
+archivoService = new ArchivoService();
+cargarParametrosDelArchivo();
 necesitaRecargar = false;
 srand(time(NULL)); // Inicializar la semilla para números aleatorios
 mostrandoPregunta = false;
@@ -38,6 +41,71 @@ MundoColabService::~MundoColabService() {
 	}
 	balas.clear();
 }
+
+
+
+void MundoColabService::cargarParametrosDelArchivo() {
+
+	archivoService = new ArchivoService();
+
+	vector<string> lineas = archivoService->leerTodasLineas("Files/PARAMETERS.txt");
+
+	int idx = 37;    
+
+	try {
+		// 1. POSICION DE LA NAVE
+		stringstream ss(lineas[idx++]);
+		string x, y;
+		getline(ss, x, ';');
+		getline(ss, y);
+
+		nave->setX(stoi(x));
+		nave->setY(stoi(y));
+
+		// 2. CONFIGURACIÓN BALAS
+		balasDisponibles = stoi(lineas[idx++]);
+		balasMinimas = stoi(lineas[idx++]);
+		balasMaximas = stoi(lineas[idx++]);
+
+		// 3. METEORITOS (min/max)
+		minMeteoritos = stoi(lineas[idx++]);
+		maxMeteoritos = stoi(lineas[idx++]);
+
+		// 4. ESTRELLAS (min/max)
+		minEstrellas = stoi(lineas[idx++]);
+		maxEstrellas = stoi(lineas[idx++]);
+
+		// 5. ACTIVAR R2D2 (0 o 1)
+		int activarR2D2 = stoi(lineas[idx++]);
+		if (activarR2D2 == 1)
+			cargarR2D2("R2D2Sprite.png", 1, 4);
+
+		// 6. VIDAS NAVE
+		int vidas = stoi(lineas[idx++]);
+		nave->setVidas(vidas);
+	}
+	catch (...) {
+		CargarValoresPorDefecto();
+	}
+}
+
+void MundoColabService::CargarValoresPorDefecto() {
+	nave->setX(100);
+	nave->setY(400);
+
+	balasDisponibles = 10;
+	balasMinimas = 5;
+	balasMaximas = 10;
+
+	minMeteoritos = 5;
+	maxMeteoritos = 20;
+
+	minEstrellas = 2;
+	maxEstrellas = 5;
+
+	nave->setVidas(3);
+}
+
 //NAVE
 //---------------------------------------------------------------------------------//
 void MundoColabService::CargarSpriteNave(char* ruta, int filas, int columnas) {
@@ -115,15 +183,11 @@ void MundoColabService::spawnMeteoritosAleatorios() {
 	//velocidad aleatoria				//modificar para aumentar velocidad de meteoritos
 	int velocidadRandom = 10 + rand() % 30;
 		
-	//tamaño aleatorio
-	double tamanio = 0.5 + (rand() % 200) / 100.0 ;
 
 
 	MeteoritoEnemigo* meteoritoEnemigo = new MeteoritoEnemigo(anchoPanel - 50, yRandom, velocidadRandom);
 	meteoritoEnemigo->cargarImagen(rutaMeteorito, 1, 4);
 	meteoritoEnemigo->setActivo(true);
-
-	meteoritoEnemigo->setTamanio(tamanio);
 
 	enemigos.push_back(meteoritoEnemigo);
 
@@ -210,7 +274,7 @@ void MundoColabService::disparar() {
 	int salidaY = nave->getY() + nave->getAlto() / 2 - 20;
 
 	BalaLaser* b = new BalaLaser(salidaX, salidaY, 15);
-	b->cargarImagen("Bala.png", 2, 4);
+	b->cargarImagen("Balas.png", 2, 4);
 	b->setActivo(true);
 
 	balasDisponibles--;

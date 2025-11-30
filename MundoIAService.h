@@ -8,6 +8,7 @@
 #include "Bala.h"
 #include "SintIA.h"
 #include <vector>
+#include "ArchivoService.h"
  
 #include "PreguntaService.h"
 
@@ -78,11 +79,13 @@ private:
     bool robotEliminado;
 
 	bool hadisparado;
+    ArchivoService* archivoService;
 
 public:
     MundoIAService(int ancho, int alto, int vidas);
     ~MundoIAService();
-
+    void cargarParametrosDelArchivo();
+    void CargarValoresPorDefecto();
     // Inicialización
     void cargarSpriteJugador(char* ruta, int filas, int columnas);
     void crearRobots(char* ruta, int filas, int columnas);

@@ -8,6 +8,7 @@
 #include "PreguntaDialogoServiceMundoColab.h"
 #include "Pregunta.h"
 #include "Dialogo.h"
+#include "ArchivoService.h"	
 
 
 
@@ -45,13 +46,15 @@ private:
 	vector<BalaLaser*> balas;
 	vector<Enemigo*> enemigos;
 	vector<EstrellaRecurso*> estrellas;
-	
+	ArchivoService* archivoService;
 public:
 	MundoColabService(int ancho, int alto, int vidasIniciales);
 	~MundoColabService();
 
-	//nave
 	
+	void cargarParametrosDelArchivo();
+	void CargarValoresPorDefecto();
+//nave
 	void CargarSpriteNave(char* ruta, int filas, int columnas);
 	void moverNave(Direccion tecla);
 

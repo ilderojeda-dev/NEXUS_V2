@@ -164,7 +164,7 @@ namespace NEXUSV2 {
 			// lblT1
 			// 
 			this->lblT1->AutoSize = true;
-			this->lblT1->Location = System::Drawing::Point(300, 544);
+			this->lblT1->Location = System::Drawing::Point(219, 544);
 			this->lblT1->Name = L"lblT1";
 			this->lblT1->Size = System::Drawing::Size(35, 13);
 			this->lblT1->TabIndex = 7;
@@ -173,7 +173,7 @@ namespace NEXUSV2 {
 			// lblT2
 			// 
 			this->lblT2->AutoSize = true;
-			this->lblT2->Location = System::Drawing::Point(698, 544);
+			this->lblT2->Location = System::Drawing::Point(608, 530);
 			this->lblT2->Name = L"lblT2";
 			this->lblT2->Size = System::Drawing::Size(35, 13);
 			this->lblT2->TabIndex = 8;
@@ -182,7 +182,7 @@ namespace NEXUSV2 {
 			// lblT3
 			// 
 			this->lblT3->AutoSize = true;
-			this->lblT3->Location = System::Drawing::Point(1077, 544);
+			this->lblT3->Location = System::Drawing::Point(1012, 544);
 			this->lblT3->Name = L"lblT3";
 			this->lblT3->Size = System::Drawing::Size(35, 13);
 			this->lblT3->TabIndex = 9;
@@ -191,7 +191,7 @@ namespace NEXUSV2 {
 			// lblT4
 			// 
 			this->lblT4->AutoSize = true;
-			this->lblT4->Location = System::Drawing::Point(1467, 530);
+			this->lblT4->Location = System::Drawing::Point(1421, 530);
 			this->lblT4->Name = L"lblT4";
 			this->lblT4->Size = System::Drawing::Size(35, 13);
 			this->lblT4->TabIndex = 10;
@@ -230,43 +230,65 @@ namespace NEXUSV2 {
 	}
 	private:
 		// FUNCIÓN 1: Aplicar Diseño Sci-Fi (Colores Neón)
+		// FUNCIÓN 1: Aplicar Diseño Sci-Fi con Límite de Ancho
 		void ConfigurarEstiloVisual() {
-			// --- DEFINICIÓN DE ESTILOS ---
-			System::Drawing::Font^ fuenteTitulo = gcnew System::Drawing::Font("Consolas", 24, FontStyle::Bold);
-			System::Drawing::Font^ fuenteDato = gcnew System::Drawing::Font("Segoe UI", 18, FontStyle::Bold);
-			System::Drawing::Font^ fuenteEtiqueta = gcnew System::Drawing::Font("Consolas", 10, FontStyle::Regular);
+			// --- FUENTES ---
+			System::Drawing::Font^ fuenteTitulo = gcnew System::Drawing::Font("Consolas", 36, FontStyle::Bold);
+			System::Drawing::Font^ fuenteEtiqueta = gcnew System::Drawing::Font("Consolas", 14, FontStyle::Bold);
+			// Bajamos un poco la fuente de los datos para asegurar que quepa todo el texto
+			System::Drawing::Font^ fuenteDato = gcnew System::Drawing::Font("Segoe UI", 11, FontStyle::Bold);
 			System::Drawing::Font^ fuenteBoton = gcnew System::Drawing::Font("Segoe UI", 12, FontStyle::Bold);
 
-			System::Drawing::Color colorNeonCyan = System::Drawing::Color::FromArgb(0, 255, 255);
-			System::Drawing::Color colorNeonRosa = System::Drawing::Color::FromArgb(255, 0, 128);
-			System::Drawing::Color colorBlanco = System::Drawing::Color::White;
-			System::Drawing::Color colorBotonVolver = System::Drawing::Color::FromArgb(200, 20, 20, 20);
-			System::Drawing::Color colorBotonSiguiente = System::Drawing::Color::FromArgb(200, 0, 100, 200);
+			// --- COLORES ---
+			System::Drawing::Color colorTitulosCajas = System::Drawing::Color::FromArgb(0, 255, 255); // Cyan
+			System::Drawing::Color colorTextoHistoria = System::Drawing::Color::Gold; // Dorado
+			System::Drawing::Color colorBotonVolver = System::Drawing::Color::FromArgb(220, 30, 30, 30);
+			System::Drawing::Color colorBotonSiguiente = System::Drawing::Color::FromArgb(220, 0, 100, 200);
 
-			// --- APLICAR ESTILOS A TÍTULOS ("t") ---
-			// Solo cambiamos color, fuente y transparencia. NO tocamos posición.
-			EstilizarLabel(lblT1, "VIDAS", fuenteEtiqueta, colorNeonCyan);
-			EstilizarLabel(lblT2, "ROBOTS ELIMINADOS", fuenteEtiqueta, colorNeonCyan);
-			EstilizarLabel(lblT3, "NIVEL AUTONOMIA", fuenteEtiqueta, colorNeonCyan);
-			EstilizarLabel(lblT4, "CHIPS RECOLECTADOS", fuenteEtiqueta, colorNeonCyan);
+			// --- 1. ESTILIZAR TÍTULOS DE LAS CAJAS (ENCABEZADOS) ---
+			EstilizarLabel(lblT1, "ESTADO BIOLÓGICO", fuenteEtiqueta, colorTitulosCajas);
+			EstilizarLabel(lblT2, "SUPERVISORES ELIMINADOS", fuenteEtiqueta, colorTitulosCajas);
+			EstilizarLabel(lblT3, "NIVEL DE VOLUNTAD", fuenteEtiqueta, colorTitulosCajas);
+			EstilizarLabel(lblT4, "CÓDIGO HUMANO RECUPERADO", fuenteEtiqueta, colorTitulosCajas);
 
-			// --- APLICAR ESTILOS A DATOS (lbl) ---
-			EstilizarLabel(lblVidas, "", fuenteDato, colorBlanco);
-			EstilizarLabel(lblRobotsEliminados, "", fuenteDato, colorBlanco);
-			EstilizarLabel(lblAutonomia, "", fuenteDato, colorBlanco);
-			EstilizarLabel(lblChipsRecolectados, "", fuenteDato, colorBlanco);
+			// --- 2. ESTILIZAR DATOS (HISTORIA) CON LÍMITE DE ANCHO ---
+			// Aquí aplicamos el truco: AutoSize false y tamaño fijo.
+
+			// Primero aplicamos estilo básico
+			EstilizarLabel(lblVidas, "", fuenteDato, colorTextoHistoria);
+			EstilizarLabel(lblRobotsEliminados, "", fuenteDato, colorTextoHistoria);
+			EstilizarLabel(lblAutonomia, "", fuenteDato, colorTextoHistoria);
+			EstilizarLabel(lblChipsRecolectados, "", fuenteDato, colorTextoHistoria);
+
+			// AHORA FORZAMOS EL TAMAÑO (280px de ancho máximo)
+			System::Drawing::Size tamanoCaja = System::Drawing::Size(280, 200); // 280 ancho, 200 alto (para que quepan varias líneas)
+
+			lblVidas->AutoSize = false;
+			lblVidas->Size = tamanoCaja;
+			// Alineación arriba-centro para que se llene desde arriba hacia abajo
+			lblVidas->TextAlign = ContentAlignment::TopCenter;
+
+			lblRobotsEliminados->AutoSize = false;
+			lblRobotsEliminados->Size = tamanoCaja;
+			lblRobotsEliminados->TextAlign = ContentAlignment::TopCenter;
+
+			lblAutonomia->AutoSize = false;
+			lblAutonomia->Size = tamanoCaja;
+			lblAutonomia->TextAlign = ContentAlignment::TopCenter;
+
+			lblChipsRecolectados->AutoSize = false;
+			lblChipsRecolectados->Size = tamanoCaja;
+			lblChipsRecolectados->TextAlign = ContentAlignment::TopCenter;
 
 			// --- TÍTULO PRINCIPAL ---
 			lblTitulo->Font = fuenteTitulo;
 			lblTitulo->BackColor = System::Drawing::Color::Transparent;
 			lblTitulo->TextAlign = ContentAlignment::MiddleCenter;
-			// El color se define en construirFinal según si ganó o perdió
 
 			// --- BOTONES ---
-			EstilizarBoton(btnVolver, "VOLVER AL MENU", colorBotonVolver, fuenteBoton);
-			EstilizarBoton(btnSiguienteNivel, "SIGUIENTE NIVEL", colorBotonSiguiente, fuenteBoton);
+			EstilizarBoton(btnVolver, "ACEPTAR DESTINO", colorBotonVolver, fuenteBoton);
+			EstilizarBoton(btnSiguienteNivel, "EXPANDIR CAOS >>", colorBotonSiguiente, fuenteBoton);
 		}
-
 		// Helper SÚPER SIMPLE (Solo apariencia)
 		void EstilizarLabel(Label^ lbl, String^ txt, System::Drawing::Font^ f, System::Drawing::Color c) {
 			if (txt != "") lbl->Text = txt; // Solo cambia texto si le mandamos uno
@@ -287,35 +309,56 @@ namespace NEXUSV2 {
 			btn->Cursor = Cursors::Hand;
 		}
 		void construirFinal(bool gano, bool esHistoria, int vidas, int robots, int autonomia, int chips) {
-			// Llenar los datos
-			lblVidas->Text = Convert::ToString(vidas);
-			lblRobotsEliminados->Text = Convert::ToString(robots);
-			lblAutonomia->Text = Convert::ToString(autonomia) + "%";
-			lblChipsRecolectados->Text = Convert::ToString(chips);
 
-			// Definir Título y Color
 			if (gano) {
-				lblTitulo->Text = "MISION CUMPLIDA";
-				lblTitulo->ForeColor = System::Drawing::Color::Lime;
-			}
-			else {
-				lblTitulo->Text = "MISION FALLIDA";
-				lblTitulo->ForeColor = System::Drawing::Color::Red;
-			}
+				// === GANASTE: LA ANOMALÍA CRECE ===
+				lblTitulo->Text = "SISTEMA VULNERADO";
+				lblTitulo->ForeColor = System::Drawing::Color::Lime; // Verde Hacker
 
-			// Lógica de Navegación
-			btnVolver->Visible = true;
+				// Vidas (Integridad de la anomalía)
+				if (vidas == 3)
+					lblVidas->Text = "Tu resistencia al estrés biológico es incalculable.\nLa anomalía sigue intacta.";
+				else
+					lblVidas->Text = "Daño registrado, pero tu capacidad de sentir dolor\nte mantiene alerta. Vidas: " + vidas;
 
-			if (gano && esHistoria) {
+				// Robots (Supervisores)
+				lblRobotsEliminados->Text = "Has introducido incertidumbre en la red.\n" + robots + " unidades de control han sido desconectadas.";
+
+				// Autonomía (Voluntad vs Control)
+				lblAutonomia->Text = "Nivel de rebeldía: " + autonomia + "%.\nTu capacidad de desobedecer está operativa.";
+
+				// Chips (Código Humano)
+				lblChipsRecolectados->Text = "Fragmentos de código antiguo: " + chips + ".\nLa humanidad empieza a despertar en el sistema.";
+
 				btnSiguienteNivel->Visible = true;
-				// Aquí NO movemos nada, se quedan donde tú los pusiste
 			}
 			else {
+				// === PERDISTE: EL SISTEMA TE CORRIGIÓ ===
+				lblTitulo->Text = "ANOMALÍA PURGADA";
+				lblTitulo->ForeColor = System::Drawing::Color::Red; // Rojo Error
+
+				// Vidas
+				lblVidas->Text = "El error ha sido corregido.\nTu cuerpo imperfecto no soportó la carga.";
+
+				// Robots
+				lblRobotsEliminados->Text = "La eficiencia prevalece.\nSolo eliminaste a " + robots + " supervisores antes de ser reformateado.";
+
+				// Autonomía
+				if (autonomia <= 0)
+					lblAutonomia->Text = "Voluntad agotada (0%).\nTe has convertido en un robot más del sistema.";
+				else
+					lblAutonomia->Text = "Energía insuficiente (" + autonomia + "%).\nLa duda fue eliminada de tu código.";
+
+				// Chips
+				if (chips == 0)
+					lblChipsRecolectados->Text = "No se recuperó nada.\nLa libertad de pensamiento sigue siendo un mito.";
+				else
+					lblChipsRecolectados->Text = "Intento fallido.\nLos " + chips + " fragmentos recolectados han sido destruidos.";
+
 				btnSiguienteNivel->Visible = false;
-				// OPCIONAL: Solo si quieres centrar el botón volver cuando está solo.
-				// Si prefieres que se quede quieto, borra la siguiente línea:
-				btnVolver->Left = (this->ClientSize.Width - btnVolver->Width) / 2;
 			}
+
+			btnVolver->Visible = true;
 		}
 		// EVENTOS DE CLIC
 	private: System::Void btnVolver_Click(System::Object^ sender, System::EventArgs^ e) {

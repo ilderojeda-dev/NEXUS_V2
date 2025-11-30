@@ -64,6 +64,7 @@ namespace NEXUSV2 {
 			this->btnContinue->BackColor = System::Drawing::Color::Teal;
 			this->btnContinue->BackgroundImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"btnContinue.BackgroundImage")));
 			this->btnContinue->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Stretch;
+			this->btnContinue->DialogResult = System::Windows::Forms::DialogResult::Cancel;
 			this->btnContinue->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
 			this->btnContinue->Font = (gcnew System::Drawing::Font(L"Consolas", 24, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
@@ -83,10 +84,9 @@ namespace NEXUSV2 {
 			this->pnlImagen->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Stretch;
 			this->pnlImagen->Controls->Add(this->lblTexto);
 			this->pnlImagen->Controls->Add(this->btnContinue);
-			this->pnlImagen->Dock = System::Windows::Forms::DockStyle::Fill;
 			this->pnlImagen->Location = System::Drawing::Point(0, 0);
 			this->pnlImagen->Name = L"pnlImagen";
-			this->pnlImagen->Size = System::Drawing::Size(1904, 1041);
+			this->pnlImagen->Size = System::Drawing::Size(1733, 1041);
 			this->pnlImagen->TabIndex = 2;
 			// 
 			// lblTexto
@@ -112,12 +112,13 @@ namespace NEXUSV2 {
 				static_cast<System::Int32>(static_cast<System::Byte>(64)));
 			this->ClientSize = System::Drawing::Size(1904, 1041);
 			this->Controls->Add(this->pnlImagen);
-			this->FormBorderStyle = System::Windows::Forms::FormBorderStyle::FixedDialog;
+			this->Cursor = System::Windows::Forms::Cursors::Default;
 			this->MaximizeBox = false;
 			this->MinimizeBox = false;
 			this->Name = L"FrmYouWinMundoColab";
 			this->StartPosition = System::Windows::Forms::FormStartPosition::CenterScreen;
 			this->Text = L"Victoria";
+			this->Load += gcnew System::EventHandler(this, &FrmYouWinMundoColab::FrmYouWinMundoColab_Load);
 			this->pnlImagen->ResumeLayout(false);
 			this->ResumeLayout(false);
 
@@ -129,5 +130,7 @@ namespace NEXUSV2 {
 		// 2. Cerrar el formulario.
 		this->Close();
 	}
-	};
+	private: System::Void FrmYouWinMundoColab_Load(System::Object^ sender, System::EventArgs^ e) {
+	}
+};
 }

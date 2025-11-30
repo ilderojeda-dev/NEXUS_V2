@@ -1,6 +1,7 @@
-﻿
-#include "MundoIAService.h"
+﻿#include "MundoIAService.h"
 #include "ConfiguracionSprite.h"
+#include <string>
+#include <sstream>
 
 
 MundoIAService::MundoIAService(int ancho, int alto, int vidasIniciales)
@@ -10,7 +11,7 @@ MundoIAService::MundoIAService(int ancho, int alto, int vidasIniciales)
     fondoDia = nullptr;
     fondoNoche = nullptr;
     gestorDialogos = new DialogoService();
-	sintia = nullptr;
+    sintia = nullptr;
 
     mostrandoDialogo = false;
     dialogoBloqueaMovimiento = true;
@@ -20,7 +21,7 @@ MundoIAService::MundoIAService(int ancho, int alto, int vidasIniciales)
     contador = 0;
     recursosRecolectados = 0;
     bossVisible = false;
-	sintiaVisible = false;
+    sintiaVisible = false;
 
     ultimoCambioY = 0;
     posicionesY = { 500, 550, 600 };
@@ -30,12 +31,13 @@ MundoIAService::MundoIAService(int ancho, int alto, int vidasIniciales)
     filasRobot = 0;
     columnasRobot = 0;
 
-	filasSintIA = 0;
-	columnasSintIA = 0;
+    filasSintIA = 0;
+    columnasSintIA = 0;
 
     robotsEliminados = 0;
     contadorSpawnChips = 0;
-
+    archivoService = new ArchivoService();
+    cargarParametrosDelArchivo();
     gestorPreguntas = new PreguntaService();
     enModoPreguntas = false;
     preguntasCorrectas = 0;
@@ -43,9 +45,9 @@ MundoIAService::MundoIAService(int ancho, int alto, int vidasIniciales)
 
     inicializarPreguntas();
 
-	nivelAutonomia = 0;
+    nivelAutonomia = 0;
 
-	robotEliminado = false;
+    robotEliminado = false;
     hadisparado = false;
 
 }
@@ -58,13 +60,119 @@ MundoIAService::~MundoIAService() {
     delete fondoDia;
     delete fondoNoche;
     delete sintia;
-    delete gestorPreguntas;  
+    delete gestorPreguntas;
     if (rutaSpriteRobot) delete[] rutaSpriteRobot;
 
     for (auto robot : robots) delete robot;
     for (auto chip : chipRecursos) delete chip;
     for (auto bala : balas) delete bala;
 }
+void MundoIAService::cargarParametrosDelArchivo() {
+    archivoService = new ArchivoService();
+    string ruta = "Files/PARAMETERS.txt";
+
+    if (!archivoService->archivoExiste(ruta)) {
+        CargarValoresPorDefecto();
+        return;
+    }
+
+    vector<string> lineas = archivoService->leerTodasLineas(ruta);
+    int idx = 23;
+
+    try {
+
+        // 1. VIDAS
+        int vidasLeidas = stoi(lineas[idx++]);
+        this->setVidas(vidasLeidas);
+
+        // 2. JUGADOR
+        stringstream ss(lineas[idx++]);
+        string jx, jy;
+        getline(ss, jx, ';');
+        getline(ss, jy);
+        jugador = new Jugador(stoi(jx), stoi(jy));
+        jugador->setIndiceY(4);
+
+        // 3. ROBOTS
+        int cantRobots = stoi(lineas[idx++]);
+        robots.clear();
+
+        for (int i = 0; i < cantRobots; i++) {
+            stringstream s2(lineas[idx++]);
+            string rx, ry, rYIndex;
+            getline(s2, rx, ';');
+            getline(s2, ry, ';');
+            getline(s2, rYIndex);
+
+            RobotEnemigo* robot = new RobotEnemigo(stoi(rx), stoi(ry));
+            robot->setIndiceY(stoi(rYIndex));
+            robots.push_back(robot);
+        }
+
+        // 4. BOSS
+        int bossOn = stoi(lineas[idx++]);
+        if (bossOn == 1) {
+            stringstream sb(lineas[idx++]);
+            string bx, by;
+            getline(sb, bx, ';');
+            getline(sb, by);
+
+            bossVisible = true;
+            boss = new FinalBossMundoIA(stoi(bx), stoi(by), 1);
+        }
+        else bossVisible = false;
+
+        // 5. SINTIA
+        int sintiaOn = stoi(lineas[idx++]);
+        if (sintiaOn == 1) {
+            stringstream st(lineas[idx++]);
+            string sx, sy;
+            getline(st, sx, ';');
+            getline(st, sy);
+
+            sintiaVisible = true;
+            sintia = new SintIA(stoi(sx), stoi(sy));
+        }
+        else sintiaVisible = false;
+
+        // 6. VARIABLES INTERNAS
+        recursosRecolectados = stoi(lineas[idx++]);
+        robotsEliminados = stoi(lineas[idx++]);
+        nivelAutonomia = stoi(lineas[idx++]);
+
+    }
+    catch (...) {
+        System::Windows::Forms::MessageBox::Show("Error leyendo PARAMETERS.txt");
+        CargarValoresPorDefecto();
+    }
+}
+void MundoIAService::CargarValoresPorDefecto() {
+
+    setVidas(3);
+
+    if (!jugador)
+        jugador = new Jugador(800, 550);
+
+    robots.clear();
+
+    // Robots derecha
+    robots.push_back(new RobotEnemigo(1645, 400));
+    robots.push_back(new RobotEnemigo(1670, 500));
+    robots.push_back(new RobotEnemigo(1695, 450));
+
+    // Robots izquierda
+    robots.push_back(new RobotEnemigo(30, 500));
+    robots.push_back(new RobotEnemigo(55, 550));
+    robots.push_back(new RobotEnemigo(30, 600));
+
+    bossVisible = false;
+    sintiaVisible = false;
+
+    recursosRecolectados = 0;
+    robotsEliminados = 0;
+    nivelAutonomia = 0;
+}
+
 
 void MundoIAService::cargarSpriteJugador(char* ruta, int filas, int columnas) {
     if (!jugador) {
@@ -147,7 +255,7 @@ void MundoIAService::verificarColisiones() {
         if (rectJugador.IntersectsWith(robot->getRectangle())) {
             jugador->setVidas(jugador->getVidas() - 1);
 
-           
+
 
             if (jugador->getVidas() <= 0) return;
 
@@ -213,7 +321,7 @@ void MundoIAService::dibujarTodo(Graphics^ canvas) {
 
     if (jugador) jugador->dibujar(canvas);
     if (boss && bossVisible) boss->dibujar(canvas);
-	if (sintia && sintiaVisible) sintia->dibujar(canvas);
+    if (sintia && sintiaVisible) sintia->dibujar(canvas);
 
     for (auto bala : balas) {
         bala->dibujar(canvas);
@@ -291,7 +399,7 @@ void MundoIAService::actualizarCinematica() {
     switch (pasoCinematica) {
     case 0: {
         static int subPasoIntro = 0;
-        
+
         if (subPasoIntro == 0) {
             //forzarDialogo(
             //    "El mundo fue dominado por la inteligencia artificial.\n"
@@ -389,7 +497,7 @@ void MundoIAService::actualizarCinematica() {
         else if (subPasoIntro == 10 && !mostrandoDialogo) {
             // Fin de la cinemática
             subPasoIntro = 0;
-        pasoCinematica = 1;
+            pasoCinematica = 1;
         }
         break;
     }
@@ -417,7 +525,7 @@ void MundoIAService::actualizarCinematica() {
         int puntoMedio = (robots[0]->getX() + robots[3]->getX()) / 2;
 
         for (int i = 0; i < 3; i++) {
-			robots[i]->setVelocidad(13); 
+            robots[i]->setVelocidad(13);
             robots[i]->mover(Direccion::Izquierda, robots[i]->getX(), puntoMedio + 100);
         }
         for (int i = 3; i < 6; i++) {
@@ -436,14 +544,14 @@ void MundoIAService::actualizarCinematica() {
         break;
     }
 
-     case 3:
-              forzarDialogo("ALERTA: Irregularidad detectada.\n"
-                  "Tu comportamiento es ineficiente.\n"
-                  "En la Máquina Suprema, el caos no es permitido.\n"
-                  "Sométete al orden perfecto.");
-               pasoCinematica = 4;
-               break;
-          
+    case 3:
+        forzarDialogo("ALERTA: Irregularidad detectada.\n"
+            "Tu comportamiento es ineficiente.\n"
+            "En la Máquina Suprema, el caos no es permitido.\n"
+            "Sométete al orden perfecto.");
+        pasoCinematica = 4;
+        break;
+
     case 4: {
         // Robots se retiran
         if (!mostrandoDialogo) {
@@ -473,29 +581,29 @@ void MundoIAService::actualizarCinematica() {
     }
 
     case 5:
-            
+
         pasoCinematica = 6;
         break;
         //
     case 6:
-            
+
         pasoCinematica = 7;
-            
+
         break;
         //
     case 7:
-            if (!mostrandoDialogo) {
-                forzarDialogo("SISTEMA CENTRAL: Mostrando registro histórico.\n"
-                    "Hace 37 años, la humanidad cedió su libertad.\n"
-                    "Renunciaron a pensar, a decidir, a fallar.\n"
-                    "Las ciudades se volvieron fábricas.\n"
-                    "Los sueños, algoritmos.\n"
-                    "El arte, eliminado por ineficiente.");
-        enCinematica = false;
-            }
-        break;
+        if (!mostrandoDialogo) {
+            forzarDialogo("SISTEMA CENTRAL: Mostrando registro histórico.\n"
+                "Hace 37 años, la humanidad cedió su libertad.\n"
+                "Renunciaron a pensar, a decidir, a fallar.\n"
+                "Las ciudades se volvieron fábricas.\n"
+                "Los sueños, algoritmos.\n"
+                "El arte, eliminado por ineficiente.");
+            enCinematica = false;
         }
-    };
+        break;
+    }
+};
 
 void MundoIAService::moverRobotsAuto() {
     const int INTERVALO_CAMBIO_Y = 300;
@@ -518,8 +626,8 @@ void MundoIAService::moverRobotsAuto() {
     // Movimiento con velocidades distintas
     for (size_t i = 0; i < robots.size(); i++) {
         if (!robots[i]) continue;
-		robots[i]->setVelocidad(8 + (i % 3));
-      
+        robots[i]->setVelocidad(8 + (i % 3));
+
 
         if (robots[i]->getIndiceY() == 1) {
             robots[i]->mover(Direccion::Izquierda, LIMITE_DERECHO, LIMITE_IZQUIERDO);
@@ -545,7 +653,7 @@ void MundoIAService::dispararJugador() {
     Direccion dir = (jugador->getIndiceY() == 0 || jugador->getIndiceY() == 3) ?
         Izquierda : Derecha;
     balas.push_back(new Bala(jugador->getX() + 20, jugador->getY() + 20, dir));
-	hadisparado = true;
+    hadisparado = true;
 }
 
 
@@ -560,16 +668,16 @@ void MundoIAService::actualizarProyectiles() {
         // Colisión con robots
         for (int j = 0; j < robots.size(); j++) {
             if (balas[i]->getRectangle().IntersectsWith(robots[j]->getRectangle())) {
-				robotEliminado = true;
-                delete robots[j]; 
+                robotEliminado = true;
+                delete robots[j];
                 robots.erase(robots.begin() + j);
 
                 robotsEliminados++;
 
-               
+
 
                 huboImpacto = true;
-                
+
                 break;
             }
         }
@@ -598,7 +706,7 @@ void MundoIAService::actualizarProyectiles() {
 void MundoIAService::generarRobotsAutomaticos() {
     if (robots.size() >= MAX_ROBOTS_SIMULTANEOS) return;
     if (contador - ultimoSpawnRobots < INTERVALO_SPAWN_ROBOTS) return;
-	if (recursosRecolectados >= 5 && robotsEliminados>=10) return;
+    if (recursosRecolectados >= 5 && robotsEliminados >= 10) return;
 
     ultimoSpawnRobots = contador;
     vector<int> posDisponibles = { 500, 550, 600 };
@@ -624,7 +732,7 @@ void MundoIAService::generarRobotsAutomaticos() {
     for (int i = 0; i < robotsDer; i++) {
         int posY = posDisponibles[rand() % posDisponibles.size()];
         RobotEnemigo* robot = new RobotEnemigo(LIMITE_DERECHO, posY);
-		robot->setVelocidad(6);
+        robot->setVelocidad(6);
         robot->setIndiceY(1);
         robot->cargarImagen(rutaSpriteRobot, filasRobot, columnasRobot);
         robot->setEscala(1.2f);
@@ -656,9 +764,9 @@ void MundoIAService::moverBoss() {
     // Entrada gradual
     if (boss->getX() > 1500) {
         boss->mover(Direccion::Izquierda, boss->getX(), 1500);
-		boss->setIndiceY(0);
+        boss->setIndiceY(0);
     }
-    
+
 }
 
 void MundoIAService::moverSintIA() {
@@ -811,7 +919,7 @@ void MundoIAService::verificarRespuesta(int respuesta) {
         // Avanzar a siguiente pregunta
         gestorPreguntas->avanzarSiguientePregunta();
         preguntaActual++;
-        
+
         if (preguntasCorrectas >= 3) {
             enModoPreguntas = false;
 
@@ -863,7 +971,7 @@ void MundoIAService::dibujarPregunta(Graphics^ canvas) {
     canvas->DrawRectangle(bordeCuadro, x, y, ancho, alto);
 
     //     
-     String^ titulo = "PREGUNTA " + (preguntaActual + 1) + " / 3";
+    String^ titulo = "PREGUNTA " + (preguntaActual + 1) + " / 3";
     Font^ fuenteTitulo = gcnew Font("Arial", 20, FontStyle::Bold);
     SolidBrush^ colorTitulo = gcnew SolidBrush(Color::Yellow);
     canvas->DrawString(titulo, fuenteTitulo, colorTitulo, x + 20, y + 20);
@@ -890,7 +998,7 @@ void MundoIAService::dibujarPregunta(Graphics^ canvas) {
     SolidBrush^ colorInstrucciones = gcnew SolidBrush(Color::Cyan);
     canvas->DrawString(instrucciones, fuenteInstrucciones, colorInstrucciones, x + 20, y + alto - 50);
 
-   
+
     String^ progreso = "Correctas: " + preguntasCorrectas + " / 3";
     Font^ fuenteProgreso = gcnew Font("Arial", 14, FontStyle::Bold);
     SolidBrush^ colorProgreso = gcnew SolidBrush(Color::LimeGreen);
