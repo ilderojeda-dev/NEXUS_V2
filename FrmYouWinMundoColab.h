@@ -84,9 +84,9 @@ namespace NEXUSV2 {
 			this->pnlImagen->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Stretch;
 			this->pnlImagen->Controls->Add(this->lblTexto);
 			this->pnlImagen->Controls->Add(this->btnContinue);
-			this->pnlImagen->Location = System::Drawing::Point(0, 0);
+			this->pnlImagen->Location = System::Drawing::Point(0, -4);
 			this->pnlImagen->Name = L"pnlImagen";
-			this->pnlImagen->Size = System::Drawing::Size(1733, 1041);
+			this->pnlImagen->Size = System::Drawing::Size(1933, 1045);
 			this->pnlImagen->TabIndex = 2;
 			// 
 			// lblTexto
@@ -113,11 +113,13 @@ namespace NEXUSV2 {
 			this->ClientSize = System::Drawing::Size(1904, 1041);
 			this->Controls->Add(this->pnlImagen);
 			this->Cursor = System::Windows::Forms::Cursors::Default;
+			this->FormBorderStyle = System::Windows::Forms::FormBorderStyle::None;
 			this->MaximizeBox = false;
 			this->MinimizeBox = false;
 			this->Name = L"FrmYouWinMundoColab";
 			this->StartPosition = System::Windows::Forms::FormStartPosition::CenterScreen;
 			this->Text = L"Victoria";
+			this->WindowState = System::Windows::Forms::FormWindowState::Maximized;
 			this->Load += gcnew System::EventHandler(this, &FrmYouWinMundoColab::FrmYouWinMundoColab_Load);
 			this->pnlImagen->ResumeLayout(false);
 			this->ResumeLayout(false);

@@ -741,6 +741,9 @@ namespace NEXUSV2 {
 					   "Has estabilizado los modulos criticos de la nave y evitado el colapso.\n"
 					   "No ganaste por adivinar, sino por analizar, priorizar y asumir consecuencias.\n\n"
 					   "El criterio humano prevalecio sobre el caos del sistema.\n\n"
+					   "Se acerca una lluvia de meteoritos....\n"
+					   "Aliado IA restaurado, su nombre es R2D2, te ayudara a recargar municioneS. Sobrevive hasta llegar a tu destino.\n\n"
+					   "Buena suerte.\n\n"
 					   "Presiona X para continuar.";
 				   lblMensaje->Text = gcnew System::String(textoVictoria.c_str());
 				   lblMensaje->Visible = true;

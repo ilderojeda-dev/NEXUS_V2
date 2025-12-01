@@ -1,4 +1,6 @@
 #pragma once
+#include "ArchivoService.h" // NECESARIO para usar ArchivoService*
+#include "Sesion.h"
 
 namespace NEXUSV2 {
 
@@ -18,23 +20,27 @@ namespace NEXUSV2 {
 		FrmFinMundoIA1(bool gano, bool esHistoria, int vidas, int robots, int autonomia, int chips)
 		{
 			InitializeComponent();
-			//
-			//TODO: Add the constructor code here
-			//// Esto elimina el pantallazo blanco y el parpadeo
+
+			// --- INICIALIZACIÓN DE VARIABLES CRÍTICAS ---
+			this->archivoService = new ArchivoService(); // Inicialización
+			this->gano = gano;
+			this->esHistoria = esHistoria; // Ya declarada
+			this->puntajeAutonomia = autonomia; // Score principal
+			// --------------------------------------------
+
+			// Esto elimina el pantallazo blanco y el parpadeo
 			this->SetStyle(ControlStyles::AllPaintingInWmPaint |
 				ControlStyles::UserPaint |
 				ControlStyles::DoubleBuffer, true);
 			this->UpdateStyles();
-			// --------------------------------------------
 
 			this->StartPosition = FormStartPosition::CenterScreen;
-			
+
 			// 1. Aplicar el estilo visual (Colores, Fuentes)
-			ConfigurarEstiloVisual();
+			ConfigurarEstilo();
 
 			// 2. Llenar los datos y configurar botones
 			construirFinal(gano, esHistoria, vidas, robots, autonomia, chips);
-
 		}
 
 	protected:
@@ -47,6 +53,7 @@ namespace NEXUSV2 {
 			{
 				delete components;
 			}
+			if (archivoService) delete archivoService;
 		}
 	private: System::Windows::Forms::Label^ lblTitulo;
 	private: System::Windows::Forms::Label^ lblVidas;
@@ -67,13 +74,18 @@ namespace NEXUSV2 {
 		/// <summary>
 		/// Required designer variable.
 		/// </summary>
+		
+
 		System::ComponentModel::Container^ components;
 	private: System::Windows::Forms::Label^ lblT1;
 	private: System::Windows::Forms::Label^ lblT2;
 	private: System::Windows::Forms::Label^ lblT3;
 	private: System::Windows::Forms::Label^ lblT4;
-
+			ArchivoService* archivoService; // Objeto de guardado
+			bool gano;                     // Resultado de la partida
+			int puntajeAutonomia;          // Puntaje para el registro
 		   bool esHistoria;
+
 #pragma region Windows Form Designer generated code
 		/// <summary>
 		/// Required method for Designer support - do not modify
@@ -225,17 +237,57 @@ namespace NEXUSV2 {
 
 		}
 #pragma endregion
+	private:
+		// --- FUNCIÓN DE REGISTRO (CON LÓGICA DE MODOS) ---
+		void FrmFinMundoIA1::RegistrarScores() {
+
+			// A. ACTUALIZAR PUNTAJE DE SESIÓN (Se hace siempre, al finalizar el nivel)
+			NEXUSV2::Sesion::PuntajeMundoIA = this->puntajeAutonomia;
+
+			// --- Variables de Guardado ---
+			System::String^ nombre = NEXUSV2::Sesion::NombreJugador;
+			int ptjIA = this->puntajeAutonomia;
+			int puntajeTotal = ptjIA;
+
+			// -----------------------------------------------------------
+			// B. DECISIÓN DE GUARDADO BINARIO
+			// -----------------------------------------------------------
+
+			// CASO 1: MODO NIVELES (Individual) - Si no es modo historia, guardamos el score.
+			if (!this->esHistoria) {
+
+				archivoService->GuardarPartida(
+					nombre,
+					this->esHistoria, // false
+					ptjIA, 0, 0,
+					puntajeTotal
+				);
+			}
+
+			// CASO 2: MODO HISTORIA - Guardamos solo si la carrera terminó (perdió)
+			else {
+				if (!this->gano) {
+
+					// Si pierde, la run se registra y se termina el juego.
+					archivoService->GuardarPartida(
+						nombre,
+						this->esHistoria,
+						ptjIA, 0, 0,
+						puntajeTotal
+					);
+				}
+			}
+		}
+
 	private: System::Void FrmFinMundoIA1_Load(System::Object^ sender, System::EventArgs^ e) {
-		
+
 	}
 	private:
-		// FUNCIÓN 1: Aplicar Diseño Sci-Fi (Colores Neón)
 		// FUNCIÓN 1: Aplicar Diseño Sci-Fi con Límite de Ancho
-		void ConfigurarEstiloVisual() {
+		void ConfigurarEstilo() {
 			// --- FUENTES ---
 			System::Drawing::Font^ fuenteTitulo = gcnew System::Drawing::Font("Consolas", 36, FontStyle::Bold);
 			System::Drawing::Font^ fuenteEtiqueta = gcnew System::Drawing::Font("Consolas", 14, FontStyle::Bold);
-			// Bajamos un poco la fuente de los datos para asegurar que quepa todo el texto
 			System::Drawing::Font^ fuenteDato = gcnew System::Drawing::Font("Segoe UI", 11, FontStyle::Bold);
 			System::Drawing::Font^ fuenteBoton = gcnew System::Drawing::Font("Segoe UI", 12, FontStyle::Bold);
 
@@ -252,20 +304,16 @@ namespace NEXUSV2 {
 			EstilizarLabel(lblT4, "CÓDIGO HUMANO RECUPERADO", fuenteEtiqueta, colorTitulosCajas);
 
 			// --- 2. ESTILIZAR DATOS (HISTORIA) CON LÍMITE DE ANCHO ---
-			// Aquí aplicamos el truco: AutoSize false y tamaño fijo.
-
-			// Primero aplicamos estilo básico
 			EstilizarLabel(lblVidas, "", fuenteDato, colorTextoHistoria);
 			EstilizarLabel(lblRobotsEliminados, "", fuenteDato, colorTextoHistoria);
 			EstilizarLabel(lblAutonomia, "", fuenteDato, colorTextoHistoria);
 			EstilizarLabel(lblChipsRecolectados, "", fuenteDato, colorTextoHistoria);
 
 			// AHORA FORZAMOS EL TAMAÑO (280px de ancho máximo)
-			System::Drawing::Size tamanoCaja = System::Drawing::Size(280, 200); // 280 ancho, 200 alto (para que quepan varias líneas)
+			System::Drawing::Size tamanoCaja = System::Drawing::Size(280, 200);
 
 			lblVidas->AutoSize = false;
 			lblVidas->Size = tamanoCaja;
-			// Alineación arriba-centro para que se llene desde arriba hacia abajo
 			lblVidas->TextAlign = ContentAlignment::TopCenter;
 
 			lblRobotsEliminados->AutoSize = false;
@@ -354,27 +402,38 @@ namespace NEXUSV2 {
 					lblChipsRecolectados->Text = "No se recuperó nada.\nLa libertad de pensamiento sigue siendo un mito.";
 				else
 					lblChipsRecolectados->Text = "Intento fallido.\nLos " + chips + " fragmentos recolectados han sido destruidos.";
-
-				btnSiguienteNivel->Visible = false;
+				if (esHistoria) {
+					btnSiguienteNivel->Visible = false;
+				}
+				
 			}
 
 			btnVolver->Visible = true;
 		}
-		// EVENTOS DE CLIC
+		// EVENTOS DE CLIC (CÓDIGO CORREGIDO PARA GUARDAR EL SCORE)
 	private: System::Void btnVolver_Click(System::Object^ sender, System::EventArgs^ e) {
+		// REGISTRAMOS SCORE si se perdió (fin de la run) o si se ganó en Modo Niveles (registro individual)
+		if (!this->gano || !this->esHistoria) {
+			RegistrarScores();
+		}
+
 		this->DialogResult = System::Windows::Forms::DialogResult::Cancel;
 		this->Close();
 	}
 
 	private: System::Void btnSiguienteNivel_Click(System::Object^ sender, System::EventArgs^ e) {
+		// REGISTRAMOS SCORE si se ganó, ya que el usuario confirma querer guardar/continuar la run.
+		if (this->gano) {
+			RegistrarScores();
+		}
+
 		this->DialogResult = System::Windows::Forms::DialogResult::OK;
 		this->Close();
 	}
-	
+
 private: System::Void lblChipsRecolectados_Click(System::Object^ sender, System::EventArgs^ e) {
 }
 private: System::Void panel1_Paint(System::Object^ sender, System::Windows::Forms::PaintEventArgs^ e) {
 }
 };
 }
-

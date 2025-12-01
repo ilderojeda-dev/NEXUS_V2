@@ -7,6 +7,7 @@
 #include "FrmYouWinMundoColab.h"
 #include "SoundManager.h"
 #include "Sesion.h"
+#include "ArchivoService.h" 
 using namespace System;
 namespace NEXUSV2 {
 
@@ -37,6 +38,9 @@ namespace NEXUSV2 {
 			// 2. Asignar el buffer. Creamos un Graphics object solo AQUI, no en cada Tick.
 			buffer = bufferContext->Allocate(this->pnlJuego->CreateGraphics(), this->pnlJuego->ClientRectangle);
 			// -----------------------------------------------------------
+			
+			// --------------------------------------------------
+			// ... (rest of constructor)
 		
 			//TODO: Add the constructor code here
 			//
@@ -56,6 +60,7 @@ namespace NEXUSV2 {
 
 			mundoColab->spawnMeteorito(1); //mantener 1 meteorito si o si (no es necesario)
 			mundoColab->spawnEstrella(1); //lo mismo
+			this->archivoService = new ArchivoService();
 			}
 			teclaPresionadaNave = Direccion::Ninguno;
 			sonidoDialogoReproducido = false;
@@ -102,6 +107,9 @@ namespace NEXUSV2 {
 		}
 	private: NEXUS_V2::Service::SoundManager^ gestorSonido;
 	private:
+		ArchivoService* archivoService; // Para el guardado binario
+		int puntajeConfianza = 0;      // Score de este mundo
+
 		// --- MIEMBROS AÑADIDOS PARA OPTIMIZACIÓN GRÁFICA ---
 		BufferedGraphicsContext^ bufferContext;
 		BufferedGraphics^ buffer;
@@ -109,6 +117,7 @@ namespace NEXUSV2 {
 		int tiempoTotal = 0;
 		int tiempoDialogo = 0;
 		int indiceDialogo = 0;
+	
 		int respuestaCorrectaIndex;
 		Dialogo* dialogoMostrandose = nullptr;
 		MundoColabService* mundoColab;
@@ -118,25 +127,6 @@ namespace NEXUSV2 {
 	private: System::ComponentModel::BackgroundWorker^ backgroundWorker1;
 
 	private: System::Windows::Forms::Timer^ timer1;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 	private: System::ComponentModel::IContainer^ components;
@@ -158,21 +148,21 @@ namespace NEXUSV2 {
 			   this->backgroundWorker1 = (gcnew System::ComponentModel::BackgroundWorker());
 			   this->timer1 = (gcnew System::Windows::Forms::Timer(this->components));
 			   this->pnlHUD = (gcnew System::Windows::Forms::Panel());
-			   this->pnlAliado = (gcnew System::Windows::Forms::Panel());
 			   this->pnlInfo = (gcnew System::Windows::Forms::Panel());
-			   this->lblBalas = (gcnew System::Windows::Forms::Label());
-			   this->lblVidas = (gcnew System::Windows::Forms::Label());
-			   this->lblMensaje = (gcnew System::Windows::Forms::Label());
-			   this->Mensaje = (gcnew System::Windows::Forms::Label());
-			   this->lblConfianzaR2D2 = (gcnew System::Windows::Forms::Label());
 			   this->lblTiempo = (gcnew System::Windows::Forms::Label());
+			   this->lblConfianzaR2D2 = (gcnew System::Windows::Forms::Label());
+			   this->Mensaje = (gcnew System::Windows::Forms::Label());
+			   this->lblMensaje = (gcnew System::Windows::Forms::Label());
+			   this->lblVidas = (gcnew System::Windows::Forms::Label());
+			   this->lblBalas = (gcnew System::Windows::Forms::Label());
+			   this->pnlAliado = (gcnew System::Windows::Forms::Panel());
 			   this->panel1 = (gcnew System::Windows::Forms::Panel());
-			   this->lblDialogo = (gcnew System::Windows::Forms::Label());
 			   this->pnlTexto = (gcnew System::Windows::Forms::Panel());
-			   this->lblPregunta = (gcnew System::Windows::Forms::Label());
-			   this->lblOp1 = (gcnew System::Windows::Forms::Label());
-			   this->lblOp2 = (gcnew System::Windows::Forms::Label());
 			   this->lblOp3 = (gcnew System::Windows::Forms::Label());
+			   this->lblOp2 = (gcnew System::Windows::Forms::Label());
+			   this->lblOp1 = (gcnew System::Windows::Forms::Label());
+			   this->lblPregunta = (gcnew System::Windows::Forms::Label());
+			   this->lblDialogo = (gcnew System::Windows::Forms::Label());
 			   this->pnlJuego = (gcnew System::Windows::Forms::Panel());
 			   this->pnlHUD->SuspendLayout();
 			   this->pnlInfo->SuspendLayout();
@@ -199,17 +189,6 @@ namespace NEXUSV2 {
 			   this->pnlHUD->Size = System::Drawing::Size(1920, 227);
 			   this->pnlHUD->TabIndex = 0;
 			   // 
-			   // pnlAliado
-			   // 
-			   this->pnlAliado->BackColor = System::Drawing::SystemColors::ActiveCaptionText;
-			   this->pnlAliado->BackgroundImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pnlAliado.BackgroundImage")));
-			   this->pnlAliado->Dock = System::Windows::Forms::DockStyle::Left;
-			   this->pnlAliado->Location = System::Drawing::Point(0, 0);
-			   this->pnlAliado->Name = L"pnlAliado";
-			   this->pnlAliado->Size = System::Drawing::Size(400, 227);
-			   this->pnlAliado->TabIndex = 0;
-			   this->pnlAliado->Paint += gcnew System::Windows::Forms::PaintEventHandler(this, &FrmMundoColab::pnlAliado_Paint);
-			   // 
 			   // pnlInfo
 			   // 
 			   this->pnlInfo->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(64)), static_cast<System::Int32>(static_cast<System::Byte>(64)),
@@ -228,42 +207,13 @@ namespace NEXUSV2 {
 			   this->pnlInfo->Size = System::Drawing::Size(506, 227);
 			   this->pnlInfo->TabIndex = 2;
 			   // 
-			   // lblBalas
+			   // lblTiempo
 			   // 
-			   this->lblBalas->AutoSize = true;
-			   this->lblBalas->Location = System::Drawing::Point(55, 25);
-			   this->lblBalas->Name = L"lblBalas";
-			   this->lblBalas->Size = System::Drawing::Size(39, 13);
-			   this->lblBalas->TabIndex = 0;
-			   this->lblBalas->Text = L"Balas: ";
-			   this->lblBalas->Click += gcnew System::EventHandler(this, &FrmMundoColab::lblBalas_Click);
-			   // 
-			   // lblVidas
-			   // 
-			   this->lblVidas->AutoSize = true;
-			   this->lblVidas->Location = System::Drawing::Point(55, 55);
-			   this->lblVidas->Name = L"lblVidas";
-			   this->lblVidas->Size = System::Drawing::Size(39, 13);
-			   this->lblVidas->TabIndex = 1;
-			   this->lblVidas->Text = L"Vidas: ";
-			   // 
-			   // lblMensaje
-			   // 
-			   this->lblMensaje->AutoSize = true;
-			   this->lblMensaje->Location = System::Drawing::Point(55, 88);
-			   this->lblMensaje->Name = L"lblMensaje";
-			   this->lblMensaje->Size = System::Drawing::Size(237, 13);
-			   this->lblMensaje->TabIndex = 2;
-			   this->lblMensaje->Text = L"Presiona r para recargar cuando no tengas balas";
-			   // 
-			   // Mensaje
-			   // 
-			   this->Mensaje->Location = System::Drawing::Point(55, 114);
-			   this->Mensaje->Name = L"Mensaje";
-			   this->Mensaje->Size = System::Drawing::Size(401, 29);
-			   this->Mensaje->TabIndex = 3;
-			   this->Mensaje->Text = L"Por cada pregunta respondida correctamente tendrás más chance de recargar más bal"
-				   L"as (confianza con R2D2)";
+			   this->lblTiempo->Location = System::Drawing::Point(273, 30);
+			   this->lblTiempo->Name = L"lblTiempo";
+			   this->lblTiempo->Size = System::Drawing::Size(119, 30);
+			   this->lblTiempo->TabIndex = 5;
+			   this->lblTiempo->Text = L"Tiempo restante para sobrevivir: ";
 			   // 
 			   // lblConfianzaR2D2
 			   // 
@@ -274,13 +224,53 @@ namespace NEXUSV2 {
 			   this->lblConfianzaR2D2->Text = L"Confianza con R2D2: ";
 			   this->lblConfianzaR2D2->Click += gcnew System::EventHandler(this, &FrmMundoColab::label1_Click);
 			   // 
-			   // lblTiempo
+			   // Mensaje
 			   // 
-			   this->lblTiempo->Location = System::Drawing::Point(273, 30);
-			   this->lblTiempo->Name = L"lblTiempo";
-			   this->lblTiempo->Size = System::Drawing::Size(119, 30);
-			   this->lblTiempo->TabIndex = 5;
-			   this->lblTiempo->Text = L"Tiempo restante para sobrevivir: ";
+			   this->Mensaje->Location = System::Drawing::Point(55, 114);
+			   this->Mensaje->Name = L"Mensaje";
+			   this->Mensaje->Size = System::Drawing::Size(401, 29);
+			   this->Mensaje->TabIndex = 3;
+			   this->Mensaje->Text = L"Por cada pregunta respondida correctamente tendrás más chance de recargar más bal"
+				   L"as (confianza con R2D2)";
+			   // 
+			   // lblMensaje
+			   // 
+			   this->lblMensaje->AutoSize = true;
+			   this->lblMensaje->Location = System::Drawing::Point(55, 88);
+			   this->lblMensaje->Name = L"lblMensaje";
+			   this->lblMensaje->Size = System::Drawing::Size(237, 13);
+			   this->lblMensaje->TabIndex = 2;
+			   this->lblMensaje->Text = L"Presiona r para recargar cuando no tengas balas";
+			   // 
+			   // lblVidas
+			   // 
+			   this->lblVidas->AutoSize = true;
+			   this->lblVidas->Location = System::Drawing::Point(55, 55);
+			   this->lblVidas->Name = L"lblVidas";
+			   this->lblVidas->Size = System::Drawing::Size(39, 13);
+			   this->lblVidas->TabIndex = 1;
+			   this->lblVidas->Text = L"Vidas: ";
+			   // 
+			   // lblBalas
+			   // 
+			   this->lblBalas->AutoSize = true;
+			   this->lblBalas->Location = System::Drawing::Point(55, 25);
+			   this->lblBalas->Name = L"lblBalas";
+			   this->lblBalas->Size = System::Drawing::Size(39, 13);
+			   this->lblBalas->TabIndex = 0;
+			   this->lblBalas->Text = L"Balas: ";
+			   this->lblBalas->Click += gcnew System::EventHandler(this, &FrmMundoColab::lblBalas_Click);
+			   // 
+			   // pnlAliado
+			   // 
+			   this->pnlAliado->BackColor = System::Drawing::SystemColors::ActiveCaptionText;
+			   this->pnlAliado->BackgroundImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pnlAliado.BackgroundImage")));
+			   this->pnlAliado->Dock = System::Windows::Forms::DockStyle::Left;
+			   this->pnlAliado->Location = System::Drawing::Point(0, 0);
+			   this->pnlAliado->Name = L"pnlAliado";
+			   this->pnlAliado->Size = System::Drawing::Size(400, 227);
+			   this->pnlAliado->TabIndex = 0;
+			   this->pnlAliado->Paint += gcnew System::Windows::Forms::PaintEventHandler(this, &FrmMundoColab::pnlAliado_Paint);
 			   // 
 			   // panel1
 			   // 
@@ -295,17 +285,6 @@ namespace NEXUSV2 {
 			   this->panel1->Name = L"panel1";
 			   this->panel1->Size = System::Drawing::Size(1023, 230);
 			   this->panel1->TabIndex = 4;
-			   // 
-			   // lblDialogo
-			   // 
-			   this->lblDialogo->AutoSize = true;
-			   this->lblDialogo->Font = (gcnew System::Drawing::Font(L"Nirmala UI", 14.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
-				   static_cast<System::Byte>(0)));
-			   this->lblDialogo->Location = System::Drawing::Point(71, 75);
-			   this->lblDialogo->Name = L"lblDialogo";
-			   this->lblDialogo->Size = System::Drawing::Size(179, 25);
-			   this->lblDialogo->TabIndex = 0;
-			   this->lblDialogo->Text = L"Traductor de RD2D: ";
 			   // 
 			   // pnlTexto
 			   // 
@@ -323,24 +302,14 @@ namespace NEXUSV2 {
 			   this->pnlTexto->Size = System::Drawing::Size(1020, 227);
 			   this->pnlTexto->TabIndex = 1;
 			   // 
-			   // lblPregunta
+			   // lblOp3
 			   // 
-			   this->lblPregunta->AutoSize = true;
-			   this->lblPregunta->Location = System::Drawing::Point(48, 65);
-			   this->lblPregunta->Name = L"lblPregunta";
-			   this->lblPregunta->Size = System::Drawing::Size(56, 13);
-			   this->lblPregunta->TabIndex = 0;
-			   this->lblPregunta->Text = L"Pregunta: ";
-			   this->lblPregunta->Click += gcnew System::EventHandler(this, &FrmMundoColab::lblDialogo_Click);
-			   // 
-			   // lblOp1
-			   // 
-			   this->lblOp1->AutoSize = true;
-			   this->lblOp1->Location = System::Drawing::Point(48, 156);
-			   this->lblOp1->Name = L"lblOp1";
-			   this->lblOp1->Size = System::Drawing::Size(19, 13);
-			   this->lblOp1->TabIndex = 1;
-			   this->lblOp1->Text = L"1) ";
+			   this->lblOp3->AutoSize = true;
+			   this->lblOp3->Location = System::Drawing::Point(680, 156);
+			   this->lblOp3->Name = L"lblOp3";
+			   this->lblOp3->Size = System::Drawing::Size(19, 13);
+			   this->lblOp3->TabIndex = 3;
+			   this->lblOp3->Text = L"3) ";
 			   // 
 			   // lblOp2
 			   // 
@@ -351,14 +320,35 @@ namespace NEXUSV2 {
 			   this->lblOp2->TabIndex = 2;
 			   this->lblOp2->Text = L"2) ";
 			   // 
-			   // lblOp3
+			   // lblOp1
 			   // 
-			   this->lblOp3->AutoSize = true;
-			   this->lblOp3->Location = System::Drawing::Point(680, 156);
-			   this->lblOp3->Name = L"lblOp3";
-			   this->lblOp3->Size = System::Drawing::Size(19, 13);
-			   this->lblOp3->TabIndex = 3;
-			   this->lblOp3->Text = L"3) ";
+			   this->lblOp1->AutoSize = true;
+			   this->lblOp1->Location = System::Drawing::Point(48, 156);
+			   this->lblOp1->Name = L"lblOp1";
+			   this->lblOp1->Size = System::Drawing::Size(19, 13);
+			   this->lblOp1->TabIndex = 1;
+			   this->lblOp1->Text = L"1) ";
+			   // 
+			   // lblPregunta
+			   // 
+			   this->lblPregunta->AutoSize = true;
+			   this->lblPregunta->Location = System::Drawing::Point(48, 65);
+			   this->lblPregunta->Name = L"lblPregunta";
+			   this->lblPregunta->Size = System::Drawing::Size(56, 13);
+			   this->lblPregunta->TabIndex = 0;
+			   this->lblPregunta->Text = L"Pregunta: ";
+			   this->lblPregunta->Click += gcnew System::EventHandler(this, &FrmMundoColab::lblDialogo_Click);
+			   // 
+			   // lblDialogo
+			   // 
+			   this->lblDialogo->AutoSize = true;
+			   this->lblDialogo->Font = (gcnew System::Drawing::Font(L"Nirmala UI", 14.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				   static_cast<System::Byte>(0)));
+			   this->lblDialogo->Location = System::Drawing::Point(71, 75);
+			   this->lblDialogo->Name = L"lblDialogo";
+			   this->lblDialogo->Size = System::Drawing::Size(179, 25);
+			   this->lblDialogo->TabIndex = 0;
+			   this->lblDialogo->Text = L"Traductor de RD2D: ";
 			   // 
 			   // pnlJuego
 			   // 
@@ -399,36 +389,88 @@ namespace NEXUSV2 {
 #pragma endregion
 
 		   // --- FUNCIÓN CLAVE: VERIFICAR ESTADO (VICTORIA/DERROTA) ---
-	private: private: void checkGameStatus() {
-		// Usamos el getter de MundoColabService para verificar las vidas y el tiempo
+	private: 
+		// --- FUNCIÓN DE REGISTRO (Nueva) ---
+		void RegistrarScoresColab(bool gano) {
 
+			// 1. OBTENER PUNTAJE DE ESTE MUNDO
+			// Asumimos que getRespuestasCorrectas() es el score de confianza
+			int ptjColab = (mundoColab->getRespuestasCorrectas()*10);
+
+			// 2. ACTUALIZAR SESIÓN (Importante para el registro binario, aunque sea el último mundo)
+			NEXUSV2::Sesion::PuntajeMundoColab = ptjColab;
+
+			// 3. OBTENER PUNTAJES ACUMULADOS DE SESIÓN
+			int ptjIA = NEXUSV2::Sesion::PuntajeMundoIA;
+			int ptjHumano = NEXUSV2::Sesion::PuntajeMundoHumano;
+
+			System::String^ nombre = NEXUSV2::Sesion::NombreJugador;
+
+			// 4. LÓGICA DE GUARDADO
+			if (this->esModoHistoria) {
+				// Modo Historia: Guarda el total acumulado (IA + Humano + Colab)
+				int puntajeTotal = ptjIA + ptjHumano + ptjColab;
+
+				// El registro binario se hace si la run finaliza (Win o Lose)
+				archivoService->GuardarPartida(
+					nombre,
+					this->esModoHistoria,
+					ptjIA,
+					ptjHumano,
+					ptjColab,
+					puntajeTotal
+				);
+			}
+			else {
+				// Modo Niveles (Individual): Guarda solo el score de Colab
+				archivoService->GuardarPartida(
+					nombre,
+					this->esModoHistoria,
+					0, // ptjAutonomia
+					0, // ptjCriterio
+					ptjColab, // ptjConfianza
+					ptjColab // Total
+				);
+			}
+		}
+	private:private: void checkGameStatus() {
 		// 1. Verificar la condición de Victoria: Sobrevivir 500 ticks de tiempoTotal
 		if (mundoColab != nullptr && tiempoTotal >= 500) {
+
+			timer1->Enabled = false; // Detener el timer
 			gestorSonido->ReproducirEfecto("SonidoGanador.wav", 1.0);
-			timer1->Enabled = false; // Detener el timer del juego
+
+			// REGISTRO INMEDIATO DEL SCORE
+			RegistrarScoresColab(true);
 
 			// Mostrar el formulario de Victoria
 			NEXUSV2::FrmYouWinMundoColab^ winForm = gcnew NEXUSV2::FrmYouWinMundoColab();
-			winForm->Show();
+			winForm->ShowDialog();
 
-			// Ocultar este formulario de juego
+			// Ocultar este formulario de juego y cerrar
 			this->Hide();
-			return; // Salir, ya se ganó.
+			this->Close(); // Cerramos el formulario ya que el flujo termina aquí
+			return;
 		}
 
 		// 2. Verificar la condición de Derrota (Game Over)
 		if (mundoColab != nullptr && mundoColab->getVidasNave() <= 0) {
 
-			timer1->Enabled = false; // Detener el timer del juego
+			timer1->Enabled = false; // Detener el timer
 			gestorSonido->ReproducirEfecto("SonidoPerdedor.wav", 1.0);
+
+			// REGISTRO INMEDIATO DEL SCORE
+			RegistrarScoresColab(false);
+
 			// Creamos una instancia del formulario de Game Over
 			NEXUSV2::FrmGameOverMundoColab^ gameOverForm = gcnew NEXUSV2::FrmGameOverMundoColab();
 
 			// Lo mostramos.
-			gameOverForm->Show();
+			gameOverForm->ShowDialog();
 
-			// Ocultar este formulario de juego
+			// Ocultar este formulario de juego y cerrar
 			this->Hide();
+			this->Close(); // Cerramos el formulario ya que el flujo termina aquí
 		}
 	}
 		   // --- FUNCIÓN CENTRALIZADA PARA ACTUALIZAR EL HUD (Paso 4) ---

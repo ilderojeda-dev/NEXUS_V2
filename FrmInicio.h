@@ -5,6 +5,7 @@
 #include "SoundManager.h"
 #include "FrmMundoColab.h"
 #include "Sesion.h"
+#include "ArchivoService.h"
 
 namespace NEXUSV2 {
 
@@ -35,7 +36,28 @@ namespace NEXUSV2 {
 			gestorSonido->ReproducirMusica("MusicaFondoInicio.wav", 0.2); // 0.3 es volumen bajito (30%)
 			ConfigurarMenuPrincipal();
 			ConfigurarPanelNiveles();
+			this->archivoService = new ArchivoService();
 			pnlNiveles->Visible = false;
+			if (this->pnlScores->Parent != nullptr && this->pnlScores->Parent != this)
+			{
+				this->pnlScores->Parent->Controls->Remove(this->pnlScores);
+			}
+			// 2. Añadir pnlScores directamente al formulario principal (this).
+			this->Controls->Add(this->pnlScores);
+
+			// 3. Asegurar que el panel esté al frente para que se vea correctamente.
+			this->pnlScores->BringToFront();
+
+			// 4. Ocultar pnlScores por defecto.
+			this->pnlScores->Visible = false;
+
+			if (this->pnlCreditos->Parent != nullptr && this->pnlCreditos->Parent != this->pnlFondo)
+			{
+				this->pnlCreditos->Parent->Controls->Remove(this->pnlCreditos);
+			}
+			this->pnlFondo->Controls->Add(this->pnlCreditos); // Lo agregamos al pnlFondo
+			this->pnlCreditos->Visible = false;
+
 			
 
 			
@@ -82,10 +104,39 @@ namespace NEXUSV2 {
 		/// </summary>
 		System::ComponentModel::Container ^components;
 
-
+		ArchivoService* archivoService;
 
 	private: System::Windows::Forms::Panel^ pnlMenuPrincipal;
 	private: System::Windows::Forms::TextBox^ txtNombreJugador;
+	private: System::Windows::Forms::Panel^ pnlScores;
+	private: System::Windows::Forms::ListView^ lvScores;
+
+	private: System::Windows::Forms::Label^ lblTituloScore;
+	private: System::Windows::Forms::ColumnHeader^ colUsuario;
+	private: System::Windows::Forms::ColumnHeader^ colMode;
+	private: System::Windows::Forms::ColumnHeader^ colMundo1;
+	private: System::Windows::Forms::ColumnHeader^ colMundo2;
+	private: System::Windows::Forms::ColumnHeader^ colMundo3;
+	private: System::Windows::Forms::ColumnHeader^ colPuntajeFinal;
+	private: System::Windows::Forms::ColumnHeader^ colFecha;
+	private: System::Windows::Forms::Button^ btnVolverScores;
+	private: System::Windows::Forms::Panel^ pnlCreditos;
+	private: System::Windows::Forms::Label^ lblProfesor;
+	private: System::Windows::Forms::Label^ lblUniversidad;
+	private: System::Windows::Forms::Label^ lblEstudiantes;
+	private: System::Windows::Forms::Label^ lblMensajeAgradecimiento;
+	private: System::Windows::Forms::Label^ lblTituloCreditos;
+	private: System::Windows::Forms::Button^ btnVolverMenu;
+
+
+
+
+
+
+
+
+
+
 	private: System::Windows::Forms::Label^ lblPromptNombre;
 
 #pragma region Windows Form Designer generated code
@@ -99,10 +150,28 @@ namespace NEXUSV2 {
 			this->brnMundoIA = (gcnew System::Windows::Forms::Button());
 			this->pnlFondo = (gcnew System::Windows::Forms::Panel());
 			this->pnlNiveles = (gcnew System::Windows::Forms::Panel());
+			this->pnlCreditos = (gcnew System::Windows::Forms::Panel());
+			this->lblProfesor = (gcnew System::Windows::Forms::Label());
+			this->lblUniversidad = (gcnew System::Windows::Forms::Label());
+			this->lblEstudiantes = (gcnew System::Windows::Forms::Label());
+			this->lblMensajeAgradecimiento = (gcnew System::Windows::Forms::Label());
+			this->lblTituloCreditos = (gcnew System::Windows::Forms::Label());
+			this->btnVolverMenu = (gcnew System::Windows::Forms::Button());
 			this->btnNivel3 = (gcnew System::Windows::Forms::Button());
 			this->btnVolver = (gcnew System::Windows::Forms::Button());
 			this->btnNivel1 = (gcnew System::Windows::Forms::Button());
 			this->btnNivel2 = (gcnew System::Windows::Forms::Button());
+			this->pnlScores = (gcnew System::Windows::Forms::Panel());
+			this->btnVolverScores = (gcnew System::Windows::Forms::Button());
+			this->lblTituloScore = (gcnew System::Windows::Forms::Label());
+			this->lvScores = (gcnew System::Windows::Forms::ListView());
+			this->colUsuario = (gcnew System::Windows::Forms::ColumnHeader());
+			this->colMode = (gcnew System::Windows::Forms::ColumnHeader());
+			this->colMundo1 = (gcnew System::Windows::Forms::ColumnHeader());
+			this->colMundo2 = (gcnew System::Windows::Forms::ColumnHeader());
+			this->colMundo3 = (gcnew System::Windows::Forms::ColumnHeader());
+			this->colPuntajeFinal = (gcnew System::Windows::Forms::ColumnHeader());
+			this->colFecha = (gcnew System::Windows::Forms::ColumnHeader());
 			this->pnlMenuPrincipal = (gcnew System::Windows::Forms::Panel());
 			this->txtNombreJugador = (gcnew System::Windows::Forms::TextBox());
 			this->lblPromptNombre = (gcnew System::Windows::Forms::Label());
@@ -113,6 +182,8 @@ namespace NEXUSV2 {
 			this->btnScores = (gcnew System::Windows::Forms::Button());
 			this->pnlFondo->SuspendLayout();
 			this->pnlNiveles->SuspendLayout();
+			this->pnlCreditos->SuspendLayout();
+			this->pnlScores->SuspendLayout();
 			this->pnlMenuPrincipal->SuspendLayout();
 			this->SuspendLayout();
 			// 
@@ -130,6 +201,7 @@ namespace NEXUSV2 {
 			this->pnlFondo->BackColor = System::Drawing::Color::White;
 			this->pnlFondo->BackgroundImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pnlFondo.BackgroundImage")));
 			this->pnlFondo->Controls->Add(this->pnlNiveles);
+			this->pnlFondo->Controls->Add(this->pnlScores);
 			this->pnlFondo->Controls->Add(this->pnlMenuPrincipal);
 			this->pnlFondo->Location = System::Drawing::Point(-2, -1);
 			this->pnlFondo->Name = L"pnlFondo";
@@ -140,6 +212,7 @@ namespace NEXUSV2 {
 			// 
 			this->pnlNiveles->BackgroundImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pnlNiveles.BackgroundImage")));
 			this->pnlNiveles->BackgroundImageLayout = System::Windows::Forms::ImageLayout::None;
+			this->pnlNiveles->Controls->Add(this->pnlCreditos);
 			this->pnlNiveles->Controls->Add(this->btnNivel3);
 			this->pnlNiveles->Controls->Add(this->btnVolver);
 			this->pnlNiveles->Controls->Add(this->btnNivel1);
@@ -147,9 +220,78 @@ namespace NEXUSV2 {
 			this->pnlNiveles->ImeMode = System::Windows::Forms::ImeMode::NoControl;
 			this->pnlNiveles->Location = System::Drawing::Point(200, 46);
 			this->pnlNiveles->Name = L"pnlNiveles";
-			this->pnlNiveles->Size = System::Drawing::Size(1536, 988);
+			this->pnlNiveles->Size = System::Drawing::Size(1534, 1009);
 			this->pnlNiveles->TabIndex = 11;
 			this->pnlNiveles->Visible = false;
+			// 
+			// pnlCreditos
+			// 
+			this->pnlCreditos->BackColor = System::Drawing::Color::Transparent;
+			this->pnlCreditos->Controls->Add(this->lblProfesor);
+			this->pnlCreditos->Controls->Add(this->lblUniversidad);
+			this->pnlCreditos->Controls->Add(this->lblEstudiantes);
+			this->pnlCreditos->Controls->Add(this->lblMensajeAgradecimiento);
+			this->pnlCreditos->Controls->Add(this->lblTituloCreditos);
+			this->pnlCreditos->Controls->Add(this->btnVolverMenu);
+			this->pnlCreditos->Location = System::Drawing::Point(378, 332);
+			this->pnlCreditos->Name = L"pnlCreditos";
+			this->pnlCreditos->Size = System::Drawing::Size(961, 715);
+			this->pnlCreditos->TabIndex = 12;
+			// 
+			// lblProfesor
+			// 
+			this->lblProfesor->AutoSize = true;
+			this->lblProfesor->Location = System::Drawing::Point(494, 425);
+			this->lblProfesor->Name = L"lblProfesor";
+			this->lblProfesor->Size = System::Drawing::Size(35, 13);
+			this->lblProfesor->TabIndex = 7;
+			this->lblProfesor->Text = L"label1";
+			// 
+			// lblUniversidad
+			// 
+			this->lblUniversidad->AutoSize = true;
+			this->lblUniversidad->Location = System::Drawing::Point(339, 332);
+			this->lblUniversidad->Name = L"lblUniversidad";
+			this->lblUniversidad->Size = System::Drawing::Size(35, 13);
+			this->lblUniversidad->TabIndex = 6;
+			this->lblUniversidad->Text = L"label1";
+			// 
+			// lblEstudiantes
+			// 
+			this->lblEstudiantes->AutoSize = true;
+			this->lblEstudiantes->Location = System::Drawing::Point(459, 343);
+			this->lblEstudiantes->Name = L"lblEstudiantes";
+			this->lblEstudiantes->Size = System::Drawing::Size(35, 13);
+			this->lblEstudiantes->TabIndex = 5;
+			this->lblEstudiantes->Text = L"label1";
+			// 
+			// lblMensajeAgradecimiento
+			// 
+			this->lblMensajeAgradecimiento->AutoSize = true;
+			this->lblMensajeAgradecimiento->Location = System::Drawing::Point(518, 297);
+			this->lblMensajeAgradecimiento->Name = L"lblMensajeAgradecimiento";
+			this->lblMensajeAgradecimiento->Size = System::Drawing::Size(35, 13);
+			this->lblMensajeAgradecimiento->TabIndex = 4;
+			this->lblMensajeAgradecimiento->Text = L"label1";
+			// 
+			// lblTituloCreditos
+			// 
+			this->lblTituloCreditos->AutoSize = true;
+			this->lblTituloCreditos->Location = System::Drawing::Point(416, 121);
+			this->lblTituloCreditos->Name = L"lblTituloCreditos";
+			this->lblTituloCreditos->Size = System::Drawing::Size(35, 13);
+			this->lblTituloCreditos->TabIndex = 3;
+			this->lblTituloCreditos->Text = L"label1";
+			// 
+			// btnVolverMenu
+			// 
+			this->btnVolverMenu->Location = System::Drawing::Point(462, 502);
+			this->btnVolverMenu->Name = L"btnVolverMenu";
+			this->btnVolverMenu->Size = System::Drawing::Size(75, 23);
+			this->btnVolverMenu->TabIndex = 2;
+			this->btnVolverMenu->Text = L"button1";
+			this->btnVolverMenu->UseVisualStyleBackColor = true;
+			this->btnVolverMenu->Click += gcnew System::EventHandler(this, &FrmInicio::btnVolverMenu_Click);
 			// 
 			// btnNivel3
 			// 
@@ -210,6 +352,89 @@ namespace NEXUSV2 {
 			this->btnNivel2->UseVisualStyleBackColor = false;
 			this->btnNivel2->Click += gcnew System::EventHandler(this, &FrmInicio::btnNivel2_Click);
 			// 
+			// pnlScores
+			// 
+			this->pnlScores->BackColor = System::Drawing::Color::Transparent;
+			this->pnlScores->Controls->Add(this->btnVolverScores);
+			this->pnlScores->Controls->Add(this->lblTituloScore);
+			this->pnlScores->Controls->Add(this->lvScores);
+			this->pnlScores->Location = System::Drawing::Point(390, 379);
+			this->pnlScores->Name = L"pnlScores";
+			this->pnlScores->Size = System::Drawing::Size(1070, 607);
+			this->pnlScores->TabIndex = 11;
+			this->pnlScores->Paint += gcnew System::Windows::Forms::PaintEventHandler(this, &FrmInicio::pnlScores_Paint);
+			// 
+			// btnVolverScores
+			// 
+			this->btnVolverScores->Location = System::Drawing::Point(462, 502);
+			this->btnVolverScores->Name = L"btnVolverScores";
+			this->btnVolverScores->Size = System::Drawing::Size(75, 23);
+			this->btnVolverScores->TabIndex = 2;
+			this->btnVolverScores->Text = L"button1";
+			this->btnVolverScores->UseVisualStyleBackColor = true;
+			this->btnVolverScores->Click += gcnew System::EventHandler(this, &FrmInicio::btnVolverScores_Click);
+			// 
+			// lblTituloScore
+			// 
+			this->lblTituloScore->AutoSize = true;
+			this->lblTituloScore->Font = (gcnew System::Drawing::Font(L"MS Gothic", 48, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->lblTituloScore->ForeColor = System::Drawing::Color::Yellow;
+			this->lblTituloScore->Location = System::Drawing::Point(434, 42);
+			this->lblTituloScore->Name = L"lblTituloScore";
+			this->lblTituloScore->Size = System::Drawing::Size(225, 64);
+			this->lblTituloScore->TabIndex = 1;
+			this->lblTituloScore->Text = L"Scores";
+			// 
+			// lvScores
+			// 
+			this->lvScores->Columns->AddRange(gcnew cli::array< System::Windows::Forms::ColumnHeader^  >(7) {
+				this->colUsuario, this->colMode,
+					this->colMundo1, this->colMundo2, this->colMundo3, this->colPuntajeFinal, this->colFecha
+			});
+			this->lvScores->HideSelection = false;
+			this->lvScores->Location = System::Drawing::Point(90, 129);
+			this->lvScores->Name = L"lvScores";
+			this->lvScores->Size = System::Drawing::Size(897, 349);
+			this->lvScores->TabIndex = 0;
+			this->lvScores->UseCompatibleStateImageBehavior = false;
+			this->lvScores->View = System::Windows::Forms::View::Details;
+			// 
+			// colUsuario
+			// 
+			this->colUsuario->Text = L"Usuario";
+			this->colUsuario->Width = 106;
+			// 
+			// colMode
+			// 
+			this->colMode->Text = L"Modo";
+			this->colMode->Width = 105;
+			// 
+			// colMundo1
+			// 
+			this->colMundo1->Text = L"IA (Autonomía)";
+			this->colMundo1->Width = 19;
+			// 
+			// colMundo2
+			// 
+			this->colMundo2->Text = L"Humano (Criterio)";
+			this->colMundo2->Width = 82;
+			// 
+			// colMundo3
+			// 
+			this->colMundo3->Text = L"Colab (Confianza)";
+			this->colMundo3->Width = 163;
+			// 
+			// colPuntajeFinal
+			// 
+			this->colPuntajeFinal->Text = L"Puntaje Total";
+			this->colPuntajeFinal->Width = 111;
+			// 
+			// colFecha
+			// 
+			this->colFecha->Text = L"Fecha";
+			this->colFecha->Width = 95;
+			// 
 			// pnlMenuPrincipal
 			// 
 			this->pnlMenuPrincipal->BackColor = System::Drawing::Color::Transparent;
@@ -220,9 +445,9 @@ namespace NEXUSV2 {
 			this->pnlMenuPrincipal->Controls->Add(this->btnSalir);
 			this->pnlMenuPrincipal->Controls->Add(this->btnCreditos);
 			this->pnlMenuPrincipal->Controls->Add(this->btnScores);
-			this->pnlMenuPrincipal->Location = System::Drawing::Point(324, 390);
+			this->pnlMenuPrincipal->Location = System::Drawing::Point(254, 390);
 			this->pnlMenuPrincipal->Name = L"pnlMenuPrincipal";
-			this->pnlMenuPrincipal->Size = System::Drawing::Size(1233, 606);
+			this->pnlMenuPrincipal->Size = System::Drawing::Size(1303, 630);
 			this->pnlMenuPrincipal->TabIndex = 12;
 			// 
 			// txtNombreJugador
@@ -337,6 +562,10 @@ namespace NEXUSV2 {
 			this->Load += gcnew System::EventHandler(this, &FrmInicio::FrmInicio_Load);
 			this->pnlFondo->ResumeLayout(false);
 			this->pnlNiveles->ResumeLayout(false);
+			this->pnlCreditos->ResumeLayout(false);
+			this->pnlCreditos->PerformLayout();
+			this->pnlScores->ResumeLayout(false);
+			this->pnlScores->PerformLayout();
 			this->pnlMenuPrincipal->ResumeLayout(false);
 			this->pnlMenuPrincipal->PerformLayout();
 			this->ResumeLayout(false);
@@ -453,6 +682,258 @@ namespace NEXUSV2 {
 		   btnVolver->Cursor = Cursors::Hand;
 		   btnVolver->Text = "VOLVER";
 	   }
+	private:
+		void FrmInicio::ConfigurarPanelScores() {
+
+			System::Drawing::Color fondoPanel = System::Drawing::Color::FromArgb(245, 5, 5, 20);
+			this->pnlScores->BackColor = fondoPanel;
+
+			// Título: Grande, NEÓN CYÁN y perfectamente centrado
+			this->lblTituloScore->Text = "TABLA DE CLASIFICACIÓN GLOBAL";
+			this->lblTituloScore->Font = gcnew System::Drawing::Font("Consolas", 26, FontStyle::Bold);
+			this->lblTituloScore->ForeColor = System::Drawing::Color::FromArgb(0, 255, 255); // Cyan Neón
+			this->lblTituloScore->TextAlign = ContentAlignment::MiddleCenter;
+
+			// Botón Volver: Oscuro y con borde neón
+			this->btnVolverScores->Text = "VOLVER AL MENÚ";
+			this->btnVolverScores->BackColor = System::Drawing::Color::FromArgb(255, 20, 40, 60); // Azul oscuro sólido
+			this->btnVolverScores->ForeColor = System::Drawing::Color::White;
+			this->btnVolverScores->FlatStyle = FlatStyle::Flat;
+			this->btnVolverScores->FlatAppearance->BorderColor = System::Drawing::Color::FromArgb(0, 255, 255);
+			this->btnVolverScores->FlatAppearance->BorderSize = 3;
+			this->btnVolverScores->Size = System::Drawing::Size(200, 65); // Más grande
+
+
+			// --- 2. CONFIGURACIÓN DEL LISTVIEW (La Tabla) ---
+
+			this->lvScores->View = View::Details;
+			this->lvScores->GridLines = true;
+			this->lvScores->FullRowSelect = true;
+
+			// 🛑 CRÍTICO: Fondo de la tabla NEGRO PURO y Texto VERDE/CYAN
+			this->lvScores->BackColor = System::Drawing::Color::Black;
+			this->lvScores->ForeColor = System::Drawing::Color::FromArgb(128, 255, 128); // Verde Neón
+			this->lvScores->Font = gcnew System::Drawing::Font("Consolas", 10, FontStyle::Regular);
+
+			// Limpiar columnas
+			this->lvScores->Columns->Clear();
+
+			// Definición de las columnas y ALINEACIÓN CORRECTA
+			this->lvScores->Columns->Add("Cadete", 150, HorizontalAlignment::Left);
+			this->lvScores->Columns->Add("Modo", 80, HorizontalAlignment::Center);
+			this->lvScores->Columns->Add("Autonomía (IA)", 120, HorizontalAlignment::Right); // Derecha para números
+			this->lvScores->Columns->Add("Criterio (Humano)", 130, HorizontalAlignment::Right);
+			this->lvScores->Columns->Add("Confianza (Colab)", 130, HorizontalAlignment::Right);
+			this->lvScores->Columns->Add("TOTAL", 100, HorizontalAlignment::Right);
+			this->lvScores->Columns->Add("Fecha", 150, HorizontalAlignment::Left);
+
+			// Ajuste visual para centrar el título
+			int anchoLista = this->lvScores->Width;
+			this->lblTituloScore->Left = (this->pnlScores->Width - anchoLista) / 2;
+
+
+			CargarDatosScores();
+		}
+		void FrmInicio::CargarDatosScores() {
+
+			this->lvScores->Items->Clear();
+
+			// Nota: Necesitas que ArchivoService esté inicializado.
+			std::vector<RegistroScore> records = archivoService->LeerRegistrosBinarios("Files/SCORES.bin");
+
+			for (const auto& record : records) {
+
+				// Usamos el método de conversión de nuestro servicio
+				System::String^ nombre = archivoService->ConvertCharToString(record.nombre);
+				System::String^ fecha = archivoService->ConvertCharToString(record.fecha);
+				System::String^ modo = record.esModoHistoria ? "Historia" : "Nivel";
+
+				// Crear el primer ítem (Nombre)
+				ListViewItem^ item = gcnew ListViewItem(nombre);
+
+				// Añadir sub-ítems en el orden de las columnas:
+				item->SubItems->Add(modo);
+				item->SubItems->Add(Convert::ToString(record.ptjAutonomia));
+				item->SubItems->Add(Convert::ToString(record.ptjCriterio));
+				item->SubItems->Add(Convert::ToString(record.ptjConfianza));
+				item->SubItems->Add(Convert::ToString(record.puntajeTotal)); // El score principal para el total
+				item->SubItems->Add(fecha);
+
+				this->lvScores->Items->Add(item);
+			}
+		}
+		void FrmInicio::ConfigurarYPosicionarCreditos() {
+
+			// VERIFICACIÓN CRÍTICA: Asegurar que los controles estén en el panel
+			if (!this->pnlCreditos->Controls->Contains(this->lblTituloCreditos)) {
+				this->pnlCreditos->Controls->Add(this->lblTituloCreditos);
+			}
+			if (!this->pnlCreditos->Controls->Contains(this->lblMensajeAgradecimiento)) {
+				this->pnlCreditos->Controls->Add(this->lblMensajeAgradecimiento);
+			}
+			if (!this->pnlCreditos->Controls->Contains(this->lblEstudiantes)) {
+				this->pnlCreditos->Controls->Add(this->lblEstudiantes);
+			}
+			if (!this->pnlCreditos->Controls->Contains(this->lblUniversidad)) {
+				this->pnlCreditos->Controls->Add(this->lblUniversidad);
+			}
+			if (!this->pnlCreditos->Controls->Contains(this->lblProfesor)) {
+				this->pnlCreditos->Controls->Add(this->lblProfesor);
+			}
+			if (!this->pnlCreditos->Controls->Contains(this->btnVolverMenu)) {
+				this->pnlCreditos->Controls->Add(this->btnVolverMenu);
+			}
+
+			this->pnlCreditos->AutoScroll = false; // Desactivar scroll para centrado perfecto
+
+			// Obtener las dimensiones del panel contenedor
+			int anchoPanel = this->pnlCreditos->Width;
+			int altoPanel = this->pnlCreditos->Height;
+
+			// Ancho fijo para las secciones principales
+			const int ANCHO_SECCION = 1080;
+
+			// --- CÁLCULO DE ALTURAS TOTALES ---
+			const int ALTURA_TITULO = 60;
+			const int ESPACIO_TITULO = 70;
+			const int ALTURA_MENSAJE = 70;
+			const int ESPACIO_MENSAJE = 80;
+			const int ALTURA_ESTUDIANTES = 120;
+			const int ESPACIO_ESTUDIANTES = 130;
+			const int ALTURA_UNIVERSIDAD = 40;
+			const int ESPACIO_UNIVERSIDAD = 50;
+			const int ALTURA_PROFESOR = 30;
+			const int ESPACIO_PROFESOR = 50;
+			const int ALTURA_BOTON = 50;
+
+			// ✅ ALTURA TOTAL DEL CONTENIDO
+			int alturaTotal = ALTURA_TITULO + ESPACIO_TITULO +
+				ALTURA_MENSAJE + ESPACIO_MENSAJE +
+				ALTURA_ESTUDIANTES + ESPACIO_ESTUDIANTES +
+				ALTURA_UNIVERSIDAD + ESPACIO_UNIVERSIDAD +
+				ALTURA_PROFESOR + ESPACIO_PROFESOR +
+				ALTURA_BOTON;
+
+			// ✅ CALCULAR POSICIÓN INICIAL PARA CENTRADO VERTICAL PERFECTO
+			int yActual = (altoPanel - alturaTotal) / 2;
+
+			// Si queda muy arriba, establecer un mínimo
+			if (yActual <100) {
+				yActual =100;
+			}
+
+			// --- Estilos de Colores ---
+			System::Drawing::Color colorNeonCyan = System::Drawing::Color::FromArgb(0, 255, 255);
+			System::Drawing::Color colorNeonMagenta = System::Drawing::Color::FromArgb(255, 0, 128);
+			System::Drawing::Color colorConsola = System::Drawing::Color::White;
+
+			// -----------------------------------------------------------------
+			// 1. TÍTULO PRINCIPAL
+			// -----------------------------------------------------------------
+			this->lblTituloCreditos->Text = "NEXUS: CÓDIGO FINALIZADO";
+			this->lblTituloCreditos->Font = gcnew System::Drawing::Font("Consolas", 36, FontStyle::Bold);
+			this->lblTituloCreditos->ForeColor = colorNeonCyan;
+			this->lblTituloCreditos->TextAlign = ContentAlignment::MiddleCenter;
+			this->lblTituloCreditos->Width = ANCHO_SECCION;
+			this->lblTituloCreditos->Left = (anchoPanel - ANCHO_SECCION) / 2;
+			this->lblTituloCreditos->Top = yActual;
+			this->lblTituloCreditos->Height = ALTURA_TITULO;
+
+			yActual += ESPACIO_TITULO;
+
+			// -----------------------------------------------------------------
+			// 2. MENSAJE EMOCIONAL
+			// -----------------------------------------------------------------
+			this->lblMensajeAgradecimiento->Text =
+				"Gracias por jugar.\nCreado por estudiantes que no durmieron mucho, pero valió la pena.";
+			this->lblMensajeAgradecimiento->Font = gcnew System::Drawing::Font("Segoe UI", 16, FontStyle::Italic);
+			this->lblMensajeAgradecimiento->ForeColor = colorConsola;
+			this->lblMensajeAgradecimiento->TextAlign = ContentAlignment::MiddleCenter;
+			this->lblMensajeAgradecimiento->Width = ANCHO_SECCION;
+			this->lblMensajeAgradecimiento->Left = (anchoPanel - ANCHO_SECCION) / 2;
+			this->lblMensajeAgradecimiento->Top = yActual;
+			this->lblMensajeAgradecimiento->Height = ALTURA_MENSAJE;
+
+			yActual += ESPACIO_MENSAJE;
+
+			// -----------------------------------------------------------------
+			// 3. ESTUDIANTES (CREADORES) - CENTRADO PERFECTO
+			// -----------------------------------------------------------------
+			this->lblEstudiantes->Text =
+				"// DESARROLLADORES //\nIlder Ojeda\nGerardo Morales\nAdriano Matos";
+			this->lblEstudiantes->Font = gcnew System::Drawing::Font("Consolas", 18, FontStyle::Bold);
+			this->lblEstudiantes->ForeColor = colorNeonMagenta;
+			this->lblEstudiantes->TextAlign = ContentAlignment::MiddleCenter;
+			this->lblEstudiantes->Width = ANCHO_SECCION;
+			this->lblEstudiantes->Left = (anchoPanel - ANCHO_SECCION) / 2;
+			this->lblEstudiantes->Top = yActual;
+			this->lblEstudiantes->Height = ALTURA_ESTUDIANTES;
+
+			yActual += ESPACIO_ESTUDIANTES;
+
+			// -----------------------------------------------------------------
+			// 4. UNIVERSIDAD
+			// -----------------------------------------------------------------
+			this->lblUniversidad->Text = "Universidad Peruana de Ciencias Aplicadas (UPC)";
+			this->lblUniversidad->Font = gcnew System::Drawing::Font("Segoe UI", 16, FontStyle::Regular);
+			this->lblUniversidad->ForeColor = colorConsola;
+			this->lblUniversidad->TextAlign = ContentAlignment::MiddleCenter;
+			this->lblUniversidad->Width = ANCHO_SECCION;
+			this->lblUniversidad->Left = (anchoPanel - ANCHO_SECCION) / 2;
+			this->lblUniversidad->Top = yActual;
+			this->lblUniversidad->Height = ALTURA_UNIVERSIDAD;
+
+			yActual += ESPACIO_UNIVERSIDAD;
+
+			// -----------------------------------------------------------------
+			// 5. PROFESOR
+			// -----------------------------------------------------------------
+			this->lblProfesor->Text = "PROFESOR ASESOR: Herry Antonio Mendoza Puertas";
+			this->lblProfesor->Font = gcnew System::Drawing::Font("Consolas", 12, FontStyle::Regular);
+			this->lblProfesor->ForeColor = colorNeonCyan;
+			this->lblProfesor->TextAlign = ContentAlignment::MiddleCenter;
+			this->lblProfesor->Width = ANCHO_SECCION;
+			this->lblProfesor->Left = (anchoPanel - ANCHO_SECCION) / 2;
+			this->lblProfesor->Top = yActual;
+			this->lblProfesor->Height = ALTURA_PROFESOR;
+
+			yActual += ESPACIO_PROFESOR;
+
+			// -----------------------------------------------------------------
+			// 6. BOTÓN VOLVER - CENTRADO CON EL RESTO
+			// -----------------------------------------------------------------
+			this->btnVolverMenu->Text = "VOLVER AL MENÚ";
+			this->btnVolverMenu->BackColor = System::Drawing::Color::FromArgb(255, 30, 40, 60);
+			this->btnVolverMenu->ForeColor = colorConsola;
+			this->btnVolverMenu->FlatStyle = FlatStyle::Flat;
+			this->btnVolverMenu->FlatAppearance->BorderColor = colorNeonCyan;
+			this->btnVolverMenu->FlatAppearance->BorderSize = 2;
+			this->btnVolverMenu->Font = gcnew System::Drawing::Font("Consolas", 12, FontStyle::Bold);
+			this->btnVolverMenu->Width = 250;
+			this->btnVolverMenu->Height = ALTURA_BOTON;
+			this->btnVolverMenu->Left = (anchoPanel - this->btnVolverMenu->Width) / 2;
+			this->btnVolverMenu->Top = yActual; // ✅ Ahora está con el bloque, no al final
+
+			// -----------------------------------------------------------------
+			// APLICAR TRANSPARENCIA Y VISIBILIDAD
+			// -----------------------------------------------------------------
+			cli::array<System::Windows::Forms::Label^>^ labels = {
+				lblTituloCreditos,
+				lblMensajeAgradecimiento,
+				lblEstudiantes,
+				lblUniversidad,
+				lblProfesor
+			};
+
+			for each (System::Windows::Forms::Label ^ lbl in labels) {
+				lbl->BackColor = System::Drawing::Color::Transparent;
+				lbl->Visible = true;
+				lbl->AutoSize = false;
+			}
+
+			this->btnVolverMenu->Visible = true;
+			this->btnVolverMenu->Enabled = true;
+		}
 	private: System::Void FrmInicio_Load(System::Object^ sender, System::EventArgs^ e) {
 	}
 	private: System::Void pnlFondo_Paint(System::Object^ sender, System::Windows::Forms::PaintEventArgs^ e) {
@@ -568,6 +1049,7 @@ namespace NEXUSV2 {
 		Sesion::NombreJugador = txtNombreJugador->Text; // Guardamos el nombre
 		Sesion::EsModoHistoria = false;
 		FrmMundoHumano^ mundo = gcnew FrmMundoHumano();
+		ArchivoService* archivoService;
 		pnlNiveles->Visible = false;
 		pnlMenuPrincipal->Visible = true;
 		mundo->FormClosed += gcnew FormClosedEventHandler(this, &FrmInicio::AlCerrarMundoHumano);
@@ -594,21 +1076,57 @@ namespace NEXUSV2 {
 		frmMundoColab->Show();
 		this->Hide();
 	}
-	private: System::Void btnCreditos_Click(System::Object^ sender, System::EventArgs^ e) {
-		gestorSonido->ReproducirEfecto("EfectoClick.wav", 1.0);
-		//Agregar formulario de creditos
+private: System::Void btnCreditos_Click(System::Object^ sender, System::EventArgs^ e) {
+	gestorSonido->ReproducirEfecto("EfectoClick.wav", 1.0);
+
+	// Asegurar que pnlCreditos esté en el lugar correcto
+	if (!this->pnlFondo->Controls->Contains(this->pnlCreditos)) {
+		this->pnlFondo->Controls->Add(this->pnlCreditos);
 	}
-		   
+
+	// Configurar antes de mostrar
+	ConfigurarYPosicionarCreditos();
+
+	// Ocultar otros paneles y mostrar créditos
+	this->pnlMenuPrincipal->Visible = false;
+	this->pnlScores->Visible = false; // ← Asegurar que scores esté oculto
+	this->pnlNiveles->Visible = false;
+
+	this->pnlCreditos->Visible = true;
+	this->pnlCreditos->BringToFront();
+}
 	
 	private: System::Void btnHistoria_Click_1(System::Object^ sender, System::EventArgs^ e) {
 		gestorSonido->ReproducirEfecto("EfectoClick.wav", 1.0);
-		//Agregar formulario de historia
+		if (this->pnlScores->Visible) {
+			// Si ya está visible, ocultarlo
+			this->pnlScores->Visible = false;
+		}
+		else {
+			// Cargar datos y aplicar diseño ANTES de mostrarlo
+			ConfigurarPanelScores();
+			this->pnlScores->Visible = true;
+			this->pnlScores->BringToFront();
+		}
 	}
 	private: System::Void btnVolver_Click(System::Object^ sender, System::EventArgs^ e) {
 		pnlNiveles->Visible = false;       // Oculta niveles
 		pnlMenuPrincipal->Visible = true;  // Muestra menú principal
 	}
 
+private: System::Void pnlScores_Paint(System::Object^ sender, System::Windows::Forms::PaintEventArgs^ e) {
+}
+private: System::Void btnVolverScores_Click(System::Object^ sender, System::EventArgs^ e) {
+	gestorSonido->ReproducirEfecto("EfectoClick.wav", 1.0);
+	this->pnlScores->Visible = false;
+}
+private: System::Void btnVolverMenu_Click(System::Object^ sender, System::EventArgs^ e) {
+	gestorSonido->ReproducirEfecto("EfectoClick.wav", 1.0);
+
+	this->pnlCreditos->Visible = false;
+	this->pnlMenuPrincipal->Visible = true;
+	this->pnlMenuPrincipal->BringToFront();
+}
 };
 	
 }

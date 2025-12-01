@@ -18,9 +18,10 @@ public:
     // Verificar si un archivo existe
     bool archivoExiste(string nombreArchivo);
 
-
+    System::String^ ConvertCharToString(const char* nativeString);
     // Métodos simples para archivo binario con strings e int
     void guardarTextoEnBinario(string nombreArchivo, string texto);
     string leerTextoDelBinario(string nombreArchivo);
+    std::vector<RegistroScore> LeerRegistrosBinarios(std::string nombreArchivo);
     void GuardarPartida(System::String^ nombreNet, bool esHistoria, int p1, int p2, int p3, int total);
 };

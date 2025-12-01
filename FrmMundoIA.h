@@ -279,7 +279,7 @@ namespace NEXUSV2 {
 
 		   }
 #pragma endregion
-
+		
 	private:
 		System::Void panel1_Paint(System::Object^ sender, System::Windows::Forms::PaintEventArgs^ e) {
 			timer1->Start();

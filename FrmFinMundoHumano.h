@@ -1,7 +1,8 @@
 ﻿#pragma once
 
 #include <string>      // <<--- IMPORTANTE
-
+#include "ArchivoService.h" // <<--- NECESARIO
+#include "Sesion.h" // <<--- NECESARIO
 using std::string;     // opcional, si quieres simplificar
 using std::to_string;  //
 namespace NEXUSV2 {
@@ -21,11 +22,19 @@ namespace NEXUSV2 {
 	public:
 		FrmFinMundoHumano(bool gano, bool esHistoria, int vidas, int estabilidad, int criterio, int progreso)
 		{
-			InitializeComponent();
-			this->StartPosition = FormStartPosition::CenterScreen;
-            ConfigurarEstiloVisual();           // 👈 aplicar diseño
+            InitializeComponent();
+            this->StartPosition = FormStartPosition::CenterScreen;
+
+            // --- ALMACENAR ESTADO Y SERVICIOS (Solución a errores) ---
+            this->archivoService = new ArchivoService();
+            this->gano = gano;
+            this->esHistoria = esHistoria;
+            this->puntajeCriterio = criterio; // Score de este mundo (ptjCriterio)
+            // -----------------------------------------------------------
+
+            ConfigurarEstiloVisual();
             construirFinal(gano, esHistoria, vidas, estabilidad, criterio, progreso);
-		}
+        }
 
 	protected:
 		/// <summary>
@@ -37,6 +46,7 @@ namespace NEXUSV2 {
 			{
 				delete components;
 			}
+            if (archivoService) delete archivoService;
 		}
     private: System::Windows::Forms::Button^ btnSiguienteNivel;
 
@@ -45,8 +55,14 @@ namespace NEXUSV2 {
     private: System::Windows::Forms::Label^ lblResumen;
     private: System::Windows::Forms::Label^ lblStats;
 
+    private:
+        // --- VARIABLES AÑADIDAS PARA EL REGISTRO DE SCORES ---
+        ArchivoService* archivoService;
+        bool gano;
+        bool esHistoria;
+        int puntajeCriterio;
 
-
+        
 
     protected:
 
@@ -160,6 +176,56 @@ namespace NEXUSV2 {
         }
 #pragma endregion
 	private:
+        // --- FUNCIÓN DE REGISTRO DE SCORES ---
+        void RegistrarScores() {
+
+            // A. ACTUALIZAR PUNTAJE DE SESIÓN (Se hace siempre)
+            NEXUSV2::Sesion::PuntajeMundoHumano = this->puntajeCriterio;
+
+            // --- Variables de Guardado ---
+            System::String^ nombre = NEXUSV2::Sesion::NombreJugador;
+            int ptjHumano = this->puntajeCriterio;
+
+            // Obtenemos el score acumulado de la Sesion
+            int ptjIA = NEXUSV2::Sesion::PuntajeMundoIA;
+            int puntajeTotal = ptjIA + ptjHumano;
+
+
+            // -----------------------------------------------------------
+            // B. LÓGICA DE GUARDADO BINARIO
+            // -----------------------------------------------------------
+
+            // CASO 1: MODO NIVELES (Individual) - Guarda solo este score.
+            if (!this->esHistoria) {
+
+                archivoService->GuardarPartida(
+                    nombre,
+                    this->esHistoria, // false
+                    0, // ptjAutonomia (No aplica)
+                    ptjHumano,
+                    0, // ptjConfianza (No aplica)
+                    ptjHumano // Total es solo el score de este mundo
+                );
+            }
+
+            // CASO 2: MODO HISTORIA - Guardamos solo si la carrera terminó (perdió).
+            else {
+                if (!this->gano) {
+
+                    // Si pierde, la run se registra con el puntaje acumulado (IA + Humano).
+                    archivoService->GuardarPartida(
+                        nombre,
+                        this->esHistoria, // true
+                        ptjIA,
+                        ptjHumano,
+                        0, // ptjConfianza (No alcanzado)
+                        puntajeTotal // Suma de IA y Humano
+                    );
+                }
+                // Si ganó, solo actualiza la Sesion (ya hecho) y sigue al Mundo 3.
+            }
+        }
+
         void construirFinal(bool gano, bool esHistoria, int vidas, int estabilidad, int criterio, int progreso)
         {
             string titulo;
@@ -344,14 +410,21 @@ namespace NEXUSV2 {
 	private: System::Void FrmFinMundoHumano_Load(System::Object^ sender, System::EventArgs^ e) {
 	}
     private: System::Void btnVolverInicio_Click(System::Object^ sender, System::EventArgs^ e) {
-		this->DialogResult = System::Windows::Forms::DialogResult::Cancel; // volver al inicio de la app
+        // REGISTRO CONDICIONAL AL CERRAR
+        if (!this->gano || !this->esHistoria) {
+            RegistrarScores();
+        }
+        this->DialogResult = System::Windows::Forms::DialogResult::Cancel;
         this->Close();
     }
-private: System::Void btnSiguienteNivel_Click(System::Object^ sender, System::EventArgs^ e) {
-    this->DialogResult = System::Windows::Forms::DialogResult::OK; // seguir al siguiente nivel 
-
-    this->Close();
-}
+    private: System::Void btnSiguienteNivel_Click(System::Object^ sender, System::EventArgs^ e) {
+    // REGISTRO CONDICIONAL AL CERRAR
+        if (this->gano) {
+             RegistrarScores();
+        }
+        this->DialogResult = System::Windows::Forms::DialogResult::OK; // seguir al siguiente nivel 
+        this->Close();
+    }
 private: System::Void lblStats_Click(System::Object^ sender, System::EventArgs^ e) {
 }
 };
