@@ -5,7 +5,7 @@ class Aliado : public Sprite {
 protected:
     int velocidad;
     bool activo;
-    int tipoMovimiento;  // 0=horizontal, 1=vertical, 2=diagonal
+    int tipoMovimiento; 
 
 public:
     Aliado();

@@ -38,7 +38,8 @@ namespace NEXUSV2 {
 
 			// 1. Aplicar el estilo visual (Colores, Fuentes)
 			ConfigurarEstilo();
-
+			this->btnSiguienteNivel->Visible = false;
+			this->btnVolver->Visible = false;
 			// 2. Llenar los datos y configurar botones
 			construirFinal(gano, esHistoria, vidas, robots, autonomia, chips);
 		}
@@ -377,8 +378,10 @@ namespace NEXUSV2 {
 
 				// Chips (Código Humano)
 				lblChipsRecolectados->Text = "Fragmentos de código antiguo: " + chips + ".\nLa humanidad empieza a despertar en el sistema.";
-
-				btnSiguienteNivel->Visible = true;
+				if (esHistoria) {
+					btnSiguienteNivel->Visible = true;
+				}
+				
 			}
 			else {
 				// === PERDISTE: EL SISTEMA TE CORRIGIÓ ===
@@ -402,9 +405,7 @@ namespace NEXUSV2 {
 					lblChipsRecolectados->Text = "No se recuperó nada.\nLa libertad de pensamiento sigue siendo un mito.";
 				else
 					lblChipsRecolectados->Text = "Intento fallido.\nLos " + chips + " fragmentos recolectados han sido destruidos.";
-				if (esHistoria) {
-					btnSiguienteNivel->Visible = false;
-				}
+				btnSiguienteNivel->Visible = false;
 				
 			}
 

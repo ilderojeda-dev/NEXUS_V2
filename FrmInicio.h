@@ -223,6 +223,7 @@ namespace NEXUSV2 {
 			this->pnlNiveles->Size = System::Drawing::Size(1534, 1009);
 			this->pnlNiveles->TabIndex = 11;
 			this->pnlNiveles->Visible = false;
+			this->pnlNiveles->Paint += gcnew System::Windows::Forms::PaintEventHandler(this, &FrmInicio::pnlNiveles_Paint);
 			// 
 			// pnlCreditos
 			// 
@@ -831,7 +832,7 @@ namespace NEXUSV2 {
 			// 1. TÍTULO PRINCIPAL
 			// -----------------------------------------------------------------
 			this->lblTituloCreditos->Text = "NEXUS: CÓDIGO FINALIZADO";
-			this->lblTituloCreditos->Font = gcnew System::Drawing::Font("Consolas", 36, FontStyle::Bold);
+			this->lblTituloCreditos->Font = gcnew System::Drawing::Font("Consolas", 30, FontStyle::Bold);
 			this->lblTituloCreditos->ForeColor = colorNeonCyan;
 			this->lblTituloCreditos->TextAlign = ContentAlignment::MiddleCenter;
 			this->lblTituloCreditos->Width = ANCHO_SECCION;
@@ -846,7 +847,7 @@ namespace NEXUSV2 {
 			// -----------------------------------------------------------------
 			this->lblMensajeAgradecimiento->Text =
 				"Gracias por jugar.\nCreado por estudiantes que no durmieron mucho, pero valió la pena.";
-			this->lblMensajeAgradecimiento->Font = gcnew System::Drawing::Font("Segoe UI", 16, FontStyle::Italic);
+			this->lblMensajeAgradecimiento->Font = gcnew System::Drawing::Font("Segoe UI", 14, FontStyle::Italic);
 			this->lblMensajeAgradecimiento->ForeColor = colorConsola;
 			this->lblMensajeAgradecimiento->TextAlign = ContentAlignment::MiddleCenter;
 			this->lblMensajeAgradecimiento->Width = ANCHO_SECCION;
@@ -861,7 +862,7 @@ namespace NEXUSV2 {
 			// -----------------------------------------------------------------
 			this->lblEstudiantes->Text =
 				"// DESARROLLADORES //\nIlder Ojeda\nGerardo Morales\nAdriano Matos";
-			this->lblEstudiantes->Font = gcnew System::Drawing::Font("Consolas", 18, FontStyle::Bold);
+			this->lblEstudiantes->Font = gcnew System::Drawing::Font("Consolas", 16, FontStyle::Bold);
 			this->lblEstudiantes->ForeColor = colorNeonMagenta;
 			this->lblEstudiantes->TextAlign = ContentAlignment::MiddleCenter;
 			this->lblEstudiantes->Width = ANCHO_SECCION;
@@ -875,7 +876,7 @@ namespace NEXUSV2 {
 			// 4. UNIVERSIDAD
 			// -----------------------------------------------------------------
 			this->lblUniversidad->Text = "Universidad Peruana de Ciencias Aplicadas (UPC)";
-			this->lblUniversidad->Font = gcnew System::Drawing::Font("Segoe UI", 16, FontStyle::Regular);
+			this->lblUniversidad->Font = gcnew System::Drawing::Font("Segoe UI", 14, FontStyle::Regular);
 			this->lblUniversidad->ForeColor = colorConsola;
 			this->lblUniversidad->TextAlign = ContentAlignment::MiddleCenter;
 			this->lblUniversidad->Width = ANCHO_SECCION;
@@ -1126,6 +1127,8 @@ private: System::Void btnVolverMenu_Click(System::Object^ sender, System::EventA
 	this->pnlCreditos->Visible = false;
 	this->pnlMenuPrincipal->Visible = true;
 	this->pnlMenuPrincipal->BringToFront();
+}
+private: System::Void pnlNiveles_Paint(System::Object^ sender, System::Windows::Forms::PaintEventArgs^ e) {
 }
 };
 	
