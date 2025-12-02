@@ -19,7 +19,7 @@ MundoIAService::MundoIAService(int ancho, int alto, int vidasIniciales)
     enCinematica = true;
     pasoCinematica = 0;
     contador = 0;
-    recursosRecolectados = 0;
+    recursosRecolectados = 5;
     bossVisible = false;
     sintiaVisible = false;
 
@@ -34,7 +34,7 @@ MundoIAService::MundoIAService(int ancho, int alto, int vidasIniciales)
     filasSintIA = 0;
     columnasSintIA = 0;
 
-    robotsEliminados = 0;
+    robotsEliminados = 10;
     contadorSpawnChips = 0;
     archivoService = new ArchivoService();
     cargarParametrosDelArchivo();

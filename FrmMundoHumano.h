@@ -139,7 +139,7 @@ namespace NEXUSV2 {
 	private: System::Windows::Forms::Button^ btnUsarTrajeGas;
 	private: System::Windows::Forms::PictureBox^ pbPrototipoA;
 	private: System::Windows::Forms::PictureBox^ pbPrototivoB;
-	private: System::Windows::Forms::PictureBox^ pbFotoJugador;
+
 	private: System::Windows::Forms::Label^ lblNombreJugador;
 	private: System::Windows::Forms::Panel^ pnlFondoEstabilidad;
 	private: System::Windows::Forms::Panel^ pnlBarraEstabilidad;
@@ -150,6 +150,7 @@ namespace NEXUSV2 {
 	private: System::Windows::Forms::PictureBox^ pbVida2;
 	private: System::Windows::Forms::PictureBox^ pbVida1;
 	private: System::Windows::Forms::PictureBox^ pbVida3;
+private: System::Windows::Forms::PictureBox^ pbFotoJugador;
 	private: System::Windows::Forms::Label^ lblMensajeTerrestre;
 
 #pragma region Windows Form Designer generated code
@@ -181,7 +182,6 @@ namespace NEXUSV2 {
 			this->btnUsarTrajeGas = (gcnew System::Windows::Forms::Button());
 			this->pbPrototipoA = (gcnew System::Windows::Forms::PictureBox());
 			this->pbPrototivoB = (gcnew System::Windows::Forms::PictureBox());
-			this->pbFotoJugador = (gcnew System::Windows::Forms::PictureBox());
 			this->lblNombreJugador = (gcnew System::Windows::Forms::Label());
 			this->pnlFondoEstabilidad = (gcnew System::Windows::Forms::Panel());
 			this->pnlBarraEstabilidad = (gcnew System::Windows::Forms::Panel());
@@ -192,6 +192,7 @@ namespace NEXUSV2 {
 			this->pbVida2 = (gcnew System::Windows::Forms::PictureBox());
 			this->pbVida1 = (gcnew System::Windows::Forms::PictureBox());
 			this->pbVida3 = (gcnew System::Windows::Forms::PictureBox());
+			this->pbFotoJugador = (gcnew System::Windows::Forms::PictureBox());
 			this->pnlMundo->SuspendLayout();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pbTrajeGasMapa))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pbTrajeElecMapa))->BeginInit();
@@ -201,13 +202,13 @@ namespace NEXUSV2 {
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pbTrajeNormalHUB))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pbPrototipoA))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pbPrototivoB))->BeginInit();
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pbFotoJugador))->BeginInit();
 			this->pnlFondoEstabilidad->SuspendLayout();
 			this->pnlFondoCriterio->SuspendLayout();
 			this->pnlFondoProgreso->SuspendLayout();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pbVida2))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pbVida1))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pbVida3))->BeginInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pbFotoJugador))->BeginInit();
 			this->SuspendLayout();
 			// 
 			// pnlMundo
@@ -454,14 +455,6 @@ namespace NEXUSV2 {
 			this->pbPrototivoB->TabIndex = 25;
 			this->pbPrototivoB->TabStop = false;
 			// 
-			// pbFotoJugador
-			// 
-			this->pbFotoJugador->Location = System::Drawing::Point(1550, 67);
-			this->pbFotoJugador->Name = L"pbFotoJugador";
-			this->pbFotoJugador->Size = System::Drawing::Size(115, 108);
-			this->pbFotoJugador->TabIndex = 26;
-			this->pbFotoJugador->TabStop = false;
-			// 
 			// lblNombreJugador
 			// 
 			this->lblNombreJugador->AutoSize = true;
@@ -561,6 +554,17 @@ namespace NEXUSV2 {
 			this->pbVida3->TabIndex = 34;
 			this->pbVida3->TabStop = false;
 			// 
+			// pbFotoJugador
+			// 
+			this->pbFotoJugador->BackColor = System::Drawing::Color::Transparent;
+			this->pbFotoJugador->BackgroundImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pbFotoJugador.BackgroundImage")));
+			this->pbFotoJugador->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Stretch;
+			this->pbFotoJugador->Location = System::Drawing::Point(1550, 67);
+			this->pbFotoJugador->Name = L"pbFotoJugador";
+			this->pbFotoJugador->Size = System::Drawing::Size(115, 108);
+			this->pbFotoJugador->TabIndex = 26;
+			this->pbFotoJugador->TabStop = false;
+			// 
 			// FrmMundoHumano
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
@@ -605,13 +609,13 @@ namespace NEXUSV2 {
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pbTrajeNormalHUB))->EndInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pbPrototipoA))->EndInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pbPrototivoB))->EndInit();
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pbFotoJugador))->EndInit();
 			this->pnlFondoEstabilidad->ResumeLayout(false);
 			this->pnlFondoCriterio->ResumeLayout(false);
 			this->pnlFondoProgreso->ResumeLayout(false);
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pbVida2))->EndInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pbVida1))->EndInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pbVida3))->EndInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pbFotoJugador))->EndInit();
 			this->ResumeLayout(false);
 			this->PerformLayout();
 

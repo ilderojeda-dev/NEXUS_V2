@@ -6,7 +6,7 @@ struct RegistroScore {
 
     bool esModoHistoria;  // ¿Jugó la historia completa?
 
-    // Las 3 Métricas Clave
+ 
     int ptjAutonomia;     // Nivel 1 (IA)
     int ptjCriterio;      // Nivel 2 (Humano)
     int ptjConfianza;     // Nivel 3 (Colaborativo)
