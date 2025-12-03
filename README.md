@@ -139,7 +139,7 @@ GitHub: [hampcode](https://github.com/hampcode)
 
 ## 📸 Galería del Equipo
 
-*(Aquí puedes agregar imágenes de la presentación final o el equipo.)*
+![Foto del Equipo NEXUS](FotoPresentacionTrabajo.jpg)
 
 ---
 
